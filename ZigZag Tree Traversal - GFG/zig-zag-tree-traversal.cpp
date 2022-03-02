@@ -99,6 +99,8 @@ struct Node {
     }
 };
 */
+#include<queue>
+#include<vector>
 #include<stack>
 class Solution{
     public:
@@ -110,48 +112,38 @@ class Solution{
     	if(root==NULL){
     	    return ans;
     	}
-    	if(root->left==NULL && root->right==NULL){
-    	    ans.push_back(root->data);
-    	    return ans;
-    	}
-    	
-    	
     	stack<Node*>right_to_left;
     	stack<Node*>left_to_right;
-    	right_to_left.push(root);
     	
+    	right_to_left.push(root);
     	while(right_to_left.size()!=0 || left_to_right.size()!=0){
     	    
     	    while(right_to_left.size()!=0){
-    	        Node *frontNode=right_to_left.top();
+    	        Node * topNode=right_to_left.top();
     	        right_to_left.pop();
-    	        ans.push_back(frontNode->data);
-    	        if(frontNode->left!=NULL){
-    	            left_to_right.push(frontNode->left);
+    	        ans.push_back(topNode->data);
+    	        if(topNode->left!=NULL){
+    	            left_to_right.push(topNode->left);
     	        }
-    	         if(frontNode->right!=NULL){
-    	            left_to_right.push(frontNode->right);
+    	        if(topNode->right!=NULL){
+    	            left_to_right.push(topNode->right);
     	        }
-    	        
     	    }
     	    
-    	      while(left_to_right.size()!=0){
-    	        Node *frontNode=left_to_right.top();
+    	    while(left_to_right.size()!=0){
+    	        Node * topNode=left_to_right.top();
     	        left_to_right.pop();
-    	        ans.push_back(frontNode->data);
-    	   
-    	         if(frontNode->right!=NULL){
-    	            right_to_left.push(frontNode->right);
-    	        }
-    	         if(frontNode->left!=NULL){
-    	             right_to_left.push(frontNode->left);
+    	        ans.push_back(topNode->data);
+    	        if(topNode->right!=NULL){
+    	            right_to_left.push(topNode->right);
     	        }
     	        
+    	         if(topNode->left!=NULL){
+    	            right_to_left.push(topNode->left);
+    	        }
     	    }
-    	    
-    	    
     	}
-     return ans;	
+    	return ans;
     }
 };
 
