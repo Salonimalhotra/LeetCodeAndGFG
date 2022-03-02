@@ -92,63 +92,48 @@ struct Node
 }; */
 
 // Should return true if tree is Sum Tree, else false
-class check{
-    public:
+class Help{
+  public:
   bool isSumTreeCheck;
-  int SumTree;
+  int sum;
 };
 class Solution
 {
     public:
-    int Sum(Node *root){
+    Help isSumTreeHelper(Node * root){
         if(root==NULL){
-            return 0;
-        }
-        else return root->data+Sum(root->left)+Sum(root->right);
-    }
-    check Helper(Node*root){
-        if(root==NULL){
-            check ans;
+            Help ans;
             ans.isSumTreeCheck=true;
-            ans.SumTree=0;
+            ans.sum=0;
             return ans;
         }
         if(root->left==NULL && root->right==NULL){
-            check ans;
+            Help ans;
             ans.isSumTreeCheck=true;
-            ans.SumTree=root->data;
+            ans.sum=root->data;
             return ans;
         }
         
-        check lans=Helper(root->left);
-        check rans=Helper(root->right);
-        if(lans.isSumTreeCheck==true && rans.isSumTreeCheck==true){
-            if(root->data==lans.SumTree+rans.SumTree){
-                check final_ans;
-                final_ans.isSumTreeCheck=true;
-                final_ans.SumTree=Sum(root);
-                return final_ans;
-            }
-            else{
-                 check final_ans;
-                final_ans.isSumTreeCheck=false;
-                final_ans.SumTree=Sum(root);
-                return final_ans;
-            }
-        }
-        else{
-                check final_ans;
-                final_ans.isSumTreeCheck=false;
-                final_ans.SumTree=Sum(root);
-                return final_ans;
-        }
+        Help leftAns=isSumTreeHelper(root->left);
+        Help rightAns=isSumTreeHelper(root->right);
+        
+        Help finalAns;
+        if(leftAns.isSumTreeCheck==true && rightAns.isSumTreeCheck==true && leftAns.sum+rightAns.sum==root->data)
+       {
+           finalAns.isSumTreeCheck=true;
+       }
+       else{
+           finalAns.isSumTreeCheck=false;
+       }
+       
+       finalAns.sum=leftAns.sum+rightAns.sum+root->data;
+       return finalAns;
     }
     bool isSumTree(Node* root)
     {
          // Your code here
-         check ans=Helper(root);
-         return ans.isSumTreeCheck;
-         
+         Help finalAns=isSumTreeHelper(root);
+         return finalAns.isSumTreeCheck;
     }
 };
 
