@@ -39,44 +39,44 @@ struct Node
   Node* right;
 };
 */
+
 class Solution{
     public:
-    Node *buildTreeHelper(int *in,int *pre,int inS,int inE,int preS, int preE){
-       
-        if(inS>inE){
+    Node * Helper(int in[],int pre[],int inS,int inE,int preS,int preE){
+        if(preS>preE || inS>inE){
             return NULL;
         }
-        int rootIndex_pre=preS;
         int rootData=pre[preS];
-        int rootIndex_in;
+        int inRootIndex;
         for(int i=inS;i<=inE;i++){
             if(in[i]==rootData){
-                rootIndex_in=i;
+                inRootIndex=i;
                 break;
             }
         }
         
-        int LeftpreS=rootIndex_pre+1;
-        int LeftinS=inS;
-        int LeftinE=rootIndex_in-1;
-        int LeftpreE=LeftinE-LeftinS+LeftpreS;
+        Node * root=new Node(rootData);
         
-        int RightpreS=LeftpreE+1;
-        int RightpreE=preE;
-        int RightinS=rootIndex_in+1;
-        int RightinE=inE;
+        int LinS=inS;
+        int LinE=inRootIndex-1;
+        int LpreS=preS+1;
+        int LpreE=LinE-LinS+LpreS;
         
-        Node *root=new Node(rootData);
-        root->left=buildTreeHelper(in,pre,LeftinS,LeftinE,LeftpreS,LeftpreE);
-        root->right=buildTreeHelper(in,pre,RightinS,RightinE,RightpreS,RightpreE);
+        int RinS=inRootIndex+1;
+        int RinE=inE;
+        int RpreS=LpreE+1;
+        int RpreE=preE;
+        
+        
+        root->left=Helper(in,pre,LinS,LinE,LpreS,LpreE);
+        root->right=Helper(in,pre,RinS,RinE,RpreS,RpreE);
+        
         return root;
-        
-    }
+    }    
     Node* buildTree(int in[],int pre[], int n)
     {
         // Code here
-        
-        return buildTreeHelper(in,pre,0,n-1,0,n-1);
+        return Helper(in,pre,0,n-1,0,n-1);
     }
 };
 
