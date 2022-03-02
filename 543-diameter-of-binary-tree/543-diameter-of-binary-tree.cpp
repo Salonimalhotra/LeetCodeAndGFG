@@ -9,21 +9,32 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+class Pair{
+  public:
+  int height;
+  int diamter;
+};
 class Solution {
 public:
-    int height(TreeNode * root){
+    Pair helper(TreeNode *root){
         if(root==NULL){
-            return 0;
+            Pair ans;
+            ans.height=0;
+            ans.diamter=0;
+            return ans;
         }
-        return 1+max(height(root->left),height(root->right));
+        
+        Pair LeftAns=helper(root->left);
+        Pair RightAns=helper(root->right);
+        Pair finalAns;
+        finalAns.diamter=max(max(LeftAns.diamter,RightAns.diamter),LeftAns.height+RightAns.height);
+ finalAns.height=1+max(LeftAns.height,RightAns.height);
+        return finalAns;
+        
+        
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        if(root==NULL){
-            return 0;
-        }
-        int leftDiameter=diameterOfBinaryTree(root->left);
-        int rightDiameter=diameterOfBinaryTree(root->right);
-        int option3=height(root->left)+height(root->right);
-         return max(max(leftDiameter,rightDiameter),option3);        
+        Pair ans=helper(root);
+        return ans.diamter; 
     }
 };
