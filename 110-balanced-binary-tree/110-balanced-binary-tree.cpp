@@ -9,35 +9,33 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class pair1{
-  public:
-  bool isBalanced1;
-  int height;
-};
 class Solution {
 public:
-    pair1 helper(TreeNode * root){
+    int Helper(TreeNode * root){
         if(root==NULL){
-            pair1 ans;
-            ans.isBalanced1=true;
-            ans.height=0;
-            return ans;
+            return 0;
         }
-        pair1 finalAns;
-        pair1 LeftAns=helper(root->left);
-        pair1 RightAns=helper(root->right);
+        int Leftheight=Helper(root->left);
+        if(Leftheight==-1){
+            return -1;
+        }
+        int Rightheight=Helper(root->right);
+        if(Rightheight==-1){
+            return -1;
+        }
+        if(abs(Leftheight-Rightheight)>1){
+            return -1;
+        }
+        return 1+max(Leftheight,Rightheight);
         
-        if(LeftAns.isBalanced1==true && RightAns.isBalanced1==true && abs(LeftAns.height-RightAns.height)<=1){
-            finalAns.isBalanced1=true;
-        }
-        else{
-            finalAns.isBalanced1=false;
-        }
-        finalAns.height=1+max(LeftAns.height,RightAns.height);
-        return finalAns;
     }
     bool isBalanced(TreeNode* root) {
-        pair1 ans=helper(root);
-        return ans.isBalanced1;
+        int ans=Helper(root);
+        if(ans!=-1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 };
