@@ -37,6 +37,9 @@ struct Node
 }; */
 
 // Should return  right view of tree
+#include<vector>
+#include<queue>
+#include<map>
 class Solution
 {
     public:
@@ -51,23 +54,24 @@ class Solution
        map<int,int>rightNodes;
        queue<pair<Node*,int>>q;
        q.push(make_pair(root,0));
-       
-       while(!q.empty()){
-           pair<Node*,int>temp=q.front();
-           Node * frontNode=temp.first;
-           int level=temp.second;
+       while(q.size()!=0){
+           pair<Node*,int>topElement=q.front();
+           Node * frontNode=topElement.first;
+           int level=topElement.second;
            q.pop();
-           if(rightNodes.find(level)==rightNodes.end()){
-               rightNodes[level]=frontNode->data;
+           
+           rightNodes[level]=frontNode->data;
+           
+           if(frontNode->left!=NULL){
+              q.push(make_pair(frontNode->left,level+1));    
            }
            if(frontNode->right!=NULL){
                q.push(make_pair(frontNode->right,level+1));
            }
-           if(frontNode->left!=NULL){
-               q.push(make_pair(frontNode->left,level+1));
-           }
+          
            
        }
+       
        for(auto i:rightNodes){
            ans.push_back(i.second);
        }
