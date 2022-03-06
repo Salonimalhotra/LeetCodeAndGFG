@@ -103,27 +103,38 @@ class Solution {
         if(root==NULL){
             return ans;
         }
-        queue<pair<Node*,int>>q;
-        map<int,int>mp;
-        q.push(make_pair(root,0));
+        queue<pair<Node*,pair<int,int>>>q;
+        map<int,pair<int,int>>map;
+        q.push(make_pair(root,make_pair(0,0)));
         while(q.size()!=0){
-            pair<Node*,int>topElement=q.front();
+            pair<Node*,pair<int,int>>topElement=q.front();
             Node * frontNode=topElement.first;
-            int hd=topElement.second;
+            int hd=topElement.second.first;
+            int lvl=topElement.second.second;
             q.pop();
             
-            mp[hd]=frontNode->data;
+            if(map.find(hd)==map.end()){
+                map[hd]=make_pair(frontNode->data,lvl);
+            }
+            else{
+                if(map[hd].second<lvl){
+                    map[hd]=make_pair(frontNode->data,lvl);
+                }
+                else if(map[hd].second==lvl){
+                     map[hd]=make_pair(frontNode->data,lvl);
+                }
+            }
             if(frontNode->left!=NULL){
-                q.push(make_pair(frontNode->left,hd-1));
+                q.push(make_pair(frontNode->left,make_pair(hd-1,lvl+1)));
             }
             if(frontNode->right!=NULL){
-                q.push(make_pair(frontNode->right,hd+1));
+                q.push(make_pair(frontNode->right,make_pair(hd+1,lvl+1)));
             }
             
         }
         
-        for(auto i:mp){
-            ans.push_back(i.second);
+        for(auto i:map){
+           ans.push_back(i.second.first);
         }
         return ans;
     }
