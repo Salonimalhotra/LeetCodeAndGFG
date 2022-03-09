@@ -22,7 +22,7 @@ public:
     }
     TreeNode* deleteNode(TreeNode* root, int key) {
        
-        if(search(root,key)==false || root==NULL){
+        if(root==NULL){
             return root;
         }
     
