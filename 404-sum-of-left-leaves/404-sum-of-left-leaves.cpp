@@ -9,32 +9,30 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-#include<queue>
 class Solution {
 public:
-    int sumOfLeftLeaves(TreeNode* root) {
+    void sumOfLeftLeavesHelper(TreeNode * root,int &sum ,bool leaf){
         if(root==NULL){
-         return 0;
-        }   
+            return; 
+        }
+        if(root->left==NULL && root->right==NULL && leaf==true){
+            sum+=root->val;
+            return;
+        }
+        
+        if(root->left!=NULL){
+            sumOfLeftLeavesHelper(root->left,sum,true);
+            
+        }
+        
+        if(root->right!=NULL){
+            sumOfLeftLeavesHelper(root->right,sum,false);
+        }
+        return;        
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
         int sum=0;
-        queue<TreeNode*>q;
-        q.push(root);
-        while(q.size()!=0){
-         TreeNode* top=q.front();
-         q.pop();
-            
-        if(top->left!=NULL){
-            if(top->left->left==NULL && top->left->right==NULL){
-                     sum+=top->left->val;
-            }
-          
-            q.push(top->left);
-        }
-            
-        if(top->right!=NULL){
-         q.push(top->right); 
-        }            
-        }
+        sumOfLeftLeavesHelper(root,sum,false);
         return sum;
     }
 };
