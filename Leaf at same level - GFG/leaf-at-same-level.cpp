@@ -99,47 +99,41 @@ struct Node
 class Solution{
   public:
     /*You are required to complete this method*/
-    int leafNodes(Node *root){
+    void returnAllLeafNodes(Node *root,int level,vector<pair<int,int>>&ans){
         if(root==NULL){
-            return 0;
+            return;
         }
         if(root->left==NULL && root->right==NULL){
-            return 1;
+            ans.push_back(make_pair(root->data,level));
+            }
+        if(root->left!=NULL){
+            returnAllLeafNodes(root->left,level+1,ans);
+        }    
+        if(root->right!=NULL){
+            returnAllLeafNodes(root->right,level+1,ans);
         }
-        return leafNodes(root->left)+leafNodes(root->right);
+        return;
     }
-    int Maxdepth(Node *root){
-        if(root==NULL){
-            return 0;
-        }
-        if(root->left==NULL && root->right==NULL){
-            return 1;
-        }
-        return 1+max(Maxdepth(root->left),Maxdepth(root->right));
-    }
-    int NodesAtDepth(Node *root,int k){
-        if(root==NULL && k!=0){
-            return 0;
-        }
-        if(root->left==NULL && root->right==NULL && k==1){
-            return 1;
-        }
-        return NodesAtDepth(root->left,k-1)+NodesAtDepth(root->right,k-1);
-        
-    }
+    
     bool check(Node *root)
     {
         //Your code here
-       
-        int leafnodes=leafNodes(root);
-        int maxDepth=Maxdepth(root);
-        int n=NodesAtDepth(root,maxDepth);
-        if(leafnodes==n){
+        vector<pair<int,int>>ans;
+        returnAllLeafNodes(root,0,ans);
+        if(ans.size()==0){
             return true;
         }
         else{
-            return false;
+            bool counter=true;
+            for(int i=1;i<ans.size();i++){
+                if(ans[i].second!=ans[i-1].second){
+                    counter=false;
+                    break;
+                }
+            }
+            return counter;
         }
+        
     }
 };
 
