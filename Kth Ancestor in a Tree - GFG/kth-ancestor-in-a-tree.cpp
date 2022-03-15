@@ -110,50 +110,46 @@ struct Node
 };
 */
 // your task is to complete this function
-#include<vector>
-#include<algorithm>
-void root_to_node_path(Node *root,int node,vector<int>&ans){
+#include<climits>
+Node * solve(Node * root,int &k,int node){
     if(root==NULL){
-        return;
+        return NULL;
     }
-    if(node==root->data){
-        ans.push_back(node);
-        return;
-    }
-    if(root->left!=NULL){
-        root_to_node_path(root->left,node,ans);
-        if(ans.size()!=0){
-            ans.push_back(root->data);
-            return;
-        }
+    if(root->data==node){
+        return root;
     }
     
-    if(root->right!=NULL){
-        root_to_node_path(root->right,node,ans);
-        if(ans.size()!=0){
-            ans.push_back(root->data);
-            return;
+    Node * leftAns=solve(root->left,k,node);
+    Node * rightAns=solve(root->right,k,node);
+    
+    if(leftAns!=NULL && rightAns==NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
         }
+        return leftAns;
     }
-    return;
+    
+    if(leftAns==NULL && rightAns!=NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
+        }
+        return rightAns;
+        
+    }
+    return NULL;
 }
 int kthAncestor(Node *root, int k, int node)
 {
     // Code here
-    vector<int>ans;
-    root_to_node_path(root,node,ans);
-    reverse(ans.begin(),ans.end());
-    int i=0;
-    int j=ans.size()-1;
-    while(j>=0 && i!=k){
-        j--;
-        i++;
-    }
-    if(i==k && j>=0){
-        return ans[j];
-    }
-    else{
-        return -1;
-    }
-    
+  Node * ans=solve(root,k,node);
+  if(ans==NULL || ans->data==node){
+      return -1;
+  }
+  else{
+      return ans->data;
+  }
 }
