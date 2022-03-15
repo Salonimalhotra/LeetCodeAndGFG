@@ -1,5 +1,5 @@
 # Leaf at same level
-## Easy 
+##  Easy 
 <div class="problem-statement" style="user-select: auto;">
                 <p style="user-select: auto;"></p><p style="user-select: auto;"><span style="font-size: 18px; user-select: auto;">Given a Binary Tree, check if all leaves are at same level or not.</span></p>
 
