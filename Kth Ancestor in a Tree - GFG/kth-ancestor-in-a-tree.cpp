@@ -111,45 +111,39 @@ struct Node
 */
 // your task is to complete this function
 #include<unordered_map>
-void traversal(Node * root,Node * node,unordered_map<int,int>&map){
+void traversal(Node*root,Node * node,unordered_map<int,int>&map){
     if(node==NULL){
         return;
     }
     if(node==root){
-        map[root->data]=-1;
+        map[node->data]=-1;
         
     }
     if(node->left!=NULL){
-         map[node->left->data]=node->data;
-         traversal(root,node->left,map);
+      map[node->left->data]=node->data;
+      traversal(root,node->left,map);
     }
+    
     if(node->right!=NULL){
         map[node->right->data]=node->data;
         traversal(root,node->right,map);
     }
     return;
- }
+}
 int kthAncestor(Node *root, int k, int node)
 {
     // Code here
-    if(root==NULL){
-        return -1;
-    }
     unordered_map<int,int>map;
-    // for(auto i:map){
-    //     cout<<i.first<<" "<<i.second<<endl;
-    // }
     traversal(root,root,map);
-    int i=1;
+    int i=0;
     int x=node;
-    int ancestor;
-    while(i!=k && map[x]!=-1){
+    while(i!=k && x!=-1){
         x=map[x];
         i++;
-        
     }
-    if(i==k && map[x]!=-1){
-        return map[x];
+    if(i==k){
+        return x;
+        
     }
     else{
         return -1;
