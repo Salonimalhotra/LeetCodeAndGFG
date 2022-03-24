@@ -8,26 +8,39 @@ using namespace std;
 
 
  // } Driver Code Ends
-// User function Template for 
-#include<queue>
+// User function Template for C++
 #include<vector>
+
 class Solution{
     public:
+    void upheapify(vector<int>&ans){
+        int childIndex=ans.size()-1;
+        while(childIndex>0){
+            int parentIndex=(childIndex-1)/2;
+            if(ans[parentIndex]<ans[childIndex]){
+                int temp=ans[parentIndex];
+                ans[parentIndex]=ans[childIndex];
+                ans[childIndex]=temp;
+                
+                childIndex=parentIndex;
+            }
+            else{
+                break;
+            }
+        }
+        return;
+    }
     vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
         // your code here
         vector<int>ans;
-        priority_queue<int>pq;
-        for(int i=0;i<a.size();i++){
-            pq.push(a[i]);
+        for(int i=0;i<n;i++){
+            ans.push_back(a[i]);
         }
-        for(int j=0;j<b.size();j++){
-            pq.push(b[j]);
-        }
-        while(pq.size()!=0){
-            ans.push_back(pq.top());
-            pq.pop();
-        }
-        return ans;
+        for(int j=0;j<m;j++){
+            ans.push_back(b[j]);
+            upheapify(ans);
+            }
+        return ans;    
         
     }
 };
