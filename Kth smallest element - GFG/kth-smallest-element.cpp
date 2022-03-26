@@ -6,6 +6,7 @@ using namespace std;
 
  // } Driver Code Ends
 //User function template for C++
+#include<bits/stdc++.h>
 #include<queue>
 class Solution{
     public:
@@ -15,17 +16,21 @@ class Solution{
     // k : find kth smallest element and return using this function
     int kthSmallest(int arr[], int l, int r, int k) {
         //code here
-        priority_queue<int>pq;
-        for(int i=l;i<k;i++){
-            pq.push(arr[i]);
-        }
-        for(int i=k;i<=r;i++){
-            if(arr[i]<pq.top()){
-                pq.pop();
-                pq.push(arr[i]);
-            }
-        }
-        return pq.top();
+       
+       //sorting in ascending order
+       priority_queue<int>pq;
+       for(int i=l;i<k;i++){
+           pq.push(arr[i]);
+       }
+       for(int i=k;i<=r;i++){
+           if(pq.top()>arr[i]){
+               pq.pop();
+               pq.push(arr[i]);
+           }
+       }
+       
+       return pq.top();
+     
     }
 };
 
