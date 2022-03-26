@@ -10,37 +10,41 @@ using namespace std;
  // } Driver Code Ends
 // User function Template for C++
 #include<vector>
-
+#include<bits/stdc++.h>
 class Solution{
     public:
-    void upheapify(vector<int>&ans){
-        int childIndex=ans.size()-1;
-        while(childIndex>0){
-            int parentIndex=(childIndex-1)/2;
-            if(ans[parentIndex]<ans[childIndex]){
-                int temp=ans[parentIndex];
-                ans[parentIndex]=ans[childIndex];
-                ans[childIndex]=temp;
-                
-                childIndex=parentIndex;
-            }
-            else{
-                break;
-            }
+    void heapify(vector<int>&a,int i){
+        int max_index=i;
+        int leftIndex=2*i+1;
+        int rightIndex=2*i+2;
+        
+        if(leftIndex<a.size() && a[leftIndex]>a[max_index]){
+            max_index=leftIndex;
         }
-        return;
+        
+        if(rightIndex<a.size() && a[rightIndex]>a[max_index]){
+            max_index=rightIndex;
+        }
+        
+        if(i!=max_index){
+            int temp=a[i];
+            a[i]=a[max_index];
+            a[max_index]=temp;
+            heapify(a,max_index);
+        }
     }
     vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
         // your code here
-        vector<int>ans;
-        for(int i=0;i<n;i++){
-            ans.push_back(a[i]);
+        for(int i=0;i<b.size();i++){
+            a.push_back(b[i]);
         }
-        for(int j=0;j<m;j++){
-            ans.push_back(b[j]);
-            upheapify(ans);
-            }
-        return ans;    
+        
+        int n1=a.size();
+        for(int i=(n1-1)/2;i>=0;i--){
+            heapify(a,i);
+        }
+        
+        return a;
         
     }
 };
