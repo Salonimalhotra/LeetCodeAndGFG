@@ -105,79 +105,85 @@ struct Node
 
 class Solution {
 public:
-    void allLeftNodes(Node *root,vector<int>&ans){
-        if(root==NULL || (root->left==NULL && root->right==NULL)){
+    void Allleft(Node * node,vector<int>&leftNodes){
+        if(node==NULL){
             return;
         }
-        
-        ans.push_back(root->data);
-        if(root->left!=NULL){
-            allLeftNodes(root->left,ans);
+        if(node->left==NULL && node->right==NULL){
+            return;
+        }
+        leftNodes.push_back(node->data);
+        if(node->left!=NULL){
+            Allleft(node->left,leftNodes);
         }
         else{
-            allLeftNodes(root->right,ans);
+            Allleft(node->right,leftNodes);
         }
         return;
     }
-    void allLeafNodes(Node *root,vector<int>&ans){
-        if(root==NULL){
+    void Allright(Node * node,vector<int>&rightNodes){
+        if(node==NULL){
             return;
         }
-        if(root->left==NULL && root->right==NULL){
-            ans.push_back(root->data);
+        if(node->left==NULL && node->right==NULL){
             return;
         }
-        allLeafNodes(root->left,ans);
-        allLeafNodes(root->right,ans);
-        return;
-    }
-    void allRightNodes(Node * root,vector <int>&ans1){
-          if(root==NULL || (root->left==NULL && root->right==NULL)){
-            return;
-        }
-        ans1.push_back(root->data);
-        if(root->right!=NULL){
-            allRightNodes(root->right,ans1);
+        rightNodes.push_back(node->data);
+        if(node->right!=NULL){
+            Allright(node->right,rightNodes);
         }
         else{
-            allRightNodes(root->left,ans1);
-            }
+            Allright(node->left,rightNodes);
+        }
+        return;
+    }
+    void AllLeaf(Node * node,vector<int>&leafNodes){
+        if(node==NULL){
+            return;
+            
+        }
         
+        if(node->left==NULL && node->right==NULL){
+            leafNodes.push_back(node->data);
+        }
+        
+        AllLeaf(node->left,leafNodes);
+        AllLeaf(node->right,leafNodes);
+        return;
     }
     vector <int> boundary(Node *root)
     {
         //Your code here
-        //first we will send left nodes in the vector except the left most leaf node
+        vector<int>ans;
         if(root==NULL){
-            vector<int>ans;
             return ans;
         }
-        vector<int>ans;
-        //firstly we push root in our array
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+                return ans;
+            
+        }
         ans.push_back(root->data);
-        // then we push all the left nodes of the left subtree in our vector array
-         if(root->left!=NULL){
-           allLeftNodes(root->left,ans);
-       }
-         // push all leafnodes in the array
-         if(root->left!=NULL){
-             allLeafNodes(root->left,ans);
-         }
-         if(root->right!=NULL){
-             allLeafNodes(root->right,ans);
-         }
-         
-         vector<int>ans1;
-         if(root->right!=NULL){
-             allRightNodes(root->right,ans1);
-         }
-         reverse(ans1.begin(),ans1.end());
-         
-         for(int i=0;i<ans1.size();i++){
-             ans.push_back(ans1[i]);
-         }
-       return ans;
+        vector<int>leftNodes;
+        Allleft(root->left,leftNodes);
+        for(int i=0;i<leftNodes.size();i++){
+            ans.push_back(leftNodes[i]);
+        }
+         vector<int>leafNodes;
+        AllLeaf(root,leafNodes);
         
+          for(int i=0;i<leafNodes.size();i++){
+            ans.push_back(leafNodes[i]);
+        }
+        
+         vector<int>rightNodes;
+        Allright(root->right,rightNodes);
+        reverse(rightNodes.begin(),rightNodes.end());
+        for(int i=0;i<rightNodes.size();i++){
+            ans.push_back(rightNodes[i]);
+        }
+        
+        return ans;
     }
 };
 
