@@ -99,9 +99,6 @@ struct Node
     Node* right;
 };
 */
-#include<map>
-#include<vector>
-#include<queue>
 class Solution
 {
     public:
@@ -110,36 +107,28 @@ class Solution
     vector<int> topView(Node *root)
     {
         //Your code here
-        vector<int>ans;
-        if(root==NULL){
-            return ans;
-        }
-        
-        map<int,int>topNodes;
-        queue<pair<Node*,int>>q;
-        
-        q.push(make_pair(root,0));
-        while(q.size()!=0){
-            pair<Node*,int>temp=q.front();
-            q.pop();
-            Node * frontNode=temp.first;
-            int hd=temp.second;
-            if(topNodes.find(hd)==topNodes.end()){
-                topNodes[hd]=frontNode->data;
+        map<int,int>map;
+        queue<pair<Node*,int>>pendingNodes;
+        pendingNodes.push(make_pair(root,0));
+        while(pendingNodes.size()!=0){
+            pair<Node*,int>topNode=pendingNodes.front();
+            pendingNodes.pop();
+            int vertical=topNode.second;
+            Node * frontNode=topNode.first;
+            if(map.find(vertical)==map.end()){
+                map[vertical]=frontNode->data;
             }
             if(frontNode->left!=NULL){
-                q.push(make_pair(frontNode->left,hd-1));
+                pendingNodes.push(make_pair(frontNode->left,vertical-1));
             }
             if(frontNode->right!=NULL){
-                q.push(make_pair(frontNode->right,hd+1));
+                pendingNodes.push(make_pair(frontNode->right,vertical+1));
             }
-            
         }
-        
-        for(auto i:topNodes){
+        vector<int>ans;
+        for(auto i:map){
             ans.push_back(i.second);
         }
-        
         return ans;
     }
 
