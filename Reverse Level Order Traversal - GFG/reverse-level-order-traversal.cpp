@@ -120,11 +120,11 @@ vector<int> reverseLevelOrder(Node *root)
     // code here
     queue<Node*>pendingNodes;
     pendingNodes.push(root);
-    stack<int>s;
+     vector<int>ans;
     while(pendingNodes.size()!=0){
         Node * topNode=pendingNodes.front();
         pendingNodes.pop();
-        s.push(topNode->data);
+        ans.push_back(topNode->data);
         if(topNode->right!=NULL){
             pendingNodes.push(topNode->right);
         }
@@ -132,10 +132,7 @@ vector<int> reverseLevelOrder(Node *root)
             pendingNodes.push(topNode->left);
         }
     }
-    vector<int>ans;
-    while(s.size()!=0){
-      ans.push_back(s.top());
-      s.pop();
-    }
+   
+   reverse(ans.begin(),ans.end());
     return ans;
 }
