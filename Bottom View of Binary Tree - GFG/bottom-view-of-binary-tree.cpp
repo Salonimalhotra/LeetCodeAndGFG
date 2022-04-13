@@ -99,42 +99,26 @@ class Solution {
   public:
     vector <int> bottomView(Node *root) {
         // Your Code Here
-        vector<int>ans;
-        if(root==NULL){
-            return ans;
-        }
-        queue<pair<Node*,pair<int,int>>>q;
-        map<int,pair<int,int>>map;
-        q.push(make_pair(root,make_pair(0,0)));
-        while(q.size()!=0){
-            pair<Node*,pair<int,int>>topElement=q.front();
-            Node * frontNode=topElement.first;
-            int hd=topElement.second.first;
-            int lvl=topElement.second.second;
-            q.pop();
+         map<int,int>map;
+        queue<pair<Node*,int>>pendingNodes;
+        pendingNodes.push(make_pair(root,0));
+        while(pendingNodes.size()!=0){
+            pair<Node*,int>topNode=pendingNodes.front();
+            pendingNodes.pop();
+            int vertical=topNode.second;
+            Node * frontNode=topNode.first;
+             map[vertical]=frontNode->data;
             
-            if(map.find(hd)==map.end()){
-                map[hd]=make_pair(frontNode->data,lvl);
-            }
-            else{
-                if(map[hd].second<lvl){
-                    map[hd]=make_pair(frontNode->data,lvl);
-                }
-                else if(map[hd].second==lvl){
-                     map[hd]=make_pair(frontNode->data,lvl);
-                }
-            }
             if(frontNode->left!=NULL){
-                q.push(make_pair(frontNode->left,make_pair(hd-1,lvl+1)));
+                pendingNodes.push(make_pair(frontNode->left,vertical-1));
             }
             if(frontNode->right!=NULL){
-                q.push(make_pair(frontNode->right,make_pair(hd+1,lvl+1)));
+                pendingNodes.push(make_pair(frontNode->right,vertical+1));
             }
-            
         }
-        
+        vector<int>ans;
         for(auto i:map){
-           ans.push_back(i.second.first);
+            ans.push_back(i.second);
         }
         return ans;
     }
