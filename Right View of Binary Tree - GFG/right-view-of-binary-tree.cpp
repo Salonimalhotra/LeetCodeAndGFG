@@ -37,9 +37,6 @@ struct Node
 }; */
 
 // Should return  right view of tree
-#include<vector>
-#include<queue>
-#include<map>
 class Solution
 {
     public:
@@ -47,35 +44,27 @@ class Solution
     vector<int> rightView(Node *root)
     {
        // Your Code here
-       vector<int>ans;
-       if(root==NULL){
-           return ans;
-       }
-       map<int,int>rightNodes;
-       queue<pair<Node*,int>>q;
-       q.push(make_pair(root,0));
-       while(q.size()!=0){
-           pair<Node*,int>topElement=q.front();
-           Node * frontNode=topElement.first;
-           int level=topElement.second;
-           q.pop();
-           
-           rightNodes[level]=frontNode->data;
-           
-           if(frontNode->left!=NULL){
-              q.push(make_pair(frontNode->left,level+1));    
-           }
-           if(frontNode->right!=NULL){
-               q.push(make_pair(frontNode->right,level+1));
-           }
-          
-           
-       }
-       
-       for(auto i:rightNodes){
-           ans.push_back(i.second);
-       }
-       return ans;
+        map<int,int>map;
+        queue<pair<Node*,int>>pendingNodes;
+        pendingNodes.push(make_pair(root,0));
+        while(pendingNodes.size()!=0){
+            pair<Node*,int>topNode=pendingNodes.front();
+            pendingNodes.pop();
+            int level=topNode.second;
+            Node * frontNode=topNode.first;
+            map[level]=frontNode->data;
+            if(frontNode->left!=NULL){
+                pendingNodes.push(make_pair(frontNode->left,level+1));
+            }
+            if(frontNode->right!=NULL){
+                pendingNodes.push(make_pair(frontNode->right,level+1));
+            }
+        }
+        vector<int>ans;
+        for(auto i:map){
+            ans.push_back(i.second);
+        }
+        return ans;
     }
 };
 
