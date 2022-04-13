@@ -92,48 +92,36 @@ struct Node
 }; */
 
 // Should return true if tree is Sum Tree, else false
-class Help{
-  public:
-  bool isSumTreeCheck;
-  int sum;
-};
 class Solution
-{
+{ 
+    
     public:
-    Help isSumTreeHelper(Node * root){
+    int sumofTree(Node * root){
         if(root==NULL){
-            Help ans;
-            ans.isSumTreeCheck=true;
-            ans.sum=0;
-            return ans;
+            return 0;
         }
-        if(root->left==NULL && root->right==NULL){
-            Help ans;
-            ans.isSumTreeCheck=true;
-            ans.sum=root->data;
-            return ans;
-        }
-        
-        Help leftAns=isSumTreeHelper(root->left);
-        Help rightAns=isSumTreeHelper(root->right);
-        
-        Help finalAns;
-        if(leftAns.isSumTreeCheck==true && rightAns.isSumTreeCheck==true && leftAns.sum+rightAns.sum==root->data)
-       {
-           finalAns.isSumTreeCheck=true;
-       }
-       else{
-           finalAns.isSumTreeCheck=false;
-       }
-       
-       finalAns.sum=leftAns.sum+rightAns.sum+root->data;
-       return finalAns;
+        return root->data+sumofTree(root->left)+sumofTree(root->right);
     }
     bool isSumTree(Node* root)
     {
          // Your code here
-         Help finalAns=isSumTreeHelper(root);
-         return finalAns.isSumTreeCheck;
+         if(root==NULL){
+             return true;
+             
+         }
+         if(root->left==NULL && root->right==NULL){
+             return true;
+         }
+         int leftSum=sumofTree(root->left);
+         int rightSum=sumofTree(root->right);
+         if(root->data!=leftSum+rightSum){
+             return false;
+             
+         }
+         
+         else{
+             return isSumTree(root->left) && isSumTree(root->right);
+         }
     }
 };
 
