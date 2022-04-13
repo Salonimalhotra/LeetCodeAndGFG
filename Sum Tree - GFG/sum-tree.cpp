@@ -96,32 +96,48 @@ class Solution
 { 
     
     public:
-    int sumofTree(Node * root){
+    // int sumofTree(Node * root){
+    //     if(root==NULL){
+    //         return 0;
+    //     }
+    //     return root->data+sumofTree(root->left)+sumofTree(root->right);
+    // }
+    pair<int,bool>helper(Node * root){
         if(root==NULL){
-            return 0;
+            pair<int,bool>ans;
+            ans.first=0;
+            ans.second=true;
+            return ans;
         }
-        return root->data+sumofTree(root->left)+sumofTree(root->right);
+        if(root->left==NULL && root->right==NULL){
+             pair<int,bool>ans;
+            ans.first=root->data;
+            ans.second=true;
+            return ans;
+        }
+        
+        pair<int,bool>leftAns=helper(root->left);
+        pair<int,bool>rightAns=helper(root->right);
+        pair<int,bool>finalAns;
+        finalAns.first=leftAns.first+rightAns.first+root->data;
+        if(root->data!=leftAns.first+rightAns.first){
+            finalAns.second=false;
+        }
+        else {
+            if(leftAns.second==true && rightAns.second==true){
+                finalAns.second=true;
+            }
+            else{
+                finalAns.second=false;
+            }
+        }
+        return finalAns;
     }
     bool isSumTree(Node* root)
     {
          // Your code here
-         if(root==NULL){
-             return true;
-             
-         }
-         if(root->left==NULL && root->right==NULL){
-             return true;
-         }
-         int leftSum=sumofTree(root->left);
-         int rightSum=sumofTree(root->right);
-         if(root->data!=leftSum+rightSum){
-             return false;
-             
-         }
-         
-         else{
-             return isSumTree(root->left) && isSumTree(root->right);
-         }
+        pair<int,bool>finalAns=helper(root);
+        return finalAns.second;
     }
 };
 
