@@ -104,40 +104,29 @@ class Solution
     vector<int> verticalOrder(Node *root)
     {
         //Your code here
-        vector<int>ans;
-        if(root==NULL){
-            return ans;
-        }
-        queue<pair<Node*,pair<int,int>>>q;
-        map<int,map<int,vector<int>>>nodes;
-        q.push(make_pair(root,make_pair(0,0)));
-        
-        while(!q.empty()){
-            pair<Node*,pair<int,int>>temp=q.front();
-            q.pop();
-            
-            Node * frontNode=temp.first;
-            int hd=temp.second.first;
-            int level=temp.second.second;
-            
-            nodes[hd][level].push_back(frontNode->data);
+        map<int,vector<int>>map;
+        queue<pair<Node*,int>>pendingNodes;
+        pendingNodes.push(make_pair(root,0));
+        while(pendingNodes.size()!=0){
+            pair<Node*,int>topNode=pendingNodes.front();
+            pendingNodes.pop();
+            Node * frontNode=topNode.first;
+            int vertical=topNode.second;
+            map[vertical].push_back(frontNode->data);
             if(frontNode->left!=NULL){
-                q.push(make_pair(frontNode->left,make_pair(hd-1,level+1)));
+                pendingNodes.push(make_pair(frontNode->left,vertical-1));
             }
-            
             if(frontNode->right!=NULL){
-                q.push(make_pair(frontNode->right,make_pair(hd+1,level+1)));
+                pendingNodes.push(make_pair(frontNode->right,vertical+1));
             }
         }
         
-        for(auto i:nodes){
+        vector<int>ans;
+        for(auto i:map){
             for(auto j:i.second){
-                for(auto k:j.second){
-                    ans.push_back(k);
-                }
+                ans.push_back(j);
             }
         }
-        
         return ans;
     }
 };
