@@ -112,28 +112,30 @@ struct Node
     Node* left;
     Node* right;
 }; */
+#include<stack>
 #include<queue>
 #include<vector>
 vector<int> reverseLevelOrder(Node *root)
 {
     // code here
-     vector<int>ans;
-      if(root==NULL){
-          return ans;
-      }
-      queue<Node*>pendingNodes;
-      pendingNodes.push(root);
-      while(pendingNodes.size()!=0){
-          Node * topNode=pendingNodes.front();
-          pendingNodes.pop();
-          ans.push_back(topNode->data);
-          if(topNode->right!=NULL){
-              pendingNodes.push(topNode->right);
-          }
-          if(topNode->left!=NULL){
-              pendingNodes.push(topNode->left);
-          }
-      }
-      reverse(ans.begin(),ans.end());
-      return ans;
+    queue<Node*>pendingNodes;
+    pendingNodes.push(root);
+    stack<int>s;
+    while(pendingNodes.size()!=0){
+        Node * topNode=pendingNodes.front();
+        pendingNodes.pop();
+        s.push(topNode->data);
+        if(topNode->right!=NULL){
+            pendingNodes.push(topNode->right);
+        }
+        if(topNode->left!=NULL){
+            pendingNodes.push(topNode->left);
+        }
+    }
+    vector<int>ans;
+    while(s.size()!=0){
+      ans.push_back(s.top());
+      s.pop();
+    }
+    return ans;
 }
