@@ -140,10 +140,7 @@ class Solution{
     int findDist(Node* root, int a, int b) {
         // Your code here
         Node * lcaNode=lca(root,a,b);
-        int dis1=dis(root,a);
-        int dis2=dis(root,b);
-        int dis3=dis(root,lcaNode->data);
-        int ans=(dis1+dis2)-(2*dis3);
+        int ans=dis(lcaNode,a)+dis(lcaNode,b);
         return ans;
         
     }
