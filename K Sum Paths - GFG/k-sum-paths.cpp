@@ -99,37 +99,32 @@ struct Node
 */
 class Solution{
   public:
-    void Helper(Node * root,int k,int &count,vector<int>&ans){
+    void solve(Node * root,int k,int &count,vector<int>&path){
         if(root==NULL){
             return;
         }
         
-        ans.push_back(root->data);
+        path.push_back(root->data);
+        solve(root->left,k,count,path);
+        solve(root->right,k,count,path);
         
-        if(root->left!=NULL){
-            Helper(root->left,k,count,ans);
-        }
-        if(root->right!=NULL){
-            Helper(root->right,k,count,ans);
-        }
-        int s=ans.size()-1;
-        int x=0;
-        for(int i=s;i>=0;i--){
-            x+=ans[i];
-            if(x==k){
+        int sum=0;
+        for(int i=path.size()-1;i>=0;i--){
+            sum+=path[i];
+            if(sum==k){
                 count++;
             }
         }
-        ans.pop_back();
+        
+        path.pop_back();
     }
     int sumK(Node *root,int k)
     {
         // code here 
+        vector<int>path;
         int count=0;
-        vector<int>ans;
-        Helper(root,k,count,ans);
+        solve(root,k,count,path);
         return count;
-        
     }
 };
 
