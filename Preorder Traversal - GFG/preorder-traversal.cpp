@@ -127,27 +127,27 @@ struct Node
 };
 */
 
-#include<stack>
-#include<vector>
 //Function to return a list containing the preorder traversal of the tree.
-void preorder_helper(Node *root,vector<int>&ans){
-    if(root==NULL){
-        return;
-    }
-    ans.push_back(root->data);
-    if(root->left!=NULL){
-        preorder_helper(root->left,ans);
-    }
-    if(root->right!=NULL){
-        preorder_helper(root->right,ans);
-    }
-    return;
-}
 vector <int> preorder(Node* root)
 {
   // Your code here
   vector<int>ans;
-  preorder_helper(root,ans);
+  if(root==NULL){
+      return ans;
+  }
+  stack<Node*>myStack;
+  myStack.push(root);
+  while(myStack.size()!=0){
+      Node * topElement=myStack.top();
+      ans.push_back(topElement->data);
+      myStack.pop();
+      if(topElement->right!=NULL){
+          myStack.push(topElement->right);
+      }
+      if(topElement->left!=NULL){
+          myStack.push(topElement->left);
+      }
+      
+  }
   return ans;
-  
 }
