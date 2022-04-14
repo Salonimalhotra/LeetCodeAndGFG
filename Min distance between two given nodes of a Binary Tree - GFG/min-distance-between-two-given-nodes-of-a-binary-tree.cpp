@@ -97,53 +97,54 @@ class Solution{
     public:
     /* Should return minimum distance between a and b
     in a tree with given root*/
-    int depth(Node * root,int a){
+    int dis(Node * root,int a){
         if(root==NULL){
             return -1;
         }
         if(root->data==a){
             return 0;
         }
-        if(depth(root->left,a)!=-1){
-            return 1+depth(root->left,a);
+        int leftdis=dis(root->left,a);
+        if(leftdis!=-1){
+            return 1+leftdis;
         }
-        else if(depth(root->right,a)!=-1){
-            return 1+depth(root->right,a);
+        int rightdis=dis(root->right,a);
+        if(rightdis!=-1){
+            return 1+rightdis;
         }
         return -1;
     }
-    int lca(Node* root,int a,int b){
+    Node * lca(Node * root,int a,int b){
         if(root==NULL){
-            return -1;
+            return NULL;
         }
         if(root->data==a || root->data==b){
-            return root->data;
+            return root;
         }
-        int leftAns=lca(root->left,a,b);
-        int rightAns=lca(root->right,a,b);
+        Node * leftlca=lca(root->left,a,b);
+        Node * rightlca=lca(root->right,a,b);
         
-        if(leftAns!=-1 && rightAns!=-1){
-            return root->data;
+        if(leftlca!=NULL && rightlca==NULL){
+            return leftlca;
         }
-        else if(leftAns==-1 && rightAns!=-1){
-            return rightAns;
+        else if(leftlca==NULL && rightlca!=NULL){
+            return rightlca;
         }
-        else if(leftAns!=-1 && rightAns==-1){
-            return leftAns;
+        else if(leftlca!=NULL && rightlca!=NULL){
+            return root;
         }
         else{
-            return -1;
+            return NULL;
         }
-        
     }
     int findDist(Node* root, int a, int b) {
         // Your code here
-        if(root==NULL){
-            return -1;
-        }
-        int lca_1=lca(root,a,b);
-        int final_ans=depth(root,a)+depth(root,b)-2*depth(root,lca_1);
-        return final_ans;
+        Node * lcaNode=lca(root,a,b);
+        int dis1=dis(root,a);
+        int dis2=dis(root,b);
+        int dis3=dis(root,lcaNode->data);
+        int ans=(dis1+dis2)-(2*dis3);
+        return ans;
         
     }
 };
