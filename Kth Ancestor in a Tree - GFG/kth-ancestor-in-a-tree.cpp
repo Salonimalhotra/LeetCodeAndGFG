@@ -110,40 +110,48 @@ struct Node
 };
 */
 // your task is to complete this function
-#include<unordered_map>
-void traversal(Node * root,Node * node,unordered_map<int,int>&map){
-    if(node==NULL){
-        return;
+Node * solve(Node * root,int &k,int node){
+    if(root==NULL){
+        return NULL;
     }
-    if(node==root){
-        map[node->data]=-1;
-    }
-    
-    if(node->left!=NULL){
-        map[node->left->data]=node->data;
+    if(root->data==node){
+      return root;   
     }
     
-    if(node->right!=NULL){
-        map[node->right->data]=node->data;
+    Node * leftAns=solve(root->left,k,node);
+    Node * rightAns=solve(root->right,k,node);
+    
+    if(leftAns!=NULL && rightAns==NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
+        }
+        else{
+            return leftAns;
+        }
     }
-    traversal(root,node->left,map);
-    traversal(root,node->right,map);
-    return;
+    
+    if(leftAns==NULL && rightAns!=NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
+        }
+        else{
+            return rightAns;
+        }
+    }
+    return NULL;
 }
 int kthAncestor(Node *root, int k, int node)
 {
     // Code here
-    unordered_map<int,int>map;
-    traversal(root,root,map);
-    
-    if(map.find(node)==map.end()){
+    Node * ans=solve(root,k,node);
+    if(ans==NULL || ans->data==node){
         return -1;
     }
-    
-    int x=node;
-    while(k!=0 && x!=-1){
-        x=map[x];
-        k--;
+    else{
+        return ans->data;
     }
-    return x;
 }
