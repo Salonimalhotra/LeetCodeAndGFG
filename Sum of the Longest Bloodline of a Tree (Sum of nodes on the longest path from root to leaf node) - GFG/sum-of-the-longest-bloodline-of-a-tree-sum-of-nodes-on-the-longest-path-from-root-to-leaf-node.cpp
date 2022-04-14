@@ -114,64 +114,45 @@ struct Node
     }
 };
 */
-class Special{
+class Pair{
     public:
-    int longestPath;
-    int sumOfLongestpath;
+    int sum;
+    int length;
 };
 class Solution
 {
 public:
-    Special helper(Node * root){
-        if(root==NULL){
-         Special Ans;
-         Ans.longestPath=0;
-         Ans.sumOfLongestpath=0;
-         return Ans;
-        }
-        
-        if(root->left==NULL && root->right==NULL){
-             Special Ans;
-             Ans.longestPath=1;
-            Ans.sumOfLongestpath=root->data;
-             return Ans;
-        }
-        Special leftAns=helper(root->left);
-        Special rightAns=helper(root->right);
-        Special final_ans;
-        
-        if(leftAns.longestPath>rightAns.longestPath){
-            final_ans.longestPath=leftAns.longestPath+1;
-            final_ans.sumOfLongestpath=leftAns.sumOfLongestpath+root->data;
-          
-        }
-        else if(leftAns.longestPath<rightAns.longestPath){
-        
-             final_ans.longestPath=rightAns.longestPath+1;
-             final_ans.sumOfLongestpath=rightAns.sumOfLongestpath+root->data;
-          
-            
-        }
-        else{
-            
-             final_ans.longestPath=max(rightAns.longestPath,leftAns.longestPath)+1;
-             final_ans.sumOfLongestpath= max(leftAns.sumOfLongestpath,rightAns.sumOfLongestpath)+root->data;
-         }
-        
-          return final_ans;
-          
-    }
+   
+   Pair helper(Node* root){
+       if(root==NULL){
+           Pair ans;
+           ans.sum=0;
+           ans.length=0;
+           return ans;
+       }
+       
+       Pair final_ans;
+       Pair leftAns=helper(root->left);
+       Pair rightAns=helper(root->right);
+       final_ans.length=1+max(leftAns.length,rightAns.length);
+       if(leftAns.length>rightAns.length){
+           final_ans.sum=root->data+leftAns.sum;
+       }
+       else if(leftAns.length<rightAns.length){
+           final_ans.sum=root->data+rightAns.sum;
+       }
+       else if(leftAns.length==rightAns.length){
+           final_ans.sum=max(leftAns.sum,rightAns.sum)+root->data;
+       }
+       return final_ans;
+   }
+    
     int sumOfLongRootToLeafPath(Node *root)
     {
         //code here
-       if(root==NULL){
-           return 0;
-       }
-       
-       Special final_ans=helper(root);
-       return final_ans.sumOfLongestpath;
+        Pair final_ans=helper(root);
+        return final_ans.sum;
     }
-    
 };
 
 // { Driver Code Starts.
