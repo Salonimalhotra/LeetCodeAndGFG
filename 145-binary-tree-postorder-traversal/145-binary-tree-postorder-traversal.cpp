@@ -18,31 +18,25 @@ public:
         if(root==NULL){
             return ans;
         }
-        TreeNode * curr=root;
-        stack<TreeNode*>stack;
-        while(curr!=NULL || stack.size()!=0){
-            if(curr!=NULL){
-                stack.push(curr);
-                curr=curr->left;
+        stack<TreeNode *>s1;
+        stack<TreeNode *>s2;
+        s1.push(root);
+        while(s1.size()!=0){
+            TreeNode * frontNode=s1.top();
+            s1.pop();
+            s2.push(frontNode);
+            if(frontNode->left!=NULL){
+                s1.push(frontNode->left);
             }
-            else{
-                TreeNode * temp=stack.top()->right;
-                if(temp==NULL){
-                    temp=stack.top();
-                    stack.pop();
-                    ans.push_back(temp->val);
-                    while(stack.size()!=0 && temp==stack.top()->right){
-                        temp=stack.top();
-                        stack.pop();
-                        ans.push_back(temp->val);
-                    }
-                }
-                else{
-                    curr=temp;
-                }
+            if(frontNode->right!=NULL){
+                s1.push(frontNode->right);
             }
         }
         
+       while(s2.size()!=0){
+           ans.push_back(s2.top()->val);
+           s2.pop();
+       }
         return ans;
-    }
+     }
 };
