@@ -11,38 +11,25 @@
  */
 class Solution {
 public:
-    TreeNode* bstFromPreorderHelper(vector<int>&preorder,int start,int end)
-    {
+    TreeNode * helper(vector<int>&preorder,int start,int end){
         if(start>end){
-         return NULL; 
-         }
-        TreeNode * root=new TreeNode(preorder[start]);
-        bool check=false;
+            return NULL;
+        }
+        int rootData=preorder[start];
+        TreeNode * root=new TreeNode(rootData);
         int i=start+1;
-        while(i<=end){
-         if(preorder[i]>root->val){
-             check=true;
-             break;
-         }
+        while(i<=preorder.size()-1 && preorder[i]<rootData){
             i++;
         }
-        int leftEnd;
-        if(check==true){
-            leftEnd=i-1;
-        }
-        else if(check==false){
-            leftEnd=end;
-        }
-        
-        TreeNode* leftSubTree=bstFromPreorderHelper(preorder,start+1,leftEnd);
-        TreeNode* rightSubTree=bstFromPreorderHelper(preorder,leftEnd+1,end);
-        root->left=leftSubTree;
-        root->right=rightSubTree;
-        return root;       
-        
+        root->left=helper(preorder,start+1,i-1);
+        root->right=helper(preorder,i,end);
+        return root;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-    TreeNode * ans=bstFromPreorderHelper(preorder,0,preorder.size()-1);
-         return ans;
+        int start=0;
+        int end=preorder.size()-1;
+        TreeNode * root=helper(preorder,start,end);
+        return root;
+        
     }
 };
