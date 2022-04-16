@@ -121,33 +121,29 @@ struct Node {
 */
 // your task is to complete the Function
 // Function should return median of the BST
-#include<vector>
-#include<algorithm>
-void inorder_traversal(Node * root,vector<int>&ans){
+void solve(struct Node * root,vector<int>&ans){
     if(root==NULL){
-        return ;
+        return;
     }
-    inorder_traversal(root->left,ans);
+    solve(root->left,ans);
     ans.push_back(root->data);
-    inorder_traversal(root->right,ans);
+    solve(root->right,ans);
     return;
 }
 float findMedian(struct Node *root)
 {
       //Code here
-      vector<int>ans;
-      inorder_traversal(root,ans);
-      float finalans;
-      if(ans.size()%2==0){
-          int x=ans[(ans.size()-1)/2];
-          int y=ans[(ans.size()+1)/2];
-          finalans=(float(x)+y)/2;
-          return finalans;
-      }
-      else{
-          int x=ans[(ans.size()/2)];
-          finalans=float(x);
-          return finalans;
-      }
+    vector<int>ans;
+    solve(root,ans);
+    float myAns;
+    int n=ans.size()-1;
+    if(ans.size()%2==0){
+        myAns=(ans[n/2]+ans[(n/2)+1])/2.0;
+    }
+    else{
+        myAns=ans[(n+1)/2];
+    }
+    return myAns;
+      
 }
 
