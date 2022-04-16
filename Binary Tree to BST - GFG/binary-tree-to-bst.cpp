@@ -106,41 +106,43 @@ struct Node
     }
 }; 
 */
-#include<algorithm>
-#include<vector>
+#include<bits/stdc++.h>
 class Solution{
   public:
     // The given root is the root of the Binary Tree
     // Return the root of the generated BST
-    void inorder_traversal(Node * root,vector<int>&ans)
-    {
+    void inordertraversal(Node * root,vector<int>&ans){
         if(root==NULL){
-            return ;
+            return;
         }
-        inorder_traversal(root->left,ans);
+        inordertraversal(root->left,ans);
         ans.push_back(root->data);
-        inorder_traversal(root->right,ans);
+        inordertraversal(root->right,ans);
         return;
     }
-    Node * Helper(vector<int>&ans,int inS,int inE){
-        if(inS>inE){
+    Node * helper(vector<int>&ans,int start,int end){
+        if(start>end){
             return NULL;
         }
-        int mid=(inS+inE)/2;
-        Node * root=new Node(ans[mid]);
-        root->left=Helper(ans,inS,mid-1);
-        root->right=Helper(ans,mid+1,inE);
+        int mid=(start+end)/2;
+        int rootData=ans[mid];
+        Node * root=new Node(rootData);
+        root->left=helper(ans,start,mid-1);
+        root->right=helper(ans,mid+1,end);
         return root;
+        
     }
     Node *binaryTreeToBST (Node *root)
     {
         //Your code goes here
+        if(root==NULL){
+            return NULL;
+        }
         vector<int>ans;
-        inorder_traversal(root,ans);
+        inordertraversal(root,ans);
         sort(ans.begin(),ans.end());
-        Node * final_ans=Helper(ans,0,ans.size()-1);
-        return final_ans;
-        
+        Node * x=helper(ans,0,ans.size()-1);
+        return x;
     }
 };
 
