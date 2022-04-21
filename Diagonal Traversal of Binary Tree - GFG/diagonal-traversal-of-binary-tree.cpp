@@ -120,8 +120,8 @@ struct Node
     Node* left, * right;
 }; */
 
-#include<vector>
 #include<queue>
+#include<vector>
 vector<int> diagonal(Node *root)
 {
    // your code here
@@ -129,17 +129,17 @@ vector<int> diagonal(Node *root)
    if(root==NULL){
        return ans;
    }
-   queue<Node*>q;
-   q.push(root);
-   while(q.size()!=0){
-       Node * top=q.front();
-       q.pop();
-       while(top!=NULL){
-           if(top->left!=NULL){
-               q.push(top->left);
+   queue<Node*>pendingNodes;
+   pendingNodes.push(root);
+   while(pendingNodes.size()!=0){
+       Node * temp=pendingNodes.front();
+       pendingNodes.pop();
+       while(temp!=NULL){
+           if(temp->left!=NULL){
+              pendingNodes.push(temp->left);
            }
-           ans.push_back(top->data);
-           top=top->right;
+           ans.push_back(temp->data);
+           temp=temp->right;
        }
    }
    return ans;
