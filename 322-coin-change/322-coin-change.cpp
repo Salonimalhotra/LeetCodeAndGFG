@@ -11,8 +11,15 @@ public:
         for(int j=1;j<=amount;j++){
             dp[0][j]=INT_MAX-1;
         }
-        
-        for(int i=1;i<=n;i++){
+        for(int j=1;j<=amount;j++){
+            if(j%coins[0]==0){
+                dp[1][j]=j/coins[0];
+            }
+            else{
+                dp[1][j]=INT_MAX-1;
+            }
+        }
+        for(int i=2;i<=n;i++){
             for(int j=1;j<=amount;j++){
                 if(coins[i-1]<=j){
                     int x=dp[i-1][j];
@@ -25,7 +32,7 @@ public:
             }
         }
         
-        if(dp[n][amount]==INT_MAX-1){
+        if(dp[n][amount]==INT_MAX-1 || dp[n][amount]==INT_MAX){
             return -1;
         }
         return dp[n][amount];
