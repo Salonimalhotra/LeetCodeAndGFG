@@ -41,8 +41,11 @@ int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
                     int option1=dp[i-1][j][k];
                     int option2=dp[i][j-1][k];
                     int option3=dp[i][j][k-1];
+                    int option4=dp[i][j-1][k-1];
+                    int option5=dp[i-1][j][k-1];
+                    int option6=dp[i-1][j-1][k];
                     
-                    dp[i][j][k]=max(option1,max(option2,option3));
+                    dp[i][j][k]=max(option1,max(option2,max(option3,max(option4,max(option5,option6)))));
                     
                 }
             }
