@@ -12,35 +12,27 @@ public:
     int maxSquare(int n, int m, vector<vector<int>> mat){
         // code here
         int dp[n][m];
+        
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(i==0){
-                    if(mat[0][j]==1){
-                        dp[0][j]=1;
+                if(i==0 || j==0){
+                    if(mat[i][j]==1){
+                        dp[i][j]=1;
                     }
                     else{
-                        dp[0][j]=0;
-                    }
-                }
-                else if(j==0){
-                    if(mat[i][0]==1){
-                        dp[i][0]=1;
-                    }
-                    else{
-                        dp[i][0]=0;
+                        dp[i][j]=0;
                     }
                 }
             }
-            
         }
         
         for(int i=1;i<n;i++){
             for(int j=1;j<m;j++){
-                if(mat[i][j]==0){
-                    dp[i][j]=0;
+                if(mat[i][j]==1){
+                    dp[i][j]=min(dp[i-1][j-1],min(dp[i-1][j],dp[i][j-1]))+1;
                 }
                 else{
-                    dp[i][j]=1+min(dp[i-1][j-1],min(dp[i-1][j],dp[i][j-1]));
+                    dp[i][j]=0;
                 }
             }
         }
@@ -48,10 +40,11 @@ public:
         int best_ans=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                best_ans=max(best_ans,dp[i][j]);
+                if(best_ans<dp[i][j]){
+                    best_ans=dp[i][j];
+                }
             }
         }
-        
         return best_ans;
     }
 };
