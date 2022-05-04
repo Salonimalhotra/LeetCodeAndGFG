@@ -20,19 +20,26 @@ public:
           }    
         }
         
-        int minDays=1;
-        int food=N;
-        int i=1;
-        for(;i<=S;i++){
-            if(food<M ){
-                minDays++;
-                food+=N;
-            }
-            food=food-M;
-            
+        int totalConsumption=S*M;
+        int purchased_food=N;
+        int minDays=totalConsumption/purchased_food;
+        if(totalConsumption%purchased_food!=0){
+            minDays++;
         }
-        
         return minDays;
+        // int minDays=1;
+        // int food=N;
+        // int i=1;
+        // for(;i<=S;i++){
+        //     if(food<M ){
+        //         minDays++;
+        //         food+=N;
+        //     }
+        //     food=food-M;
+            
+        // }
+        
+        // return minDays;
         
     }
 };
