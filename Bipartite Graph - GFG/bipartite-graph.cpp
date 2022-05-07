@@ -5,44 +5,42 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
 public:
-    bool helper(int V,int * colors, vector<int>adj[],int si){
-        colors[si]=0;
-        queue<int>q;
-        q.push(si);
-        while(q.size()!=0){
-            int topNode=q.front();
-            q.pop();
-            for(int i=0;i<adj[topNode].size();i++){
-                if(colors[adj[topNode][i]]==-1){
-                    colors[adj[topNode][i]]=1-colors[topNode];
-                    q.push(adj[topNode][i]);
+    bool helper(int V,int si,vector<int>adj[],int * colors){
+        for(int i=0;i<adj[si].size();i++){
+            if(colors[adj[si][i]]==-1){
+                colors[adj[si][i]]=1-colors[si];
+                bool ans=helper(V,adj[si][i],adj,colors);
+                if(ans==false){
+                    return false;
                 }
                 else{
-                    if(colors[topNode]==colors[adj[topNode][i]]){
-                        return false;
-                    }
+                    continue;
+                }
+            }
+            else{
+                if(colors[adj[si][i]]==colors[si]){
+                    return false;
                 }
             }
         }
         return true;
-        
     }
 	bool isBipartite(int V, vector<int>adj[]){
 	    // Code here
-	    int * colors=new int [V];
+	    int * colors=new int[V];
 	    for(int i=0;i<V;i++){
 	        colors[i]=-1;
 	    }
 	    
 	    for(int i=0;i<V;i++){
 	        if(colors[i]==-1){
-	            bool ans=helper(V,colors,adj,i);
+	            colors[i]=1;
+	            bool ans=helper(V,i,adj,colors);
 	            if(ans==false){
-	                return ans;
+	                return false;
 	            }
 	        }
 	    }
-	    
 	    return true;
 	}
 
