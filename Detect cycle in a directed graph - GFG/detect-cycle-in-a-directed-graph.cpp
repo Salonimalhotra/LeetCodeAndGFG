@@ -6,47 +6,39 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in a directed graph.
-    bool helper(int i,bool * visited,bool * dfs_visited,int V,vector<int>adj[]){
-        visited[i]=true;
-        dfs_visited[i]=true;
-        for(int j=0;j<adj[i].size();j++){
-            if(visited[adj[i][j]]!=true){
-                 bool ans=helper(adj[i][j],visited,dfs_visited,V,adj);
-                 if(ans==true){
-                     return true;
-                 }
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        vector<int>topo;
+        vector<int>inedges(V,0);
+        for(int i=0;i<V;i++){
+            for(int j=0;j<adj[i].size();j++){
+                inedges[adj[i][j]]++;
             }
-            else{
-                if(dfs_visited[adj[i][j]]==true){
-                    return true;
+        }
+        queue<int>q;
+        for(int i=0;i<inedges.size();i++){
+            if(inedges[i]==0){
+                q.push(i);
+            }
+        }
+        int cnt=0;
+        while(q.size()!=0){
+            int topNode=q.front();
+            q.pop();
+            cnt++;
+            for(int i=0;i<adj[topNode].size();i++){
+                inedges[adj[topNode][i]]--;
+                if(inedges[adj[topNode][i]]==0){
+                    q.push(adj[topNode][i]);
                 }
             }
         }
-        dfs_visited[i]=false;
-        return false;
-    }
-    bool isCyclic(int V, vector<int> adj[]) {
-        // code here
-        bool * visited=new bool[V];
-        for(int i=0;i<V;i++){
-            visited[i]=false;
+        if(cnt==V){
+            return false;
         }
-        
-        bool * dfs_visited=new bool[V];
-        for(int j=0;j<V;j++){
-            dfs_visited[j]=false;
+        else{
+            return true;
         }
-        
-        for(int i=0;i<V;i++){
-            if(visited[i]!=true){
-                bool ans=helper(i,visited,dfs_visited,V,adj);
-                if(ans==true){
-                     return true;
-                 }
-            }
-        }
-        return false;
-        
     }
 };
 
