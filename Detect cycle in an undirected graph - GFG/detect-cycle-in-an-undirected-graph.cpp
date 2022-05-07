@@ -6,27 +6,18 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool isCycle1(int V,int vertex,vector<int> adj[],bool * visited){
-        queue<pair<int,int>>pendingVertices;
-        pendingVertices.push(make_pair(vertex,-1));
+    bool detectCycle(int vertex,int parent,int V,vector<int>adj[],bool * visited){
         visited[vertex]=true;
-        while(pendingVertices.size()!=0){
-            pair<int,int>topVertex=pendingVertices.front();
-            pendingVertices.pop();
-            for(int i=0;i<adj[topVertex.first].size();i++){
-                if(visited[adj[topVertex.first][i]]==true){
-                    if(adj[topVertex.first][i]==topVertex.second){
-                        continue;
-                    }
-                    else{
-                        return true;
-                    }
-                    
+        for(int i=0;i<adj[vertex].size();i++){
+            if(visited[adj[vertex][i]]!=true){
+                if(detectCycle(adj[vertex][i],vertex,V,adj,visited)){
+                    return true;
                 }
-                else{
-                    visited[adj[topVertex.first][i]]=true;
-                    pendingVertices.push(make_pair(adj[topVertex.first][i],topVertex.first));
-                }
+            }
+            else{
+                 if(adj[vertex][i]!=parent){
+                     return true;
+                 }
             }
         }
         return false;
@@ -34,19 +25,18 @@ class Solution {
     bool isCycle(int V, vector<int> adj[]) {
         // Code here
         bool * visited=new bool[V];
-        
         for(int i=0;i<V;i++){
             visited[i]=false;
         }
-        
         for(int i=0;i<V;i++){
-            if(visited[i]!=true){
-            bool ans=isCycle1(V,i,adj,visited);
-            if(ans==true){
-                return true;
-                }
-            }
+           if(visited[i]!=true){
+               bool ans1=detectCycle(i,-1,V,adj,visited);
+               if(ans1==true){
+                   return true;
+               }
+           }
         }
+        
         return false;
     }
 };
