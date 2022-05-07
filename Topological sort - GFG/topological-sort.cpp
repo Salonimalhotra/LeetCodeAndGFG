@@ -7,42 +7,37 @@ class Solution
 {
 	public:
 	//Function to return list containing vertices in Topological order. 
-	void  helper(stack<int>&s,int i,int V,vector<int>adj[],bool *visited){
-	    visited[i]=true;
-	    for(int j=0;j<adj[i].size();j++){
-	        if(visited[adj[i][j]]!=true){
-	            helper(s,adj[i][j],V,adj,visited);
-	            
-	        }
-	        else{
-	            continue;
-	        }
-	    }
-	    s.push(i);
-	    return;
-	}
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
-	    bool * visited=new bool[V];
+	    vector<int>topo;
+	    vector<int>indegree(V,0);
 	    for(int i=0;i<V;i++){
-	        visited[i]=false;
-	    }
-	    
-	    stack<int>s;
-	    for(int i=0;i<V;i++){
-	        if(visited[i]!=true){
-	            helper(s,i,V,adj,visited);
+	        for(int j=0;j<adj[i].size();j++){
+	            indegree[adj[i][j]]++;
 	        }
 	    }
 	    
-	    vector<int>ans;
-	    while(s.size()!=0){
-	        ans.push_back(s.top());
-	        s.pop();
+	    queue<int>q;
+	    for(int i=0;i<V;i++){
+	        if(indegree[i]==0){
+	            q.push(i);
+	        }
 	    }
-	    return ans;
 	    
+	    while(q.size()!=0){
+	        int topNode=q.front();
+	        q.pop();
+	        topo.push_back(topNode);
+	        for(int i=0;i<adj[topNode].size();i++){
+	            indegree[adj[topNode][i]]--;
+	            if(indegree[adj[topNode][i]]==0){
+	                q.push(adj[topNode][i]);
+	            }
+	        }
+	    }
+	    
+	    return topo;
 	}
 };
 
