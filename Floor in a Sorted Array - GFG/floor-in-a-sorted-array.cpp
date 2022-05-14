@@ -12,21 +12,24 @@ class Solution{
     int findFloor(vector<long long> v, long long n, long long x){
         
         // Your code here
-        long long int ans=INT_MIN;
-        long long int index=-1;
-        for(int i=0;i<n;i++){
-            if(v[i]<=x){
-                if(v[i]>ans){
-                    ans=v[i];
-                    index=i;
-                }
+        long long int start=0;
+        long long int end=n-1;
+        long long res=-1;
+        
+        while(start<=end){
+            int mid=start+(end-start)/2;
+            if(v[mid]==x){
+                return mid;
+            }
+            else if(v[mid]<x){
+                res=mid;
+                start=mid+1;
+            }
+            else if(v[mid]>x){
+                end=mid-1;
             }
         }
-        if(ans==INT_MIN){
-            return -1;
-        }
-        return index;
-        
+        return res;
     }
 };
 
