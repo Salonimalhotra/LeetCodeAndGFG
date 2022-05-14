@@ -17,9 +17,9 @@ class Solution{
        else if((B>A || B>C) && (B<A || B<C)){
            return B;
        }
-       else if((C>B || C>A) && (A>C || B>C)){
-           return C;
-       }
+      else{
+          return C;
+      }
        
     }
 };
