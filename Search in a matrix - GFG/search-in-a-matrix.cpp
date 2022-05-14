@@ -10,14 +10,20 @@ public:
 	int matSearch (vector <vector <int>> &mat, int N, int M, int X)
 	{
 	    // your code here
-	    for(int i=0;i<N;i++){
-	        for(int j=0;j<M;j++){
-	            if(mat[i][j]==X){
-	                return 1;
-	            }
-	        }
-	    }
-	    return 0;
+	   int row=0;
+	   int col=M-1;
+	   while(row>=0 && row<N && col>=0 && col<M){
+	       if(mat[row][col]==X){
+	           return 1;
+	       }
+	       else if(mat[row][col]>X){
+	           col--;
+	       }
+	       else if(mat[row][col]<X){
+	           row++;
+	       }
+	   }
+	   return 0;
 	}
 };
 
