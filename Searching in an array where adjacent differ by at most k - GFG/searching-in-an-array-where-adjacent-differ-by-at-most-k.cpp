@@ -30,15 +30,17 @@ return 0;
 
 // } Driver Code Ends
 
-
+#include<bits/stdc++.h>
 // x is the element to be searched in arr[0..n-1]
 // such that all elements differ by at-most k.
 int search(int arr[], int n, int x, int k)
 {
-    // Complete the function	
+    // Complete the function
+    
     for(int i=0;i<n;i++){
-        if(arr[i]==x){
-            return i;
+        int diff=abs(x-arr[i]);
+        if((i+diff/k)<n && arr[i+diff/k]==x){
+            return i+diff/k;
         }
     }
     return -1;
