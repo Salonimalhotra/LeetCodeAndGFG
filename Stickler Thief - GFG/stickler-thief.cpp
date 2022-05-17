@@ -8,32 +8,18 @@ class Solution
 {
     public:
     //Function to find the maximum money the thief can get.
-    int helper(int arr[],int i,int *dp){
-        if(i<=0){
-            return 0;
-        }
-        else if(i==1){
-            return arr[0];
-        }
-        if(dp[i]!=-1){
-            return dp[i];
-        }
-        int smallAns=arr[i-1]+helper(arr,i-2,dp);
-        int smallAns1=helper(arr,i-1,dp);
-        dp[i]=max(smallAns,smallAns1);
-        return dp[i];
-    }
     int FindMaxSum(int arr[], int n)
     {
-        
         // Your code here
-      
         int *dp=new int[n+1];
-        for(int i=0;i<=n;i++){
-            dp[i]=-1;
+        dp[0]=0;
+        dp[1]=arr[0];
+        for(int i=2;i<=n;i++)
+        {
+           dp[i]=max(dp[i-1],dp[i-2]+arr[i-1]);
         }
         
-          return helper(arr,n,dp); 
+        return dp[n];
     }
 };
 
