@@ -26,39 +26,28 @@ int main()
     return 0;
 }// } Driver Code Ends
 
-#include<bits/stdc++.h>
-int binarySearch(int arr[],int s,int e,int x){
-    if(s>e){
-        return -1;
-    }
-    int start=s;
-    int end=e;
-    while(start<=end){
-        int mid=start+(end-start)/2;
-        if(arr[mid]==x){
-            return mid;
-        }
-        else if(arr[mid]<x){
-          start=mid+1;
-        }
-        else if(arr[mid]>x){
-            end=mid-1;
-        }
-    }
-    return -1;
-}
+#include<unordered_map>
 bool findPair(int arr[], int size, int n){
     //code
-    sort(arr,arr+size);
-    bool check=false;
-    for(int i=0;i<=size-2;i++){
-        int x=arr[i]+n;
-        // int y=arr[i]-n;
-        int bS=binarySearch(arr,i+1,size-1,x);
-        if(bS==-1){
-            continue;
+    if(n==0){
+        unordered_map<int,int>map1;
+        for(int i=0;i<size;i++){
+            map1[arr[i]]++;
         }
-        else{
+        for(auto i:map1){
+            if(i.second>=2){
+                return true;
+            }
+        }
+        return false;
+    }
+    unordered_map<int,int>map;
+    for(int i=0;i<size;i++){
+        map[arr[i]]=i;
+    }
+    bool check=false;
+    for(int i=0;i<size;i++){
+        if((map.find(arr[i]+n)!=map.end()) || (map.find(arr[i]-n)!=map.end())){
             check=true;
             break;
         }
