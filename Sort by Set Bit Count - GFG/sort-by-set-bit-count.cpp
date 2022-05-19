@@ -8,11 +8,13 @@ class Solution{
     public:
     int CountSetBits(int n)
     {
-        int cnt = 0;
-        while(n)
-        {
-            n = n & (n-1);
-            cnt++;
+        int cnt=0;
+        while(n>0){
+            int x=n%2;
+            if(x==1){
+                cnt++;
+            }
+            n=n/2;
         }
         return cnt;
     }
