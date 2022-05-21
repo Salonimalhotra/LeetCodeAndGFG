@@ -1,12 +1,19 @@
+#include<unordered_map>
+#include<vector>
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        int totalSum=0;
+        unordered_map<int,bool>map;
         for(int i=0;i<nums.size();i++){
-            totalSum+=nums[i];
+            map[nums[i]]=true;
         }
-        int fS=((nums.size()+1)*(nums.size()))/2;
-        int misNum=fS-totalSum;
-        return misNum;
+        int ans=-1;
+        for(int i=0;i<=nums.size();i++){
+            if(map.find(i)==map.end()){
+                ans=i;
+                break;
+            }
+        }
+        return ans;
     }
 };
