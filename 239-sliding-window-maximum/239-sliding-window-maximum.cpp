@@ -9,6 +9,9 @@ public:
         int j=0;
         vector<int>ans;
         while(j<nums.size()){
+            while(pq.size()!=0 && pq.top().first<nums[j]){
+                pq.pop();
+            }
             pq.push(make_pair(nums[j],j));
             if(j-i+1<k){
                 j++;
