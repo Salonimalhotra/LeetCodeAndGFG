@@ -18,26 +18,36 @@ void merge(int arr1[], int arr2[], int n, int m) {
     int i, j, gap = n + m;
        for (gap = nextGap(gap);gap > 0; gap = nextGap(gap))
        {
-           for (i = 0; i + gap < n; i++)
-           {
-               if (arr1[i] > arr1[i + gap])
-                   swap(arr1[i], arr1[i + gap]);
-           }
-           for (j = gap > n ? gap - n : 0;i < n && j < m;i++, j++)
-           {
-               if (arr1[i] > arr2[j])
-                   swap(arr1[i], arr2[j]);
-           }
-           if (j < m) 
-           {
-               for (j = 0; j + gap < m; j++)
-               {
-                   if (arr2[j] > arr2[j + gap])
-                       swap(arr2[j], arr2[j + gap]);
+           i=0;
+           j=i+gap;
+           while(i<n+m && j<n+m){
+               if(i<n && j<n){
+                   if(arr1[i]>arr1[j]){
+                       swap(arr1[i],arr1[j]);
+                   }
+                   i++;
+                   j++;
                }
+               else if(i<n && j>=n){
+                   if(arr1[i]>arr2[(j-n)%m]){
+                       swap(arr1[i],arr2[(j-n)%m]);
+                       
+                   }
+                   i++;
+                   j++;
+               }
+               else if(i>=n && j>=n){
+                   if(arr2[(i-n)%m]>arr2[(j-n)%m]){
+                       swap(arr2[(i-n)%m],arr2[(j-n)%m]);
+                   }
+                   i++;
+                   j++;
+               }
+               
            }
        }
-}
+       return; 
+    }
 };
 
 // { Driver Code Starts.
