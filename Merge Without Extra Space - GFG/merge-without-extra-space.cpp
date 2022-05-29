@@ -10,7 +10,8 @@ public:
    {
        if (gap <= 1)
            return 0;
-       return (gap / 2) + (gap % 2);
+    //   return (gap / 2) + (gap % 2);
+    return (int)ceil(gap/2.0);
    }
 void merge(int arr1[], int arr2[], int n, int m) {
     // code here
