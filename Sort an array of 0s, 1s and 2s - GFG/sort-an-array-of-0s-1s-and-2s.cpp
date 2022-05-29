@@ -8,53 +8,26 @@ using namespace std;
 class Solution
 {
     public:
-    void merge(int a[],int start,int end){
-        int mid=(start+end)/2;
-        int i=start;
-        int j=mid+1;
-        int arr[end-start+1];
-        int k=0;
-        while(i<=mid && j<=end){
-            if(a[i]<=a[j]){
-                arr[k]=a[i];
-                k++;
-                i++;
-            }
-            else{
-                arr[k]=a[j];
-                k++;
-                j++;
-            }
-        }
-        
-        while(i<=mid){
-            arr[k++]=a[i++];
-        }
-        
-        while(j<=end){
-            arr[k++]=a[j++];
-        }
-        k=0;
-        for(int i=start;i<=end;i++){
-            a[i]=arr[k++];
-        }
-        return;
-    }
-    void mergeSort(int a[],int start,int end){
-        if(start>=end){
-            return;
-        }
-        int mid=(start+end)/2;
-        mergeSort(a,start,mid);
-        mergeSort(a,mid+1,end);
-        merge(a,start,end);
-        return;
-    }
     void sort012(int a[], int n)
     {
         // coode here 
-        mergeSort(a,0,n-1);
-        return;
+        int i=0;                      
+        int j=0;
+        int k=n-1;                    
+        while(j<=k){
+            if(a[j]==0){              
+               swap(a[i],a[j]);
+               i++;
+               j++;
+            }
+            else if(a[j]==1){
+                j++;
+            }
+            else if(a[j]==2){
+                swap(a[j],a[k]);
+                k--;
+            }
+        }
     }
     
 };
