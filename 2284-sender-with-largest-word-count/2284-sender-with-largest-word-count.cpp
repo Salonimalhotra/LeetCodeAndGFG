@@ -19,17 +19,12 @@ public:
         
     }
     string largestWordCount(vector<string>& messages, vector<string>& senders) {
-        map<string,int>mp;
+        unordered_map<string,int>mp;
         for(int i=0;i<senders.size();i++){
             string x=senders[i];
             int count=storeCount(messages,i);
             mp[x]=mp[x]+count;            
         }
-        
-        // for(auto i:mp){
-        //     cout<<i.first<<":"<<i.second<<endl;
-        // }
-        
         int max_count=INT_MIN;
         for(auto i:mp){
             if(i.second>max_count){
