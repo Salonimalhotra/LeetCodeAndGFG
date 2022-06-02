@@ -9,28 +9,29 @@ class Solution {
   public:
     string equilibrium(int *arr, int n) {
         // code here
-        int prefixArray[n];
+        // int prefixArray[n];
         int sum=0;
         for(int i=0;i<n;i++){
             sum+=arr[i];
-            prefixArray[i]=sum;
+            // prefixArray[i]=sum;
         }
         
-        int suffixArray[n];
-         sum=0;
-        for(int i=n-1;i>=0;i--){
-          sum+=arr[i];
-          suffixArray[i]=sum;
-        }
+        // int suffixArray[n];
+        //  sum=0;
+        // for(int i=n-1;i>=0;i--){
+        //   sum+=arr[i];
+        //   suffixArray[i]=sum;
+        // }
         
         bool check=false;
+        int leftSum=0;
         for(int i=0;i<n;i++){
-            int x1=prefixArray[i]-arr[i];
-            int x2=suffixArray[i]-arr[i];
-            if(x1==x2){
-                check=true;
-                break;
-            }
+           if(leftSum==sum-arr[i]){
+               check=true;
+               break;
+           }
+           leftSum+=arr[i];
+           sum=sum-arr[i];
         }
         if(check==true){
             
