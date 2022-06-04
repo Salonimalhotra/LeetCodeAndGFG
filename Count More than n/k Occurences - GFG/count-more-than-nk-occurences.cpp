@@ -14,16 +14,14 @@ class Solution
     //Function to find all elements in array that appear more than n/k times.
     int countOccurence(int arr[], int n, int k) {
         // Your code here
-        int x=n/k;
+        int count=0;
         unordered_map<int,int>mp;
         for(int i=0;i<n;i++){
             mp[arr[i]]++;
-        }
-       int count=0;
-        for(auto i:mp){
-            if(i.second>x){
+            if(mp[arr[i]]!=-1000 && mp[arr[i]]>n/k){
                 count++;
-            }
+                mp[arr[i]]=-1000;
+        }
         }
         return count;
     }
