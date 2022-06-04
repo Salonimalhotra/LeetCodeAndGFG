@@ -28,19 +28,34 @@ int main() {
 
 #include<unordered_map>
 string isSubset(int a1[], int a2[], int n, int m) {
-    bool check=true;
+    //Brute force Approach-O(N^2):-
+    
+    // bool check=true;
+    // for(int i=0;i<m;i++){
+    //     int x=a2[i];
+    //     bool flag=false;
+    //     for(int j=0;j<n;j++){
+    //         if(a1[j]==x){
+    //             flag=true;
+    //             break;
+    //         }
+    //     }
+    //     if(flag==false){
+    //         return "No";
+    //     }
+    // }
+    // return "Yes";
+    
+    //optimised Approach:-O(N);
+    unordered_map<int,int>mp;
+    for(int i=0;i<n;i++){
+        mp[a1[i]]++;
+    }
     for(int i=0;i<m;i++){
-        int x=a2[i];
-        bool flag=false;
-        for(int j=0;j<n;j++){
-            if(a1[j]==x){
-                flag=true;
-                break;
-            }
-        }
-        if(flag==false){
+        if(mp.find(a2[i])==mp.end()){
             return "No";
         }
     }
     return "Yes";
+    
 }
