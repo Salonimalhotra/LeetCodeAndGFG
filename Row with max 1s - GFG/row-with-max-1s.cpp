@@ -73,22 +73,67 @@ public:
 	   
 	   //efficient Approach:- nlog(m);
 	   
-	   int maxCount=INT_MIN;
-	   int rowIndex=-1;
+	   //int maxCount=INT_MIN;
+	   //int rowIndex=-1;
 	   
-	   for(int i=0;i<n;i++){
-	       int firstOcc=binarySearchFirstOcc(arr,n,m,i);
-	       if(firstOcc==-1){
-	           continue;
-	       }
-	       int occ=binarySearchLastOcc(arr,n,m,i)-binarySearchFirstOcc(arr,n,m,i)+1;
-	       if(occ>maxCount){
-	           maxCount=occ;
-	           rowIndex=i;
-	       }
-	   }
+	   //for(int i=0;i<n;i++){
+	   //    int firstOcc=binarySearchFirstOcc(arr,n,m,i);
+	   //    if(firstOcc==-1){
+	   //        continue;
+	   //    }
+	   //    int occ=binarySearchLastOcc(arr,n,m,i)-binarySearchFirstOcc(arr,n,m,i)+1;
+	   //    if(occ>maxCount){
+	   //        maxCount=occ;
+	   //        rowIndex=i;
+	   //    }
+	   //}
 	   
-	   return rowIndex;
+	   //return rowIndex;
+	   
+	   //best approach:-
+	   //int j = m-1;
+    // while(j>=0 && arr[0][j]==1){
+    //     j--;
+    // }
+    // if(j<0){
+    //     return 0;
+    // }
+    
+    
+        
+    // int row = 0;
+    // // int ans=-1;
+    
+    // for(int i=1;i<n;i++){
+        
+    //     while(j>=0 && arr[i][j]==1){
+    //         j--;
+    //         row = i;
+            
+    //     }
+        
+    // }
+    
+   
+    // if(row==0){
+    //     return -1;
+    // }
+    //  return row;
+    int maxRow=-1;
+    int i=0;
+    int j=m-1;
+    while(i<n && j>=0){
+        if(arr[i][j]==1){
+            maxRow=i;
+            j--;
+            
+        }
+        else{
+            i++;
+        }
+      }
+      
+      return maxRow;
 	}
 
 };
