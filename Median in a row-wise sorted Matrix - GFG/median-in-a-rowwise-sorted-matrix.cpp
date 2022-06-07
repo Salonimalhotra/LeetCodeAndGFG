@@ -7,21 +7,42 @@ using namespace std;
 
  // } Driver Code Ends
 //User function template for C++
-#include<algorithm>
-#include<vector>
+
 class Solution{   
 public:
-    int median(vector<vector<int>> &matrix, int r, int c){
-        // code here   
-        vector<int>ans;
-        for(int i=0;i<matrix.size();i++){
-            for(int j=0;j<matrix[0].size();j++){
-                ans.push_back(matrix[i][j]);
+    int countOfLessThanEqualTo(vector<vector<int>> &matrix,int r,int c,int i,int mid){
+        int low=0;
+        int high=c-1;
+        while(low<=high){
+            int md=(low+(high-low)/2);
+            if(matrix[i][md]<=mid){
+                low=md+1;
+            }
+            else{
+                high=md-1;
             }
         }
-        sort(ans.begin(),ans.end());
-        int mid=(0+ans.size()-1)/2;
-        return ans[mid];
+        return low;
+    }
+    int median(vector<vector<int>> &matrix, int r, int c){
+        // code here          
+        //efficient approach :-
+        int low=0;
+        int high=1e9;
+        while(low<=high){
+            int mid=(low+(high-low)/2);
+            int cnt=0;
+            for(int i=0;i<r;i++){
+                cnt+=countOfLessThanEqualTo(matrix,r,c,i,mid);
+            }
+            if(cnt<=(r*c)/2){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        return low;
     }
 };
 
