@@ -8,24 +8,24 @@ class Solution{
 public:
     int *findTwoElement(int *arr, int n) {
         // code here
-        int a,b;
-        for(int i=0;i<n;i++){
-            if(arr[abs(arr[i])-1]<0){
-                a=abs(arr[i]);
+        int i=0;
+        while(i<n){
+            int correct=arr[i]-1;
+            if(correct<n && arr[i]!=arr[correct]){
+                swap(arr[i],arr[correct]);
             }
             else{
-                arr[abs(arr[i])-1]=-arr[abs(arr[i])-1];
+                i++;
             }
         }
-        
+        int * ans=new int[2];
         for(int i=0;i<n;i++){
-            if(arr[i]>0){
-                b=i+1;
+            if(arr[i]-1!=i){
+                ans[0]=arr[i];
+                ans[1]=i+1;
+                break;
             }
         }
-        int *ans=new int[2];
-        ans[0]=a;
-        ans[1]=b;
         return ans;
     }
 };
