@@ -7,7 +7,7 @@ using namespace std;
 
  // } Driver Code Ends
 //User function template for C++
-
+#include<unordered_map>
 class Solution{
   public:
      // Function to find majority element in the array
@@ -17,38 +17,18 @@ class Solution{
     {
         
         // your code here
-        int count=1;
-        int mav=a[0];
-        for(int i=1;i<size;i++){
-            if(a[i]==mav){
-                count++;
-            }
-            else if(a[i]!=mav){
-                count--;
-            }
-            if(count==0){
-                mav=a[i];
-                count=1;
+        int ans=-1;
+        unordered_map<int,int>mp;
+        for(int i=0;i<size;i++){
+            mp[a[i]]++;
+        }
+        for(auto i:mp){
+            if(i.second>size/2){
+                ans=i.first;
+                break;
             }
         }
-        
-        if(count==0){
-            return -1;
-        }
-        else{
-            int counter=0;
-            for(int i=0;i<size;i++){
-                if(a[i]==mav){
-                    counter++;
-                }
-            }
-            if(counter>size/2){
-                return mav;
-            }
-            else{
-                return -1;
-            }
-        }
+        return ans;
         
     }
 };
