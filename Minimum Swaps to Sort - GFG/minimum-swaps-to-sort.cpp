@@ -4,7 +4,14 @@ using namespace std;
 
  // } Driver Code Ends
 
-#include<vector>
+bool compare(pair<int,int>x ,pair<int,int>y){
+    if(x.first<y.first){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 class Solution 
 {
     public:
@@ -12,29 +19,27 @@ class Solution
 	int minSwaps(vector<int>&nums)
 	{
 	    // Code here
-	    vector<pair<int,int>>nums1;
+	    vector<pair<int,int>>ans;
 	    for(int i=0;i<nums.size();i++){
-	        pair<int,int>p;
-	        p.first=nums[i];
-	        p.second=i;
-	        nums1.push_back(p);
+	        pair<int,int>p1;
+	        p1.first=nums[i];
+	        p1.second=i;
+	        ans.push_back(p1);
 	    }
-	    
-	    sort(nums1.begin(),nums1.end());
-	    
-	    int c=0;
+	    sort(ans.begin(),ans.end(),compare);
+	    int minSwaps=0;
 	    int i=0;
-	    while(i<nums1.size()){
-	        if(nums1[i].second==i){
+	    while(i<ans.size()){
+	        if(ans[i].second==i){
 	            i++;
 	        }
-	        else{
-	            c++;
-	            swap(nums1[i],nums1[nums1[i].second]);
-	            
+	        else if(ans[i].second!=i){
+	            int correct=ans[i].second;
+	            swap(ans[i],ans[correct]);
+	            minSwaps++;
 	        }
 	    }
-	  return c;
+	    return minSwaps;
 	}
 };
 
