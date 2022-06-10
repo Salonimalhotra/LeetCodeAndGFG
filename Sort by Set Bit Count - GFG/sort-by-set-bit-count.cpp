@@ -6,36 +6,38 @@ using namespace std;
  // } Driver Code Ends
 class Solution{
     public:
-    int CountSetBits(int n)
-    {
-        int cnt = 0;
-        while(n)
-        {
-            n = n & (n-1);
-            cnt++;
+   bool static compare(pair<int,int>p1,pair<int,int>p2){
+        return p1.second>p2.second;
+    }
+    int count(int n){
+        int cnt=0;
+        while(n>0){
+            int x=n%2;
+            if(x==1){
+                cnt++;
+            }
+            n=n/2;
         }
         return cnt;
     }
-    static bool cmp(pair<int,int>a,pair<int,int>b)
-    {
-       return a.second > b.second;
-    }
     void sortBySetBitCount(int arr[], int n)
     {
-        vector<pair<int,int>>ans;
-        for(int i = 0;i<n;i++)
-        {
-            int x = CountSetBits(arr[i]);
-            ans.push_back({arr[i],x});
+        // Your code goes here
+        vector<pair<int,int>>v;
+        for(int i=0;i<n;i++){
+            pair<int,int>p1;
+            p1.first=arr[i];
+            p1.second=count(arr[i]);
+            v.push_back(p1);
         }
-        stable_sort(ans.begin(),ans.end(),cmp);
-        for(int i = 0;i<n;i++)
-        {
-            arr[i] = ans[i].first;
+        
+        stable_sort(v.begin(),v.end(),compare);
+        for(int i=0;i<v.size();i++){
+            arr[i]=v[i].first;
         }
         return;
+        
     }
-    
 };
 
 // { Driver Code Starts.
