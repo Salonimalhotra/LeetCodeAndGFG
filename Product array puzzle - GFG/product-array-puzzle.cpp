@@ -8,33 +8,34 @@ using namespace std;
 
  // } Driver Code Ends
 //User function template for C++
-
+#include<vector>
 class Solution{
   public:
     // nums: given vector
     // return the Product vector P that hold product except self at each index
     vector<long long int> productExceptSelf(vector<long long int>& nums, int n) {
        
-        //code here      
-        vector<long long int>left(n,0);
-        left[0]=1;
-        for(int i=1;i<n;i++){
-            left[i]=nums[i-1]*left[i-1];
+        //code here        
+        vector<long long int>ans(n,0);
+        vector<long long int>prefix(n,0);
+        long long int prod=1;
+        for(int i=0;i<nums.size();i++){
+            prefix[i]=prod;
+            prod*=nums[i];
         }
         
-        vector<long long int>right(n,0);
-        right[n-1]=1;
-        for(int j=n-2;j>=0;j--){
-            right[j]=nums[j+1]*right[j+1];
+         vector<long long int>suffix(n,0);
+         prod=1;
+        for(int i=nums.size()-1;i>=0;i--){
+            suffix[i]=prod;
+            prod*=nums[i];
         }
+        for(int i=0;i<n;i++){
+            ans[i]=prefix[i]*suffix[i];
+        }
+        return ans;
         
-        vector<long long int>finalAns(n,0);
-       for(int i=0;i<n;i++){
-           finalAns[i]=left[i]*right[i];
-       }
-        return finalAns;
     }
-    
 };
 
 
