@@ -12,11 +12,11 @@ class Solution{
     int count(int n){
         int cnt=0;
         while(n>0){
-            int x=n%2;
+            int x=n&1;
             if(x==1){
                 cnt++;
             }
-            n=n/2;
+            n>>=1;
         }
         return cnt;
     }
