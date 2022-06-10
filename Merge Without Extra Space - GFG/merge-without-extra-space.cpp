@@ -6,48 +6,46 @@ using namespace std;
 //User function template for C++
 class Solution{
 public:
-     int nextGap(int gap)
-   {
-       if (gap <= 1)
-           return 0;
-    //   return (gap / 2) + (gap % 2);
-    return (int)ceil(gap/2.0);
-   }
-void merge(int arr1[], int arr2[], int n, int m) {
-    // code here
-    int i, j, gap = n + m;
-       for (gap = nextGap(gap);gap > 0; gap = nextGap(gap))
-       {
-           i=0;
-           j=i+gap;
-           while(i<n+m && j<n+m){
-               if(i<n && j<n){
-                   if(arr1[i]>arr1[j]){
-                       swap(arr1[i],arr1[j]);
-                   }
-                   i++;
-                   j++;
-               }
-               else if(i<n && j>=n){
-                   if(arr1[i]>arr2[(j-n)%m]){
-                       swap(arr1[i],arr2[(j-n)%m]);
-                       
-                   }
-                   i++;
-                   j++;
-               }
-               else if(i>=n && j>=n){
-                   if(arr2[(i-n)%m]>arr2[(j-n)%m]){
-                       swap(arr2[(i-n)%m],arr2[(j-n)%m]);
-                   }
-                   i++;
-                   j++;
-               }
-               
-           }
-       }
-       return; 
-    }
+	void merge(int arr1[], int arr2[], int n, int m) {
+	    // code here
+	    int arr[n+m];
+	    int k=0;
+	    int i=0;
+	    int j=0;
+	    while(i<n && j<m){
+	        if(arr1[i]<arr2[j]){
+	            arr[k]=arr1[i];
+	            k++;
+	            i++;
+	        }
+	        else if(arr1[i]>arr2[j]){
+	            arr[k]=arr2[j];
+	            k++;
+	            j++;
+	        }
+	        else if(arr1[i]==arr2[j]){
+	            arr[k++]=arr1[i++];
+	        }
+	    }
+	    while(i<n){
+	        arr[k++]=arr1[i++];
+	    }
+	    while(j<m){
+	        arr[k++]=arr2[j++];
+	    }
+	    i=0;
+	    int t=0;
+	    for(;i<n;i++){
+	        arr1[t]=arr[i];
+	        t++;
+	    }
+	    t=0;
+	    for(;i<n+m;i++){
+	        arr2[t]=arr[i];
+	        t++;
+	    }
+	    return ;
+	}
 };
 
 // { Driver Code Starts.
