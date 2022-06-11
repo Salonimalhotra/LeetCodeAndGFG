@@ -8,47 +8,33 @@ class Solution{
     public:
     int kthElement(int arr1[], int arr2[], int n, int m, int k)
     {
-        int i=0;
-        int count=0;
-        int j=0;
-        int element=-1;
-        while(count!=k && i<n && j<m){
-            if(arr1[i]<arr2[j]){
-                element=arr1[i];
-                count++;
-                i++;
-                
+        if(n>m){
+            return kthElement(arr2,arr1,m,n,k);
+        }
+        //low is max(0,k-m) as if there is k>m then we dont have the option of picking zero elements from arr1 and picking rest elements from arr2
+        //then we have to pick k-m elements atleast from arr1 
+        int low=max(0,k-m);
+        //the max elements can be picked from arr1 will be k if n>k and max element will be n if k<n 
+        int high=min(k,n);
+        while(low<=high){
+            int mid=(low+high)/2;
+            int cut1=mid;
+            int cut2=k-cut1;
+            int l1=cut1==0 ? INT_MIN:arr1[cut1-1];
+            int l2=cut2==0 ? INT_MIN:arr2[cut2-1];
+            int r1=cut1==n ? INT_MAX:arr1[cut1];
+            int r2=cut2==m ? INT_MAX:arr2[cut2];
+            if(l1<=r2 && l2<=r1){
+                return max(l1,l2);
             }
-            else if(arr1[i]>arr2[j]){
-                element=arr2[j];
-                count++;
-                j++;
-               
+            else if(l1>r2){
+                high=cut1-1;
             }
-            else if(arr1[i]==arr2[j]){
-                element=arr1[i];
-                count++;
-                i++;
-               
+            else {
+                low=cut1+1;
             }
         }
-        
-        while(count!=k && i<n){
-            element=arr1[i];
-            count++;
-            i++;
-        }
-        while(count!=k && j<m){
-            element=arr2[j];
-            count++;
-            j++;
-        }
-        if(count==k){
-            return element;
-        }
-        else{
-            return -1;
-        }
+        return -1;
     }
 };
 
