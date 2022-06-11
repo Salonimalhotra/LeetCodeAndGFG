@@ -7,53 +7,53 @@ using namespace std;
 
  // } Driver Code Ends
 //User function template in C++
-
+bool isPossible(int A[],int N,int M,int x){
+    int sum=0;
+    int numberStudents=1;
+    for(int i=0;i<N;i++){
+        if(sum+A[i]<=x){
+            sum+=A[i];
+            
+        }
+        else{
+            numberStudents++;
+            if(numberStudents>M || A[i]>x){
+                return false;
+            }
+            sum=A[i];
+            
+        }
+    }
+    return true;
+}
 class Solution 
 {
     public:
     //Function to find minimum number of pages.
-    bool isPossibleSol(int A[],int N,int M,int mid){
-        int studentCount=1;
-        int pageSum=0;
-        
-        for(int i=0;i<N;i++){
-            if(pageSum+A[i]<=mid){
-                pageSum+=A[i];
-                
-            }
-            else{
-                studentCount++;
-                if(studentCount>M || A[i]>mid){
-                    return false;
-                }
-                pageSum=0;
-                pageSum+=A[i];
-            }
-        }
-        return true;
-        
-    }
     int findPages(int A[], int N, int M) 
     {
         //code here
-        int s=0;
-        int e;
-        int sumArray=0;
+        int maxPages=INT_MIN;
         for(int i=0;i<N;i++){
-            sumArray+=A[i];
-        }
-        e=sumArray;
-        int ans=-1;
-        while(s<=e){
-            int mid=(s+(e-s)/2);
-            
-            if(isPossibleSol(A,N,M,mid)){
-                ans=mid;
-                e=mid-1;
+            if(A[i]>maxPages){
+                maxPages=A[i];
             }
-            
+        }
+        int totalPages=0;
+        for(int i=0;i<N;i++){
+            totalPages+=A[i];
+        }
+        int start=maxPages;
+        int end=totalPages;
+        int ans=-1;
+        while(start<=end){
+            int mid=(start+(end-start)/2);
+            if(isPossible(A,N,M,mid)==true){
+                ans=mid;
+                end=mid-1;
+            }
             else{
-                s=mid+1;
+                start=mid+1;
             }
         }
         return ans;
