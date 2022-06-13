@@ -12,7 +12,7 @@ class Solution{
     long long maxSubarraySum(int arr[], int n){
         
         // Your code here
-        long long ans=INT_MIN;
+         long long ans=INT_MIN;
         long long sum=0;
         for(int i=0;i<n;i++){
             sum+=arr[i];
@@ -22,7 +22,6 @@ class Solution{
             }
         }
         return ans;
-        
     }
 };
 
