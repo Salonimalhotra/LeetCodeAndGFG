@@ -12,11 +12,19 @@ class Solution{
     long long maxSubarraySum(int arr[], int n){
         
         // Your code here
-         long long ans=INT_MIN;
+        long long ans=INT_MIN;
         long long sum=0;
         for(int i=0;i<n;i++){
+            //first add the current element to sum
             sum+=arr[i];
-            ans=max(ans,sum);
+            if(i==0){
+                ans=sum;
+            }
+            else{
+                 ans=max(sum,ans);
+            }
+            
+            //if sum is negative then set sum to 0 as we would be starting fresh sum from the next subarray as current negative is only decreasing the sum further in the array
             if(sum<0){
                 sum=0;
             }
