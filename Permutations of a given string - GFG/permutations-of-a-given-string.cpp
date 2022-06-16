@@ -6,35 +6,31 @@ using namespace std;
 class Solution
 {
 	public:
-	    int helper(string S,vector<string>&ans){
+	    void helper(string S,string output,vector<string>&finalans){
 	        if(S.size()==0){
-	            string x="";
-	            ans.push_back(x);
-	            return 1;
+	            finalans.push_back(output);
+	            return;
 	        }
-	        int k=0;
 	        for(int i=0;i<S.size();i++){
-	            char firstchar=S[i];
-	            vector<string>ans1;
-	            int smalloutputSize=helper(S.substr(0,i)+S.substr(i+1,S.size()),ans1);
-	            for(int j=0;j<smalloutputSize;j++){
-	                string x="";
-	                x.push_back(firstchar);
-	                x.append(ans1[j]);
-	                ans.push_back(x);
-	                k++;
-	            }
+	            helper(S.substr(0,i)+S.substr(i+1),output+S[i],finalans);
 	        }
-	        return k;
+	        return;
 	    }
 		vector<string>find_permutation(string S)
 		{
 		    // Code here there
-		    string output="";
-		    vector<string>ans;
-		    int size=helper(S,ans);
-		    sort(ans.begin(),ans.end());
-		    return ans;
+		    	vector<string>finalans;
+		    	string output="";
+		    	helper(S,output,finalans);
+		    	set<string>s;
+		    	for(auto i:finalans){
+		    	    s.insert(i);
+		    	}
+		    	finalans.clear();
+		    	for(auto i:s){
+		    	    finalans.push_back(i);
+		    	}
+		    	return finalans;
 		}
 };
 
