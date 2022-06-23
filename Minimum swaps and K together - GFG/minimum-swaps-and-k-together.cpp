@@ -15,37 +15,39 @@ class Solution
 public:
     int minSwap(int arr[], int n, int k) {
         // Complet the function
-        int ans=INT_MAX;
         int count=0;
         for(int i=0;i<n;i++){
             if(arr[i]<=k){
                 count++;
             }
         }
-        
         if(count==n || count==0){
             return 0;
         }
         int i=0;
         int j=0;
-        int bad=0;
+        int minSwaps=INT_MAX;
+        int minAns=0;
         while(j<n){
             if(arr[j]>k){
-                bad++;
+                minAns++;
             }
             if(j-i+1<count){
                 j++;
             }
             else if(j-i+1==count){
-                ans=min(ans,bad);
+                minSwaps=min(minSwaps,minAns);
                 if(arr[i]>k){
-                    bad--;
+                    minAns--;
+                    i++;
                 }
-                i++;
+                else{
+                    i++;
+                }
                 j++;
             }
         }
-        return ans;
+        return minSwaps;
     }
 };
 
