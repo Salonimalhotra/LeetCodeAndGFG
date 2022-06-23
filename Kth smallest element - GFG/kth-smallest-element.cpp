@@ -15,22 +15,20 @@ class Solution{
     // k : find kth smallest element and return using this function
     int kthSmallest(int arr[], int l, int r, int k) {
         //code here
-       priority_queue<int>pq;
-       int i=l;
-       int count=0;
-       while(count<k){
-           pq.push(arr[i]);
-           i++;
-           count++;
-       }
-       while(i<=r){
-           if(pq.top()>arr[i]){
-               pq.pop();
-               pq.push(arr[i]);
-           }
-           i++;
-       }
-       return pq.top();
+        priority_queue<int>maxHeap;
+        int j=l;
+        for(int i=0;i<k;i++){
+            maxHeap.push(arr[j]);
+            j++;
+        }
+        for(int i=j;i<=r;i++){
+            if(maxHeap.top()>arr[i]){
+                maxHeap.pop();
+                maxHeap.push(arr[i]);
+            }
+        }
+        return maxHeap.top();
+        
     }
 };
 
