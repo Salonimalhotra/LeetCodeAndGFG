@@ -2,18 +2,24 @@
 #include<algorithm>
 class Solution {
 public:
-    int dominantIndex(vector<int>& nums) {
-        vector<pair<int,int>>ans;
+    pair<int,int> maxElementIndex(vector<int>&nums){
+        int maxElement=INT_MIN;
+        int maxIndex=-1;
         for(int i=0;i<nums.size();i++){
-            pair<int,int>p;
-            p.first=nums[i];
-            p.second=i;
-            ans.push_back(p);
+            if(nums[i]>maxElement){
+                maxElement=nums[i];
+                maxIndex=i;
+            }
         }
-        sort(ans.begin(),ans.end());
-        pair<int,int>maX=ans[ans.size()-1];
-        for(int i=ans.size()-2;i>=0;i--){
-            if(maX.first<2*ans[i].first){
+        pair<int,int>p;
+        p.first=maxElement;
+        p.second=maxIndex;
+        return p;
+    }
+    int dominantIndex(vector<int>& nums) {
+        pair<int,int>maX=maxElementIndex(nums);        
+        for(int i=nums.size()-1;i>=0;i--){
+            if(nums[i]!=maX.first && maX.first<2*nums[i]){
                 return -1;
             }
         }
