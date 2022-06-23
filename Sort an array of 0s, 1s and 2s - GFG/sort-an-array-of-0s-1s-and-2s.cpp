@@ -10,24 +10,25 @@ class Solution
     public:
     void sort012(int a[], int n)
     {
-        // coode here 
-        int i=0;                      
-        int j=0;
-        int k=n-1;                    
-        while(j<=k){
-            if(a[j]==0){              
-               swap(a[i],a[j]);
-               i++;
-               j++;
+        // code here 
+        int low=0;
+        int high=n-1;
+        int mid=0;
+        while(mid<=high){
+            if(a[mid]==0){
+                swap(a[low],a[mid]);
+                low++;
+                mid++;
             }
-            else if(a[j]==1){
-                j++;
+            else if(a[mid]==1){
+                mid++;
             }
-            else if(a[j]==2){
-                swap(a[j],a[k]);
-                k--;
+            else if(a[mid]==2){
+                swap(a[mid],a[high]);
+                high--;
             }
         }
+        return ;
     }
     
 };
