@@ -11,45 +11,24 @@ public:
 	// Function to find maximum product subarray
 	long long maxProduct(vector<int> arr, int n) {
 	    // code here
-	    //Brute force-O(n^3);
-	   // long long maxProduct=INT_MIN;
-	   //  for(int i=0;i<n;i++){
-	   //      for(int j=i;j<n;j++){
-	   //          long long  product=1;
-	   //          for(int k=i;k<=j;k++){
-	   //              product*=arr[k];
-	   //          }
-	   //          maxProduct=max(maxProduct,product);
-	   //      }
-	   //  }
-	   //  return maxProduct;
-	   long long  product=1;
-	   long long  maxProduct=INT_MIN;
-	   
-	   for(int i=0;i<n;i++){
-	       if(arr[i]!=0){
-	           product*=arr[i];
-	           maxProduct=max(maxProduct,product);
-	       }
-	       else{
-	           product=1;
-	           continue;
-	       }
-	      
-	     }
-	     
-	   product=1;
-	   for(int j=n-1;j>=0;j--){
-	        if(arr[j]!=0){
-	           product*=arr[j];
-	           maxProduct=max(maxProduct,product);
-	       }
-	       else{
-	           product=1;
-	           continue;
-	       }
-	   }
-	   return maxProduct;
+	    long long maxProduct=INT_MIN;
+	    long long int p=1;
+	    for(int i=0;i<arr.size();i++){
+	        p*=arr[i];
+	        maxProduct=max(p,maxProduct);
+	        if(p==0){
+	            p=1;
+	        }
+	    }
+	    p=1;
+	    for(int i=arr.size()-1;i>=0;i--){
+	        p*=arr[i];
+	        maxProduct=max(maxProduct,p);
+	        if(p==0){
+	            p=1;
+	        }
+	    }
+	    return maxProduct;
 	}
 };
 
