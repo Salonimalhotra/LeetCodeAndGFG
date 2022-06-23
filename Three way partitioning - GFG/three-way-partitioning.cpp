@@ -21,8 +21,8 @@ public:
         while(j<=k){
             if(array[j]<a){
                 swap(array[i],array[j]);
-                j++;
                 i++;
+                j++;
             }
             else if(array[j]>=a && array[j]<=b){
                 j++;
