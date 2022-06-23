@@ -17,19 +17,19 @@ class Solution{
       for(int i=0;i<N;i++){
           mp[arr[i]]++;
       }
-      int maxLen=INT_MIN;
+      int ans=INT_MIN;
       for(int i=0;i<N;i++){
           if(mp.find(arr[i]-1)==mp.end()){
-              int len=0;
+              int count=0;
               int x=arr[i];
               while(mp.find(x)!=mp.end()){
-                  len++;
+                  count++;
                   x=x+1;
               }
-              maxLen=max(len,maxLen);
+              ans=max(count,ans);
           }
       }
-      return maxLen;
+      return ans;
     }
 };
 
