@@ -30,23 +30,30 @@ class Solution
             vector<int>ans1;
             int i=0;
             int j=0;
+            int k=0;
             int prev_Element=INT_MIN;
-            while(i<n1 && j<n2){
+            while(i<n1 && j<n2 && k<n3){
                 if(A[i]<B[j]){
                     i++;
                 }
-                else if(A[i]>B[j]){
+                else if(B[j]<C[k]){
                     j++;
                 }
-                else if(A[i]==B[j] && A[i]!=prev_Element && binarySearch(C,0,n3-1,A[i])){
+                else if(A[i]==B[j] && B[j]==C[k] && A[i]!=prev_Element){
                     ans1.push_back(A[i]);
                     prev_Element=A[i];
                     i++;
                     j++;
+                    k++;
                 }
-                else{
+                else if(A[i]==B[j] && B[j]==C[k] && A[i]==prev_Element){
                     i++;
                     j++;
+                    k++;
+                }
+                
+                else{
+                    k++;
                 }
             }
             return ans1;
