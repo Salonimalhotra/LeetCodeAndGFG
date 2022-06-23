@@ -1,27 +1,30 @@
 #include<vector>
 #include<bits/stdc++.h>
-#include<algorithm>
+#include<stack>
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         sort(intervals.begin(),intervals.end());
-        int index=0;
-        for(int i=1;i<intervals.size();i++){
-            if(intervals[i][0]<=intervals[index][1]){
-                intervals[index][1]=max(intervals[index][1],intervals[i][1]);
-               
-            }
-            else {
-                index++;
-                intervals[index][0]=intervals[i][0];
-                intervals[index][1]=intervals[i][1];
-                
+        // vector<vector<int>>ans;
+        stack<vector<int>>s;
+        s.push(intervals[0]);
+        int i=1;
+        while(i<intervals.size()){
+          if(s.top()[1]>=intervals[i][0]){
+              s.top()[1]=max(intervals[i][1],s.top()[1]);
+              i++;
+          }
+            else{
+                s.push(intervals[i]);
+                i++;
             }
         }
+        intervals.clear();
+        while(s.size()!=0){
+            intervals.push_back(s.top());
+            s.pop();
+        }
+        return  intervals;
         
-        for(int i=intervals.size()-1;i>index;i--){
-            intervals.pop_back();
-        }
-        return intervals;
     }
 };
