@@ -11,16 +11,16 @@
  */
 class Solution {
 public:
-    void helper(TreeNode* root,int &sum){   
-        if(root==NULL){
+void helper(TreeNode* root,int &sum){   
+    if(root==NULL){
         return;
     }
    helper(root->right,sum);
-   int originalData=root->val;
-   root->val+=sum;
-   sum+=originalData;
+   sum+=root->val;
+   root->val=sum;
    helper(root->left,sum); 
-    }
+    return;
+ }
     
     TreeNode* bstToGst(TreeNode* root) {
         int sum=0;
