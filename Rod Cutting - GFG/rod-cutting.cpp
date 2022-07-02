@@ -10,21 +10,38 @@ using namespace std;
 
 class Solution{
   public:
-    int ans(int price[],int len[],int n){
-        int dp[n+1][n+1];
+    int helper(int price[],int length[],int n,int maxlen){
+        // if(n==0 || maxlen==0){
+        //     return 0;
+        // }
+        
+        // if(length[n-1]<=maxlen){
+        //     int option1=price[n-1]+helper(price,length,n,maxlen-length[n-1]);
+        //     int option2=helper(price,length,n-1,maxlen);
+        //     return max(option1,option2);
+        // }
+        
+        // else{
+        //     return helper(price,length,n-1,maxlen);
+        // }
+        
+        int ** dp=new int *[n+1];
+        for(int i=0;i<=n;i++){
+            dp[i]=new int[n+1];
+        }
         
         for(int i=0;i<=n;i++){
             dp[i][0]=0;
         }
+        
         for(int j=0;j<=n;j++){
             dp[0][j]=0;
         }
+        
         for(int i=1;i<=n;i++){
             for(int j=1;j<=n;j++){
-                if(len[i-1]<=j){
-                    int x=dp[i-1][j];
-                    int y=price[i-1]+dp[i][j-(len[i-1])];
-                    dp[i][j]=max(x,y);
+                if(length[i-1]<=j){
+                    dp[i][j]=max(price[i-1]+dp[i][j-length[i-1]],dp[i-1][j]);
                 }
                 else{
                     dp[i][j]=dp[i-1][j];
@@ -35,11 +52,18 @@ class Solution{
     }
     int cutRod(int price[], int n) {
         //code here
-        int len[n];
+        // int **dp=new int*[n+1];
+        // for(int i=0;i<=n;i++){
+        //     dp[i]=new int[n+1];
+        // }
+        
+        int * length=new int[n];
         for(int i=0;i<n;i++){
-            len[i]=i+1;
+            length[i]=i+1;
         }
-        return ans(price,len,n);
+        
+        return helper(price,length,n,n);
+        
         
     }
 };
