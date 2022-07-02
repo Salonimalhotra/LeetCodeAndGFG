@@ -6,55 +6,55 @@ using namespace std;
 class Solution{
 
   public:
-    bool ** subsetSum(int arr[],int n,int range){
-        //dp table containing values
-        bool ** dp=new bool *[n+1];
+    int SubsetSum(int arr[],int n,int sum){
+        bool **dp=new bool*[n+1];
         for(int i=0;i<=n;i++){
-            dp[i]=new bool[range+1];
+            dp[i]=new bool[sum+1];
         }
         
         for(int i=0;i<=n;i++){
-            dp[i][0]=true;
-        }
-        for(int j=1;j<=range;j++){
-            dp[0][j]=false;
-        }
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=range;j++){
-                if(arr[i-1]<=j){
-                    dp[i][j]=dp[i-1][j] || dp[i-1][j-arr[i-1]];
-                    
+            for(int j=0;j<=sum;j++){
+                if(i==0){
+                    dp[i][j]=false;
                 }
-                else if(arr[i-1]>j){
+                if(j==0){
+                    dp[i][j]=true;
+                }
+            }
+        }
+        
+        
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=sum;j++){
+                if(arr[i-1]<=j){
+                    bool option1=dp[i-1][j-arr[i-1]];
+                    bool option2=dp[i-1][j];
+                    dp[i][j]=option1 || option2;
+                }
+                else{
                     dp[i][j]=dp[i-1][j];
                 }
             }
         }
-        return dp;
+        
+        int minDiff=INT_MAX;
+        for(int j=0;j<=sum;j++){
+            if(dp[n][j]==true){
+                minDiff=min(minDiff,abs(sum-2*j));
+            }
+        }
+        return minDiff;
     }
 	int minDifference(int arr[], int n)  { 
 	    // Your code goes here
-	    int sum=0;
+	    int start=0;
+	    int end=0;
 	    for(int i=0;i<n;i++){
-	        sum+=arr[i];
+	        end+=arr[i];
 	    }
-	    bool ** dp=subsetSum(arr,n,sum);
 	    
-	    vector<int>ans;
-	    
-	    for(int j=0;j<=sum/2;j++){
-	        if(dp[n][j]==true){
-	            ans.push_back(j);
-	        }
-	    }
-	    int min_diff=INT_MAX;
-	    for(int i=0;i<ans.size();i++){
-	        if(sum-2*ans[i]<min_diff){
-	            min_diff=sum-2*ans[i];
-	        }
-	    }
-	    return min_diff;
-	} 
+	    return SubsetSum(arr,n,end);
+		} 
 };
 
 
