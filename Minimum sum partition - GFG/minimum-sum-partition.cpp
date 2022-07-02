@@ -38,7 +38,7 @@ class Solution{
         }
         
         int minDiff=INT_MAX;
-        for(int j=0;j<=sum;j++){
+        for(int j=0;j<=sum/2;j++){
             if(dp[n][j]==true){
                 minDiff=min(minDiff,abs(sum-2*j));
             }
