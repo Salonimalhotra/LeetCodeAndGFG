@@ -1,26 +1,24 @@
+#include<climits>
 #include<vector>
 class Solution {
 public:
     vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
-        vector<bool>v(candies.size(),extraCandies);
-        int n=candies.size();
-        for(int i=0;i<n;i++){
-            int x=candies[i]+extraCandies;
-            bool ans=true;
-            for(int j=0;j<n;j++){
-                if(j==i){
-                    continue;
-                }
-                else{
-                    if(candies[j]>x){
-                        ans=false;
-                        break;
-                    }
-                }
+        vector<bool>v(candies.size(),false);
+        int maxCandies=INT_MIN;
+        for(int i=0;i<candies.size();i++){
+            if(candies[i]>maxCandies){
+                maxCandies=candies[i];
             }
-            v[i]=ans;            
         }
         
+        for(int i=0;i<candies.size();i++){
+            if(candies[i]+extraCandies>=maxCandies){
+                v[i]=true;
+            }
+            else{
+                v[i]=false;
+            }
+        }
         return v;
     }
     
