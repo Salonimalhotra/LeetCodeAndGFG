@@ -5,22 +5,27 @@ using namespace std;
  // } Driver Code Ends
 class Solution{
     public:
-    
-    int longestCommonSubstr (string s1, string s2, int x, int y)
+    // int longestCommonSubstr(string S1, string S2, int n, int m)
+    int longestCommonSubstr (string S1, string S2, int n, int m)
     {
+        // your code here
+        int ** dp=new int*[n+1];
+        for(int i=0;i<=n;i++){
+            dp[i]=new int[m+1];
+        }
         
-        int dp[x+1][y+1];
-        for(int i=0;i<=x;i++){
-            for(int j=0;j<=y;j++){
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
                 if(i==0 || j==0){
                     dp[i][j]=0;
                 }
             }
         }
         
-        for(int i=1;i<=x;i++){
-            for(int j=1;j<=y;j++){
-                if(s1[i-1]==s2[j-1]){
+        
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(S1[i-1]==S2[j-1]){
                     dp[i][j]=1+dp[i-1][j-1];
                 }
                 else{
@@ -29,15 +34,14 @@ class Solution{
             }
         }
         
-        int ans=INT_MIN;
-        for(int i=0;i<=x;i++){
-            for(int j=0;j<=y;j++){
-                ans=max(ans,dp[i][j]);
+        int max_Ans=INT_MIN;
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
+                max_Ans=max(max_Ans,dp[i][j]);
             }
         }
-        return ans;
-      
-    
+        
+        return max_Ans;
     }
 };
 
