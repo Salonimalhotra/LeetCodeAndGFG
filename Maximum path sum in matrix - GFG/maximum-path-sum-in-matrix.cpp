@@ -6,38 +6,38 @@ using namespace std;
 
  // } Driver Code Ends
 // User function Template for C++
-
+#include<vector>
+#include<bits/stdc++.h>
 class Solution{
 public:
     int maximumPath(int N, vector<vector<int>> Matrix)
     {
         // code here
-        int rows=Matrix.size();
-        int cols=Matrix[0].size();
-        int dp[rows][cols];
-        for(int j=0;j<cols;j++){
-            dp[rows-1][j]=Matrix[rows-1][j];
-        }
-        for(int i=rows-2;i>=0;i--){
-            for(int j=cols-1;j>=0;j--){
-                if(j==0){
-                    dp[i][j]=Matrix[i][j]+max(dp[i+1][j],dp[i+1][j+1]);
-                }
-                else if(j==cols-1){
-                    dp[i][j]=Matrix[i][j]+max(dp[i+1][j-1],dp[i+1][j]);
-                }
-                else {
-                    dp[i][j]=Matrix[i][j]+max(dp[i+1][j+1],max(dp[i+1][j],dp[i+1][j-1]));
-                }
-            }      
+        vector<vector<int>>dp(N,vector<int>(N,0));
+        
+        for(int j=0;j<N;j++){
+            dp[N-1][j]=Matrix[N-1][j];
         }
         
-        int max_ans=INT_MIN;
-        for(int j=0;j<cols;j++){
-            max_ans=max(dp[0][j],max_ans);
+        for(int i=N-2;i>=0;i--){
+            for(int j=N-1;j>=0;j--){
+                if(j==N-1){
+                    dp[i][j]=max(dp[i+1][j],dp[i+1][j-1])+Matrix[i][j];
+                }
+                else if(j==0){
+                    dp[i][j]=max(dp[i+1][j],dp[i+1][j+1])+Matrix[i][j];
+                }
+                else{
+                    dp[i][j]=Matrix[i][j]+max(dp[i+1][j],max(dp[i+1][j-1],dp[i+1][j+1]));
+                }
+            }
         }
-        return max_ans;
-      
+        int maxAns=INT_MIN;
+        for(int j=0;j<N;j++){
+            maxAns=max(maxAns,dp[0][j]);
+        }
+        
+        return maxAns;
     }
 };
 
