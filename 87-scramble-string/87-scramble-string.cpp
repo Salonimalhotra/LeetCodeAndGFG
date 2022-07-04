@@ -1,46 +1,41 @@
-#include<string>
-#include<unordered_map>
 class Solution {
 public:
-   bool solve(string A,string B,unordered_map<string,bool>&map){
-    if(A.compare(B)==0){
-        return true;
-    }
-    if(A.length()<=1){
-        return false;
-    }
-       
-    string x;
-    x.append(A);
-    x.append(" ");
-    x.append(B);
-    
-    if(map.find(x)!=map.end()){
-        return map[x];
-    }   
-    
-    bool flag=false;
-    int n=B.size();
-    for(int i=1;i<n;i++){
-       bool condition1=solve(A.substr(0,i),B.substr(0,i),map) && solve(A.substr(i,n-i),B.substr(i,n-i),map);            bool condition2=solve(A.substr(0,i),B.substr(n-i,i),map) && solve(A.substr(i,n-i),B.substr(0,n-i),map);
-        if(condition1 || condition2){
-            flag=true;
-            break;
+    bool helper(string s1,string s2,unordered_map<string,bool>&map){
+        if(s1.compare(s2)==0){
+            return true;
         }
-    }
-       
-    map[x]=flag;   
-    return flag;
-}
-    bool isScramble(string s1, string s2) {
-       if(s1.length()!=s2.length()){
+        else if(s1.size()==0 || s2.size()==0){
+            return false;
+        }
+        string temp="";
+        temp.append(s1);
+        temp.push_back(' ');
+        temp.append(s2);
+        if(map.find(temp)!=map.end()){
+            return map[temp];
+        }
+        
+        bool flag=false;
+        int n=s1.size();
+        for(int i=1;i<=n-1;i++){
+            bool condition1=helper(s1.substr(0,i),s2.substr(n-i,i),map) && helper(s1.substr(i,n-i),s2.substr(0,n-i),map);
+            bool condition2=helper(s1.substr(0,i),s2.substr(0,i),map) && helper(s1.substr(i),s2.substr(i),map);
+            if(condition1==true || condition2==true){
+                map[temp]=true;
+                return true;
+            }
+        }
+        map[temp]=false;
         return false;
     }
-     if(s1.length()==0 && s2.length()==0){
-        return true;
-    }
-    unordered_map<string,bool>map;
-    bool ans=solve(s1,s2,map);
-        return ans;
+    bool isScramble(string s1, string s2) {
+      if(s1.size()!=s2.size()){
+          return false;
+      }   
+      else if(s1.size()==0 && s2.size()==0){
+          return true;
+      }
+      unordered_map<string,bool>map;  
+      return helper(s1,s2,map);  
     }
 };
