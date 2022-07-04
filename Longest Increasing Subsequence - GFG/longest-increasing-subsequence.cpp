@@ -12,27 +12,21 @@ class Solution
     int longestSubsequence(int n, int a[])
     {
        // your code here
-       int *output=new int[n];
-       output[0]=1;
+       int * dp=new int[n];
+       dp[0]=1;
+       int maxAns=1;
        for(int i=1;i<n;i++){
-           output[i]=1;
+           int temp=1;
            for(int j=i-1;j>=0;j--){
-               if(a[j]<a[i]){
-                   if(output[j]+1>output[i]){
-                       output[i]=1+output[j];
-                   }
+               if(a[i]>a[j]){
+                   temp=max(temp,dp[j]+1);
                }
-               
            }
+           dp[i]=temp;
+           maxAns=max(maxAns,dp[i]);
        }
        
-       int best_ans=1;
-       for(int i=0;i<n;i++){
-           best_ans=max(best_ans,output[i]);
-       }
-       return best_ans;
-       
-       
+       return maxAns;
     }
 };
 
