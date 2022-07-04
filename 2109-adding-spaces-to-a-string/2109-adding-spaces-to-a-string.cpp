@@ -5,7 +5,7 @@ public:
         string newString="";
         int i=0;
         int j=0;
-        while(i<s.size()){
+        while(i<s.size()  && j<spaces.size()){
              if(i==spaces[j]){
                  newString+=' ';
                  j++;
@@ -14,9 +14,7 @@ public:
                 newString+=s[i];
                 i++;
             }
-            if(j==spaces.size()){
-                break;
-            }
+            
             
         }
         
