@@ -28,10 +28,10 @@ public:
     int matrixMultiplication(int N, int arr[])
     {
         // code here
-        int **dp=new int*[N+1];
-        for(int i=0;i<=N;i++){
-            dp[i]=new int[N+1];
-            for(int j=0;j<=N;j++){
+        int **dp=new int*[N];
+        for(int i=0;i<N;i++){
+            dp[i]=new int[N];
+            for(int j=0;j<N;j++){
                 dp[i][j]=-1;
             }
         }
