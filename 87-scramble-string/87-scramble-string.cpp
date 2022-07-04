@@ -4,7 +4,7 @@ public:
         if(s1.compare(s2)==0){
             return true;
         }
-        else if(s1.size()==0 || s2.size()==0){
+        else if(s1.size()<=1 || s2.size()<=1){
             return false;
         }
         string temp="";
