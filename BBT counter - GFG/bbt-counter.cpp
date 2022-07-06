@@ -8,22 +8,24 @@ using namespace std;
 #include<cmath>
 class Solution {
   public:
+  
     long long int countBT(int h) { 
-        // code here    
-        long long int ans[h+1];
-        ans[0]=1;
-        ans[1]=1;
-        long long int mod=pow(10,9)+7;
-        for(int i=2;i<=h;i++){
-            long long int option1=ans[i-1]%mod;
-            long long int option2=ans[i-2]%mod;
-            
-            long long int temp1=(option1*option1)%mod;
-            long long int temp2=2*(option1*option2)%mod;
-            ans[i]=(temp1+temp2)%mod;
+        // code here
+        int mod=pow(10,9)+7;
+        int * dp=new int[h+1];
+        for(int i=0;i<=h;i++){
+            dp[i]=0;
         }
-        
-        return ans[h];
+        dp[0]=1;
+        dp[1]=1;
+        for(int i=2;i<=h;i++){
+            long long int x=dp[i-1];
+            long long int y=dp[i-2];
+            long long int option1=(x*x)%mod;
+            long long int option2=(2*x*y)%mod;
+            dp[i]=(option1+option2)%mod;
+        }
+        return dp[h];
     }
 };
 
