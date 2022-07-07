@@ -10,23 +10,24 @@ public:
 	int maxSubstring(string S)
 	{
 	    // Your code goes here
-	    int max_ans=-1;
 	    int ans=0;
+	    int maxAns=INT_MIN;
 	    for(int i=0;i<S.size();i++){
-	        if(S[i]=='0'){
-	            ans+=1;
+	        if(S[i]=='1'){
+	            ans--;
 	        }
-	        else if(S[i]=='1'){
-	            ans-=1;
+	        else if(S[i]=='0'){
+	            ans++;
 	        }
-	        if(ans>max_ans){
-	            max_ans=ans;
+	        
+	        if(ans>maxAns){
+	            maxAns=ans;
 	        }
 	        if(ans<0){
 	            ans=0;
 	        }
 	    }
-	    return max_ans;
+	    return maxAns;
 	}
 };
 
