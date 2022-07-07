@@ -7,29 +7,27 @@ class Solution{
 		
 
 	public:
-	int maxSumIS(int a[], int n)  
+	int maxSumIS(int arr[], int n)  
 	{  
 	    // Your code goes here
-	    int *output=new int[n];
-       output[0]=a[0];
-       for(int i=1;i<n;i++){
-           output[i]=a[i];
-           for(int j=i-1;j>=0;j--){
-               if(a[j]<a[i]){
-                   if(output[j]+a[i]>output[i]){
-                       output[i]=a[i]+output[j];
-                   }
-               }
-               
-           }
-       }
-       
-       int best_ans=INT_MIN;
-       for(int i=0;i<n;i++){
-           best_ans=max(best_ans,output[i]);
-       }
-       return best_ans;
-       
+	    int * dp=new int[n];
+	    int maxSum=INT_MIN;
+	    dp[0]=arr[0];
+	    maxSum=arr[0];
+	    for(int i=1;i<n;i++){
+	        dp[i]=arr[i];
+	       for(int j=i-1;j>=0;j--){
+	          if(arr[i]>arr[j]){
+	              if(dp[j]+arr[i]>dp[i]){
+	                  dp[i]=dp[j]+arr[i];
+	                  
+	              }
+	          }
+	          
+	       }
+	       maxSum=max(maxSum,dp[i]);
+	    }
+	    return maxSum;
 	}  
 };
 
