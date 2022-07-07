@@ -27,26 +27,17 @@ int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
                 if(i==0 || j==0 || k==0){
                     dp[i][j][k]=0;
                 }
-            }
-        }
-    }
-    
-    for(int i=1;i<=n1;i++){
-        for(int j=1;j<=n2;j++){
-            for(int k=1;k<=n3;k++){
-                if(A[i-1]==B[j-1] && B[j-1]==C[k-1]){
+                else if(A[i-1]==B[j-1] && B[j-1]==C[k-1]){
                     dp[i][j][k]=1+dp[i-1][j-1][k-1];
                 }
                 else{
                     int option1=dp[i-1][j][k];
                     int option2=dp[i][j-1][k];
                     int option3=dp[i][j][k-1];
-                    int option4=dp[i][j-1][k-1];
-                    int option5=dp[i-1][j][k-1];
-                    int option6=dp[i-1][j-1][k];
-                    
+                    int option4=dp[i-1][j-1][k];
+                    int option5=dp[i][j-1][k-1];
+                    int option6=dp[i-1][j][k-1];
                     dp[i][j][k]=max(option1,max(option2,max(option3,max(option4,max(option5,option6)))));
-                    
                 }
             }
         }
