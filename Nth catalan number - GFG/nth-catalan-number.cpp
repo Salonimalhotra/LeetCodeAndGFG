@@ -17,15 +17,16 @@ class Solution
     cpp_int findCatalan(int n) 
     {
         //code here
-        cpp_int dp[n+1];
+        cpp_int * dp=new cpp_int[n+1];
+        for(int i=0;i<=n;i++){
+            dp[i]=0;
+        }
         dp[0]=1;
         dp[1]=1;
         for(int i=2;i<=n;i++){
-            cpp_int ans=0;
-            for(int j=0;j<i;j++){
-                ans+=dp[j]*dp[i-j-1];
+            for(int j=0;j<=i-1;j++){
+                dp[i]+=dp[j]*dp[i-j-1];
             }
-            dp[i]=ans;
         }
         return dp[n];
     }
