@@ -1,5 +1,5 @@
 # Nth catalan number
-## Easy 
+##  Easy 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a number <strong>N</strong>. The task is to find the N<sup>th</sup> catalan number.<br>
 The first few Catalan numbers for <strong>N = 0, 1, 2, 3, </strong>… are <strong>1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, …<br>
