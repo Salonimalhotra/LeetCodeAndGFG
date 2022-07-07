@@ -10,24 +10,36 @@ using namespace std;
 int maxProfit(vector<int>&price){
     //Write your code here..
     int n=price.size();
-    vector<int>profit(n,0);
-    int maxPrice=price[n-1];
-    
+    int profit[price.size()];
+    profit[n-1]=0;
+    int maxElement=price[n-1];
     for(int i=n-2;i>=0;i--){
-        if(price[i]>maxPrice){
-            maxPrice=price[i];
+        if(price[i]>maxElement){
+            maxElement=price[i];
         }
-        profit[i]=max(profit[i+1],maxPrice-price[i]);
+        int option1=maxElement-price[i];
+        int option2=profit[i+1];
+        profit[i]=max(option1,option2);
     }
     
-    int minPrice=price[0];
+    // for(int i=0;i<n;i++){
+    //     cout<<profit[i]<<" ";
+    // }
+    // cout<<endl;
+    int minElement=price[0];
     for(int i=1;i<n;i++){
-        if(minPrice>price[i]){
-            minPrice=price[i];
+        if(price[i]<minElement){
+            minElement=price[i];
         }
-        profit[i]=max(profit[i-1],profit[i]+price[i]-minPrice);
+        int option1=profit[i-1];
+        int option2=price[i]-minElement + profit[i];
+        profit[i]=max(option1,option2);
     }
     
+    // for(int i=0;i<n;i++){
+    //     cout<<profit[i]<<" ";
+    // }
+    // cout<<endl;
     return profit[n-1];
 }
 
