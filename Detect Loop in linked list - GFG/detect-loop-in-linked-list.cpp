@@ -42,6 +42,7 @@ struct Node
     }
 
 */
+ 
 class Solution
 {
     public:
@@ -49,21 +50,19 @@ class Solution
     bool detectLoop(Node* head)
     {
         // your code here
-        if(head==NULL){
-            return false;
-        }
-        Node * slow=head;
-        Node * fast=head->next;
-        while(fast!=NULL && fast->next!=NULL){
-            if(slow==fast){
+        unordered_map<struct Node*,bool>map;
+        Node * curr=head;
+        while(curr!=NULL){
+            if(map.find(curr)!=map.end()){
                 return true;
             }
-            slow=slow->next;
-            fast=fast->next->next;
+            else{
+                map[curr]=true;
+            }
+            curr=curr->next;
         }
-        return false;
-        
-    }
+       return false;
+       }
 };
 
 
