@@ -46,34 +46,37 @@ struct Node
 class Solution
 {
     public:
-    Node *compute(Node *head)
-    {
-        // your code goes here
+    Node * rev(Node * head){
         if(head==NULL || head->next==NULL){
             return head;
         }
-        Node * secondHead=compute(head->next);
-        head->next=secondHead;
-        int maindata=head->data;
-        bool check=false;
-        while(secondHead!=NULL){
-            if(secondHead->data>maindata){
-                check=true;
-                break;
+        Node * secondhead=rev(head->next);
+        head->next->next=head;
+        head->next=NULL;
+        return secondhead;
+    }
+    Node *compute(Node *head)
+    {
+        // your code goes here
+        Node * revhead=rev(head);
+        int maxData=revhead->data;
+        Node * prev=revhead;
+        Node * curr=revhead->next;
+        while(curr!=NULL){
+            if(curr->data<maxData){
+               Node * x=curr;
+               prev->next=curr->next;
+               delete x;
+               curr=curr->next;
             }
             else{
-                secondHead=secondHead->next;
+                maxData=max(maxData,curr->data);
+                prev=curr;
+                curr=curr->next;
             }
+            
         }
-        if(check==false){
-            return head;
-        }
-        else{
-            Node * x=head;
-            head=head->next;
-            delete x;
-            return head;
-        }
+        return rev(revhead);
     }
     
 };
