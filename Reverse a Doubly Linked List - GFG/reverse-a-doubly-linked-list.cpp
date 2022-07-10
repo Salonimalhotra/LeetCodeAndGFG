@@ -104,7 +104,7 @@ Node* reverseDLL(Node * head)
     if(not head){
         return head;
     }
-    if(not head->next){
+    if(head->next==NULL){
         head->prev = NULL;
         return head;
     }
