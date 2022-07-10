@@ -101,28 +101,21 @@ struct Node
 Node* reverseDLL(Node * head)
 {
     //Your code here
-    if(head==NULL || head->next==NULL){
+    if(not head){
         return head;
     }
-    else{
-        Node * previous=NULL;
-        Node * current=head;
-        Node * nextOne;
-        
-        while(current!=NULL){
-            nextOne=current->next;
-            
-            current->next=previous;
-            current->prev=nextOne;
-            
-            
-            previous=current;
-            current=nextOne;
-            
-        }
-        return previous;
+    if(not head->next){
+        head->prev = NULL;
+        return head;
     }
     
+    Node* newHead = reverseDLL(head->next);
+    
+    head->next->next = head;
+    head->prev = head->next;
+    head->next = NULL;
+    
+    return newHead;
 }
 
 
