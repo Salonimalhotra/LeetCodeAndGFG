@@ -68,16 +68,16 @@ struct Node {
 Node *removeDuplicates(Node *head)
 {
  // your code goes here
- if(head==NULL || head->next==NULL){
-     return head;
+ Node * curr=head;
+ while(curr!=NULL && curr->next!=NULL){
+     if(curr->data==curr->next->data){
+         Node * temp=curr->next;
+         curr->next=curr->next->next;
+         delete temp;
+     }
+     else{
+         curr=curr->next;
+     }
  }
- if(head->data==head->next->data){
-     Node * temp=head;
-     head=head->next;
-     delete temp;
-     return removeDuplicates(head);
- }
- else{
-     head->next=removeDuplicates(head->next);
- }
+ return head;
 }
