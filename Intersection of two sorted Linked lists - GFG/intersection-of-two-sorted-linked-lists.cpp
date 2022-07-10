@@ -84,42 +84,34 @@ struct Node
 Node* findIntersection(Node* head1, Node* head2)
 {
     // Your Code Here
-    unordered_map<int,int>map;
-    Node * temp=head1;
-    while(temp!=NULL){
-        map[temp->data]++;
-        temp=temp->next;
+    if(head1==NULL || head2==NULL){
+        return NULL;
     }
+    Node * temp1=head1;
+    Node * temp2=head2;
     Node * newhead=NULL;
     Node * newtail=NULL;
-    temp=head2;
-    while(temp!=NULL){
-        if(map.find(temp->data)!=map.end()){
+    while(temp1!=NULL && temp2!=NULL){
+        if(temp1->data==temp2->data){
             if(newhead==NULL){
-                Node * newnode=new Node(temp->data);
+                Node * newnode=new Node(temp1->data);
                 newhead=newnode;
                 newtail=newnode;
-                map[temp->data]--;
-                if(map[temp->data]==0){
-                    map.erase(temp->data);
-                }
-                temp=temp->next;
             }
             else{
-                Node * newnode=new Node(temp->data);
+                Node * newnode=new Node(temp1->data);
                 newtail->next=newnode;
                 newtail=newnode;
-                map[temp->data]--;
-                if(map[temp->data]==0){
-                    map.erase(temp->data);
-                }
-                temp=temp->next;
             }
+            temp1=temp1->next;
+            temp2=temp2->next;
+        }
+        else if(temp1->data<temp2->data){
+            temp1=temp1->next;
         }
         else{
-            temp=temp->next;
+            temp2=temp2->next;
         }
-        
     }
     return newhead;
 }
