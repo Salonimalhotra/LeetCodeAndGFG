@@ -78,15 +78,13 @@ class Solution{
                  head2=head2->next;
              }
         }
-        while(head1!=NULL){
+        if(head1!=NULL){
             newtail->next=head1;
-            newtail=head1;
-            head1=head1->next;
+            
         }
-        while(head2!=NULL){
+        else if(head2!=NULL){
             newtail->next=head2;
-            newtail=head2;
-            head2=head2->next;
+           
         }
         return newhead;
     }
