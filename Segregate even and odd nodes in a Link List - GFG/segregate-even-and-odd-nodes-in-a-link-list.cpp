@@ -78,17 +78,17 @@ public:
            }
        }
       
-       if(evenhead == NULL)
-    		return oddhead;
-    	if(oddhead == NULL)
-    		return evenhead;
-    	
-    	oddtail->next = NULL;
-    	eventail->next = NULL;
-    
-    	eventail->next = oddhead;
-    
-    	return evenhead;
+       if(evenhead==NULL){
+           return oddhead;
+       }
+        if(eventail!=NULL){
+           eventail->next=NULL;
+       }
+       if(oddhead!=NULL){
+           eventail->next=oddhead;
+           oddtail->next=NULL;
+       }
+        return evenhead;     
       
     }
 };
