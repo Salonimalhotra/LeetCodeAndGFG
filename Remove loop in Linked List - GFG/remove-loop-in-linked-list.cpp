@@ -72,7 +72,7 @@ struct Node
 };
 
 */
-
+#include<unordered_map>
 class Solution
 {
     public:
@@ -81,39 +81,19 @@ class Solution
     {
         // code here
         // just remove the loop without losing any nodes
-        if(head==NULL){
+        unordered_map<Node *,bool>map;
+        Node * temp=head;
+        while(temp!=NULL && map.find(temp->next)==map.end()){
+            map[temp]=true;
+            temp=temp->next;
+        }
+        if(temp==NULL){
             return;
         }
-        Node * slow=head;
-        Node * fast=head;
-        
-        while(fast!=NULL && fast->next!=NULL){
-            slow=slow->next;
-            fast=fast->next->next;
-            if(slow==fast){
-                break;
-            }
-        }
-        
-        if(slow!=fast){
+        else{
+            temp->next=NULL;
             return;
         }
-        
-        slow=head;
-        if(slow==fast){
-            while(fast->next!=slow){
-                fast=fast->next;
-            }
-            fast->next=NULL;
-            return;
-        }
-        while(slow->next!=fast->next){
-            slow=slow->next;
-            fast=fast->next;
-        }
-        fast->next=NULL;
-        return ;
-        
     }
 };
 
