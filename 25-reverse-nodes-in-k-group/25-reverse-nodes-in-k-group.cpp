@@ -8,55 +8,63 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
+class Pair{
+    public:
+    ListNode * head;
+    ListNode * tail;
+};
 class Solution {
 public:
-     ListNode * reverseLL( ListNode* head){
-        if(head==NULL || head->next==NULL){
-            return head;
+    Pair rev(ListNode * head){
+        if(head==NULL){
+            Pair ans;
+            ans.head=NULL;
+            ans.tail=NULL;
+            return ans;
         }
-         ListNode* newhead=reverseLL(head->next);
-        head->next->next=head;
-        head->next=NULL;
-        return newhead;
+        else if(head->next==NULL){
+            Pair ans;
+            ans.head=head;
+            ans.tail=head;
+            return ans;
+        }
+           Pair semiAns=rev(head->next);
+           semiAns.tail->next=head;
+           head->next=NULL;
+           Pair finalAns;
+           finalAns.head=semiAns.head;
+           finalAns.tail=head;
+           return finalAns;        
     }
-    
-    int length(ListNode * head){
+    int len(ListNode * head){
         if(head==NULL){
             return 0;
         }
-        else{
-            return 1+length(head->next);
-        }
+        return 1+len(head->next);
     }
-        
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(head==NULL){
+        if(head==NULL || head->next==NULL || k==0){
             return head;
         }
-        else if(head->next==NULL){
+        else if(k>len(head)){
             return head;
         }
-        else if(k==0){
-            return head;
+        else if(k==len(head)){
+            Pair ans=rev(head);
+            return ans.head;
         }
-        else if(k>length(head)){
-           return head;
+        int cnt=0;
+        ListNode * temp=head;
+        while(temp!=NULL && cnt<k-1){
+            temp=temp->next;
+            cnt++;
         }
-        else if(k==length(head)){
-             return reverseLL(head);
-        }
-         ListNode * curr=head;
-        int count=0;
-        while(curr!=NULL && count<k-1){
-            curr=curr->next;
-            count++;
-        }
-         ListNode * temp=curr->next;
-        curr->next=NULL;
-         ListNode * newhead=reverseLL(head);
-         ListNode* newtail=reverseKGroup(temp,k);
-        head->next=newtail;
-        return newhead;
+        ListNode * firstTail=temp;
+        ListNode * secondHead=firstTail->next;
+        firstTail->next=NULL;
+        ListNode * semiAns=reverseKGroup(secondHead,k);
+        Pair revAns=rev(head);
+        revAns.tail->next=semiAns;
+        return revAns.head;
     }
 };
