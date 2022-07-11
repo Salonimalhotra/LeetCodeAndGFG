@@ -88,7 +88,7 @@ class Solution
         Node * newhead=NULL;
         Node *newtail=NULL;
         
-        while(carry!=0 || sum!=0 || temp1!=NULL || temp2!=NULL){
+        while(carry!=0  || temp1!=NULL || temp2!=NULL){
             if(temp1!=NULL && temp2!=NULL){
                 sum+=temp1->data+temp2->data;
                 temp1=temp1->next;
