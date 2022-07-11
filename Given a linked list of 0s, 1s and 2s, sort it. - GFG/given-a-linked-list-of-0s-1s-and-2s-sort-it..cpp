@@ -36,93 +36,130 @@ class Solution
     Node* segregate(Node *head) {
         
         // Add code here
-        Node * onehead=NULL;
-        Node * onetail=NULL;
+        // Node * onehead=NULL;
+        // Node * onetail=NULL;
         
-        Node * zerohead=NULL;
-        Node * zerotail=NULL;
+        // Node * zerohead=NULL;
+        // Node * zerotail=NULL;
         
-        Node * twohead=NULL;
-        Node * twotail=NULL;
+        // Node * twohead=NULL;
+        // Node * twotail=NULL;
         
+        // Node * temp=head;
+        // while(temp!=NULL){
+        //     if(temp->data==1){
+        //         if(onehead==NULL){
+        //             onehead=temp;
+        //             onetail=temp;
+        //         }
+        //         else{
+        //             onetail->next=temp;
+        //             onetail=temp;
+        //         }
+        //         temp=temp->next;
+        //     }
+        //     else if(temp->data==0){
+        //         if(zerohead==NULL){
+        //             zerohead=temp;
+        //             zerotail=temp;
+        //         }
+        //         else{
+        //             zerotail->next=temp;
+        //             zerotail=temp;
+        //         }
+        //         temp=temp->next;
+        //     }
+        //     else if(temp->data==2){
+        //         if(twohead==NULL){
+        //             twohead=temp;
+        //             twotail=temp;
+        //         }
+        //         else{
+        //             twotail->next=temp;
+        //             twotail=temp;
+        //         }
+        //         temp=temp->next;
+        //     }
+        // }
+        
+        
+        // if(zerohead==NULL){
+        //     if(onehead!=NULL && twohead!=NULL){
+        //         onetail->next=twohead;
+        //         twotail->next=NULL;
+        //         return onehead;
+        //     }
+        //     else if(onehead==NULL){
+        //         if(twohead==NULL){
+        //             return NULL;
+        //         }
+        //         else{
+        //             twotail->next=NULL;
+        //             return twohead;
+        //         }
+        //     }
+        //     else if(twohead==NULL && onehead!=NULL){
+        //           onetail->next=NULL;
+        //           return onehead;
+        //     }
+        // }
+        // else{
+        //       if(onehead!=NULL && twohead!=NULL){
+        //         zerotail->next=onehead;
+        //         onetail->next=twohead;
+        //         twotail->next=NULL;
+        //         // return zerohead;
+        //       }
+        //       else if(onehead==NULL && twohead!=NULL){
+        //         zerotail->next=twohead;
+        //         twotail->next=NULL;
+        //         // return zerohead;
+        //       }
+        //       else if(onehead!=NULL && twohead==NULL){
+        //           zerotail->next=onehead;
+        //           onetail->next=NULL;
+                  
+        //       }
+        //       return zerohead;
+        // }
+        int countZ=0;
+        int countO=0;
+        int countT=0;
         Node * temp=head;
         while(temp!=NULL){
-            if(temp->data==1){
-                if(onehead==NULL){
-                    onehead=temp;
-                    onetail=temp;
-                }
-                else{
-                    onetail->next=temp;
-                    onetail=temp;
-                }
-                temp=temp->next;
+            if(temp->data==0){
+                countZ++;
             }
-            else if(temp->data==0){
-                if(zerohead==NULL){
-                    zerohead=temp;
-                    zerotail=temp;
-                }
-                else{
-                    zerotail->next=temp;
-                    zerotail=temp;
-                }
-                temp=temp->next;
+            else if(temp->data==1){
+                countO++;
             }
-            else if(temp->data==2){
-                if(twohead==NULL){
-                    twohead=temp;
-                    twotail=temp;
-                }
-                else{
-                    twotail->next=temp;
-                    twotail=temp;
-                }
-                temp=temp->next;
+            else{
+                countT++;
             }
+            temp=temp->next;
         }
         
-        
-        if(zerohead==NULL){
-            if(onehead!=NULL && twohead!=NULL){
-                onetail->next=twohead;
-                twotail->next=NULL;
-                return onehead;
+         temp=head;
+        while(temp!=NULL){
+            while(countZ!=0){
+                temp->data=0;
+                temp=temp->next;
+                countZ--;
             }
-            else if(onehead==NULL){
-                if(twohead==NULL){
-                    return NULL;
-                }
-                else{
-                    twotail->next=NULL;
-                    return twohead;
-                }
+             while(countO!=0){
+                temp->data=1;
+                temp=temp->next;
+                countO--;
             }
-            else if(twohead==NULL && onehead!=NULL){
-                  onetail->next=NULL;
-                  return onehead;
+            
+            while(countT!=0){
+                temp->data=2;
+                temp=temp->next;
+                countT--;
             }
+            
         }
-        else{
-              if(onehead!=NULL && twohead!=NULL){
-                zerotail->next=onehead;
-                onetail->next=twohead;
-                twotail->next=NULL;
-                // return zerohead;
-              }
-              else if(onehead==NULL && twohead!=NULL){
-                zerotail->next=twohead;
-                twotail->next=NULL;
-                // return zerohead;
-              }
-              else if(onehead!=NULL && twohead==NULL){
-                  zerotail->next=onehead;
-                  onetail->next=NULL;
-                  
-              }
-              return zerohead;
-        }
-        
+        return head;
     }
 };
 
