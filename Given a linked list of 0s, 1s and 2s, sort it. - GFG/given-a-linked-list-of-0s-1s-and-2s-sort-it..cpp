@@ -1,0 +1,179 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+
+using namespace std;
+/* Link list Node */
+struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+struct Node *start = NULL;
+
+
+ // } Driver Code Ends
+/*
+ 
+  Node is defined as
+  struct Node {
+    int data;
+    struct Node *next;
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
+};
+
+*/
+class Solution
+{
+    public:
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+        
+        // Add code here
+        Node * onehead=NULL;
+        Node * onetail=NULL;
+        
+        Node * zerohead=NULL;
+        Node * zerotail=NULL;
+        
+        Node * twohead=NULL;
+        Node * twotail=NULL;
+        
+        Node * temp=head;
+        while(temp!=NULL){
+            if(temp->data==1){
+                if(onehead==NULL){
+                    onehead=temp;
+                    onetail=temp;
+                }
+                else{
+                    onetail->next=temp;
+                    onetail=temp;
+                }
+                temp=temp->next;
+            }
+            else if(temp->data==0){
+                if(zerohead==NULL){
+                    zerohead=temp;
+                    zerotail=temp;
+                }
+                else{
+                    zerotail->next=temp;
+                    zerotail=temp;
+                }
+                temp=temp->next;
+            }
+            else if(temp->data==2){
+                if(twohead==NULL){
+                    twohead=temp;
+                    twotail=temp;
+                }
+                else{
+                    twotail->next=temp;
+                    twotail=temp;
+                }
+                temp=temp->next;
+            }
+        }
+        
+        
+        if(zerohead==NULL){
+            if(onehead!=NULL && twohead!=NULL){
+                onetail->next=twohead;
+                twotail->next=NULL;
+                return onehead;
+            }
+            else if(onehead==NULL){
+                if(twohead==NULL){
+                    return NULL;
+                }
+                else{
+                    twotail->next=NULL;
+                    return twohead;
+                }
+            }
+            else if(twohead==NULL && onehead!=NULL){
+                  onetail->next=NULL;
+                  return onehead;
+            }
+        }
+        else{
+              if(onehead!=NULL && twohead!=NULL){
+                zerotail->next=onehead;
+                onetail->next=twohead;
+                twotail->next=NULL;
+                // return zerohead;
+              }
+              else if(onehead==NULL && twohead!=NULL){
+                zerotail->next=twohead;
+                twotail->next=NULL;
+                // return zerohead;
+              }
+              else if(onehead!=NULL && twohead==NULL){
+                  zerotail->next=onehead;
+                  onetail->next=NULL;
+                  
+              }
+              return zerohead;
+        }
+        
+    }
+};
+
+
+// { Driver Code Starts.
+
+// Function to sort a linked list of 0s, 1s and 2s
+void printList(struct Node *Node) {
+    while (Node != NULL) {
+        printf("%d ", Node->data);
+        Node = Node->next;
+    }
+    printf("\n");
+}
+
+/* Drier program to test above function*/
+void insert(int n1) {
+    int n, value, i;
+    // scanf("%d",&n);
+    n = n1;
+    struct Node *temp;
+    for (i = 0; i < n; i++) {
+        scanf("%d", &value);
+
+        if (i == 0) {
+            start = new Node(value);
+            temp = start;
+            continue;
+        } else {
+            temp->next = new Node(value);
+            temp = temp->next;
+            temp->next = NULL;
+        }
+    }
+}
+
+int main() {
+
+    int n;
+
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        scanf("%d", &n);
+
+        insert(n);
+        Solution ob;
+        struct Node *newHead = ob.segregate(start);
+        printList(newHead);
+    }
+
+    return 0;
+}  // } Driver Code Ends
