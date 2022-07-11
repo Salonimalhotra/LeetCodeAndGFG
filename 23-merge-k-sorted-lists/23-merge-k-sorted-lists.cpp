@@ -104,7 +104,7 @@ public:
             if(topNode->next!=NULL){
                 nextNode=topNode->next;
                 pq.push(nextNode);
-                topNode->next=NULL;
+                // topNode->next=NULL;
             }
             pq.pop();
             if(newhead==NULL){
