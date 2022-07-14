@@ -10,52 +10,38 @@ using namespace std;
 
 class Solution{
     public:
-    void ratInMazeHelper(vector<vector<int>>&m,vector<vector<int>>&sol,int n,vector<string>&ans,int row,int col,char direction,string &x){
-        if(row==n-1 && col==n-1){
-             sol[row][col]=1;
-            x.push_back(direction);
-            if(m[row][col]!=0){
-                 ans.push_back(x);
-            }
-           
-            sol[row][col]=0;
-            x.pop_back();
-            return;
-        }
-        if(row>=n || col>=n || row<0 || col<0 || m[row][col]==0 || sol[row][col]==1){
+    void helper(vector<vector<int>> &m, int n,int row,int col,string x,vector<vector<bool>>&visited,vector<string>&ans){
+        if(row<0 || col<0 || row>=n || col>=n){
             return;
         }
         
-        sol[row][col]=1;
-        if(row!=0 || col!=0){
-             x.push_back(direction);
+        if(m[row][col]==0){
+            return;
         }
-        ratInMazeHelper(m,sol,n,ans,row+1,col,'D',x);
-        ratInMazeHelper(m,sol,n,ans,row-1,col,'U',x);
-        ratInMazeHelper(m,sol,n,ans,row,col+1,'R',x);
-        ratInMazeHelper(m,sol,n,ans,row,col-1,'L',x);
-        sol[row][col]=0;
-         if(row!=0 || col!=0){
-          x.pop_back();
+        
+        if(row==n-1 && col==n-1){
+            ans.push_back(x);
+            return;
         }
+        
+        if(visited[row][col]==true){
+            return;
+        }
+        
+        visited[row][col]=true;
+        helper(m,n,row,col+1,x+'R',visited,ans);
+        helper(m,n,row+1,col,x+'D',visited,ans);
+        helper(m,n,row,col-1,x+'L',visited,ans);
+        helper(m,n,row-1,col,x+'U',visited,ans);
+        visited[row][col]=false;
         return;
-    }
-    void ratInMaze(vector<vector<int>>&m,vector<vector<int>>&sol,int n,vector<string>&ans){
-        string x;
-        ratInMazeHelper(m,sol,n,ans,0,0,'A',x);
     }
     vector<string> findPath(vector<vector<int>> &m, int n) {
         // Your code goes here
+        vector<vector<bool>>visited(n,vector<bool>(n,false));
         vector<string>ans;
-        vector<vector<int>>sol;
-        for(int i=0;i<n;i++){
-            vector<int>sol1;
-            for(int j=0;j<n;j++){
-                sol1.push_back(0);
-            }
-            sol.push_back(sol1);
-        }
-        ratInMaze(m,sol,n,ans);
+        string x="";
+        helper(m,n,0,0,x,visited,ans);
         return ans;
     }
 };
