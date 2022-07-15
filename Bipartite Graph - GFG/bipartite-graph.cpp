@@ -5,42 +5,45 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
 public:
-    bool helper(int V,int si,vector<int>adj[],int * colors){
-        for(int i=0;i<adj[si].size();i++){
-            if(colors[adj[si][i]]==-1){
-                colors[adj[si][i]]=1-colors[si];
-                bool ans=helper(V,adj[si][i],adj,colors);
-                if(ans==false){
-                    return false;
-                }
-                else{
-                    continue;
-                }
-            }
-            else{
-                if(colors[adj[si][i]]==colors[si]){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+   bool bfs(int vertex,int V,int * colours,vector<int>adj[]){
+       colours[vertex]=0;
+       queue<int>pending;
+       pending.push(vertex);
+       while(pending.size()!=0){
+           int top=pending.front();
+           pending.pop();
+           for(auto i:adj[top]){
+               if(colours[i]!=-1){
+                   if(colours[i]==colours[top]){
+                       return false;
+                   }
+                   else{
+                       continue;
+                   }
+               }
+               else{
+                   colours[i]=1-colours[top];
+                   pending.push(i);
+               }
+           }
+       }
+       return true;
+   }
 	bool isBipartite(int V, vector<int>adj[]){
 	    // Code here
-	    int * colors=new int[V];
+	    int * colours=new int[V];
 	    for(int i=0;i<V;i++){
-	        colors[i]=-1;
+	        colours[i]=-1;
 	    }
 	    
 	    for(int i=0;i<V;i++){
-	        if(colors[i]==-1){
-	            colors[i]=1;
-	            bool ans=helper(V,i,adj,colors);
-	            if(ans==false){
+	        if(colours[i]==-1){
+	            if(!bfs(i,V,colours,adj)){
 	                return false;
 	            }
 	        }
 	    }
+	    
 	    return true;
 	}
 
