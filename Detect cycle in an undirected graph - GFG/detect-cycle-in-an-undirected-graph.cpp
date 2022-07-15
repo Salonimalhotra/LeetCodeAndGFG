@@ -6,37 +6,42 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool detectCycle(int vertex,int parent,int V,vector<int>adj[],bool * visited){
+    bool helper(int vertex,int V,vector<bool>&visited,vector<int>adj[]){
+        queue<pair<int,int>>pending;
         visited[vertex]=true;
-        for(int i=0;i<adj[vertex].size();i++){
-            if(visited[adj[vertex][i]]!=true){
-                if(detectCycle(adj[vertex][i],vertex,V,adj,visited)){
-                    return true;
+        pending.push(make_pair(vertex,-1));
+        while(!pending.empty()){
+            pair<int,int>top=pending.front();
+            pending.pop();
+            for(auto i:adj[top.first]){
+                if(visited[i]==true){
+                    if(top.second!=i){
+                        return true;      
+                    }
+                    else{
+                        continue;
+                    }
+                  
                 }
-            }
-            else{
-                 if(adj[vertex][i]!=parent){
-                     return true;
-                 }
+                else{
+                    visited[i]=true;
+                     pending.push(make_pair(i,top.first));
+                }
             }
         }
         return false;
     }
     bool isCycle(int V, vector<int> adj[]) {
         // Code here
-        bool * visited=new bool[V];
+        vector<bool>visited(V,false);
         for(int i=0;i<V;i++){
-            visited[i]=false;
+            if(visited[i]!=true){
+                bool ans=helper(i,V,visited,adj);
+                if(ans){
+                    return true;
+                }
+            }
         }
-        for(int i=0;i<V;i++){
-           if(visited[i]!=true){
-               bool ans1=detectCycle(i,-1,V,adj,visited);
-               if(ans1==true){
-                   return true;
-               }
-           }
-        }
-        
         return false;
     }
 };
