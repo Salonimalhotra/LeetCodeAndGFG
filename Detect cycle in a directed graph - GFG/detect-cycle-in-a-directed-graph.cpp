@@ -6,38 +6,37 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in a directed graph.
-    bool detectCycle(int i,vector<bool>&visited,vector<bool>&dfsvisited,int V,vector<int>adj[]){
-        visited[i]=true;
-        dfsvisited[i]=true;
-        for(auto j:adj[i]){
-            if(visited[j]!=true){
-              bool check=detectCycle(j,visited,dfsvisited,V,adj);
-                if(check){
-                    return true;
-                }
-            }
-            else if(dfsvisited[j]){
-                return true;
-            }
-        }
-        
-        dfsvisited[i]=false;
-        return false;
-    }
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-        vector<bool>visited(V,false);
-        vector<bool>dfsvisited(V,false);
+        vector<int>indegree(V,0);
+        queue<int>q;
+        for(int i=0;i<V;i++){
+            for(auto j:adj[i]){
+                indegree[j]++;
+            }
+        }
         
         for(int i=0;i<V;i++){
-            if(visited[i]!=true){
-                bool check=detectCycle(i,visited,dfsvisited,V,adj);
-                if(check){
-                    return true;
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        int cnt=0;
+        while(q.size()!=0){
+            int top=q.front();
+            q.pop();
+            cnt++;
+            for(auto i:adj[top]){
+                indegree[i]--;
+                if(indegree[i]==0){
+                    q.push(i);
                 }
             }
         }
-        return false;
+        if(cnt==V){
+            return false;
+        }
+        return true;
     }
 };
 
