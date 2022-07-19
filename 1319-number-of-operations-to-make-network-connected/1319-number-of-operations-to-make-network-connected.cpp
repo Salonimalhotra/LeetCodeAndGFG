@@ -1,52 +1,65 @@
 #include<vector>
 class Solution {
 public:
-    void helper(int vertex,bool * visited,vector<vector<int>>&adj){
-      
-        visited[vertex]=true;
-        // vertices++;
+    int findParent(int u,int * parent){
+        if(parent[u]==u){
+            return u;
+        }
+        else{
+            return parent[u]=findParent(parent[u],parent);
+        }
+    }    
+    void unionn(int a,int b,int * ranks,int * parent,int &ans){        
+        int parent_a=findParent(a,parent);
+        int parent_b=findParent(b,parent);
         
-        for(auto i:adj[vertex]){
-            if(visited[i]!=true){
-                // edges++;
-                helper(i,visited,adj);
-                
-            }
-            else if(visited[i]==true){
-                // edges++;
-                continue;
-            }
+        if(parent_a==parent_b && a!=b){
+            //cycle is detected
+            ans++;   
+            return;
+        }
+        else if(ranks[parent_a]>ranks[parent_b]){
+            parent[parent_b]=parent_a;
+        }
+        else if(ranks[parent_b]>ranks[parent_a]){
+            parent[parent_a]=parent_b;
+        }
+        else{
+             parent[parent_b]=parent_a;
+             ranks[parent_a]++;
         }
         return;
     }
+    
     int makeConnected(int n, vector<vector<int>>& connections) {
-        //create and adj list basically
-        vector<vector<int>>adj(n,vector<int>());
-        for(int i=0;i<connections.size();i++){
-             int firstv=connections[i][0];
-             int secondv=connections[i][1];
-             adj[firstv].push_back(secondv);
-             adj[secondv].push_back(firstv);
-        }
         
-        //
-        bool * visited=new bool[n];
-        for(int i=0;i<n;i++){
-            visited[i]=false;
-        }
-        
-        int ans=0;
-        for(int i=0;i<n;i++){
-            if(visited[i]!=true){
-                 ans++;
-                helper(i,visited,adj);
-               
-            }
-        }
-        if(connections.size()<n-1){
+        if(n-1>connections.size()){
             return -1;
         }
-        return ans-1;
+        int ans=0;
+        int * parent=new int[n];
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+        }
+        int * ranks=new int[n];
+        for(int i=0;i<n;i++){
+            ranks[i]=0;
+        }
+        for(int i=0;i<connections.size();i++){
+            unionn(connections[i][0],connections[i][1],ranks,parent,ans);
+        }
+        int unconnected=0;
         
+        for(int i=0;i<n;i++){
+            if(parent[i]==i){
+                unconnected++;
+            }
+        }
+        
+        if(unconnected-1>ans){
+            return -1;
+        }
+        // if extra edges are greater than unconnected,then it means that we have edges to connect unconnectd components  
+        return unconnected-1;
     }
 };
