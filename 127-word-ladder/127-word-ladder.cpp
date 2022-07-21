@@ -2,40 +2,21 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        bool check=false;
-        for(auto i:wordList){
-            if(i==endWord){
-                check=true;
-                break;
-            }
-        }
-        
-        if(check==false){
-            return 0;
-        }
+       
         unordered_map<string ,bool>map;
-        
-//         for(int i=0;i<beginWord.size();i++){
-//             char x=beginWord[i];
-//             for(auto j:wordList){
-//                 string test1=beginWord.substr(0,i)+beginWord.substr(i+1);
-//                 string test2=j.substr(0,i)+j.substr(i+1);
-//                 if(test1==test2 && beginWord[i]!=j[i]){
-//                     beginWord=j;
-//                     if(j==endWord){
-//                         return 
-//                     }
-                    
-//                 }
-//             }
-//         }
         queue<pair<string,int>>q;
         q.push(make_pair(beginWord,1));
         map[beginWord]=1;
         unordered_set<string>set;
+        
         for(auto j:wordList){
             set.insert(j);
         }
+        
+        if(set.find(endWord)==set.end()){
+            return 0;
+        }
+        
         while(q.size()!=0){
             pair<string,int>top=q.front();
             q.pop();
