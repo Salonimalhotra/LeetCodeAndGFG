@@ -17,8 +17,6 @@ public:
             int x1=0;
             int x2=0;
            while(x1<words[j].size() && x2<words[i].size()){
-               // cout<<words[j][x1]<<" "<<words[i][x2]<<endl;
-               // cout<<orderNum[words[j][x1]]<<" "<<orderNum[words[i][x2]]<<endl;
                if(orderNum[words[j][x1]]<orderNum[words[i][x2]]){
                    return false;
                }
@@ -33,9 +31,7 @@ public:
             if(x1<words[j].size() && x2==words[i].size()){
                 return false;
             }
-            else{
-                i++;
-            }
+           i++;
            
         }      
      
