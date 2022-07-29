@@ -12,6 +12,16 @@ class TrieNode{
         }
         isTerminal=false;
     }
+    
+   TrieNode *isPresent(char x){
+       int index=x-'a';
+       if(children[index]!=NULL){
+           return children[index];
+       }
+       else{
+           return NULL;
+       }
+   }
 };
 class Trie {
    TrieNode * root;
@@ -25,16 +35,12 @@ class Trie {
             root->isTerminal=true;
             return;
         }        
-        TrieNode * child;
         int index=word[0]-'a';
-        if(root->children[index]==NULL){
+        TrieNode * child=root->isPresent(word[0]);
+        if(child==NULL){
             child=new TrieNode(word[0]);
             root->children[index]=child;
         }
-        else{
-            child=root->children[index];
-        }
-        
         insertHelper(word.substr(1),child);
         
     }
@@ -52,13 +58,11 @@ class Trie {
             }
         }
      
-        int index=word[0]-'a';
-       if(root->children[index]!=NULL){
-           return searchHelper(word.substr(1),root->children[index]);      
-       }
-        else{
+        TrieNode * child=root->isPresent(word[0]);
+        if(child==NULL){
             return false;
-        }        
+        }
+        return searchHelper(word.substr(1),child); 
           
     }
     
@@ -71,14 +75,11 @@ class Trie {
             return true;
         }
         
-          int index=prefix[0]-'a';
-       if(root->children[index]!=NULL){
-           return startsWithHelper(prefix.substr(1),root->children[index]);      
-       }
-        else{
+           TrieNode * child=root->isPresent(prefix[0]);
+         if(child==NULL){
             return false;
-        }    
-        
+        }
+        return startsWithHelper(prefix.substr(1),child); 
         
     }
     bool startsWith(string prefix) {
