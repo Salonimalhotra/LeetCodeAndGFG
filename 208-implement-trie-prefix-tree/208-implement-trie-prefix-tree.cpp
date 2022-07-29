@@ -1,47 +1,48 @@
 class TrieNode{
   public:
-  char data;
-  TrieNode ** children;
-  bool isTerminal;
-  TrieNode(char x){
-      data=x;
-      children=new TrieNode * [26];
-      for(int i=0;i<26;i++){
-          children[i]=NULL;
-      }
-      isTerminal=false;
-  }
-    
+   char data;
+   TrieNode ** children;
+   bool isTerminal;
+  
+    TrieNode(char d){
+        this->data=d;
+        children=new TrieNode*[26];
+        for(int i=0;i<26;i++){
+           children[i]=NULL;
+        }
+        isTerminal=false;
+    }
 };
 class Trie {
-public:
-    TrieNode * root;
+   TrieNode * root;
+    public:
     Trie() {
         root=new TrieNode('\0');
     }
-    void insertHelper(TrieNode * root,string word){
+    
+    void insertHelper(string word,TrieNode * root){        
         if(word.size()==0){
             root->isTerminal=true;
             return;
-        }
-        
-        int index=word[0]-'a';
+        }        
         TrieNode * child;
-        if(root->children[index]!=NULL){
-            child=root->children[index];
-        }
-        else{
+        int index=word[0]-'a';
+        if(root->children[index]==NULL){
             child=new TrieNode(word[0]);
             root->children[index]=child;
         }
+        else{
+            child=root->children[index];
+        }
         
-        insertHelper(child,word.substr(1));
+        insertHelper(word.substr(1),child);
+        
     }
     void insert(string word) {
-        return insertHelper(root,word);
+        insertHelper(word,root);        
     }
     
-    bool searchHelper(TrieNode * root,string word) {
+    bool searchHelper(string word,TrieNode * root){
         if(word.size()==0){
             if(root->isTerminal==true){
                 return true;
@@ -50,34 +51,38 @@ public:
                 return false;
             }
         }
+     
         int index=word[0]-'a';
-        
-        if(root->children[index]!=NULL){
-           return searchHelper(root->children[index],word.substr(1));    
-        }
+       if(root->children[index]!=NULL){
+           return searchHelper(word.substr(1),root->children[index]);      
+       }
         else{
             return false;
-        }
+        }        
+          
     }
-    bool search(string word){
-        return searchHelper(root,word);
+    
+    bool search(string word) {
+        return searchHelper(word,root);
     }
-    bool startsWithHelper(TrieNode * root,string prefix){
-         if(prefix.size()==0){
-           return true;
+    
+    bool startsWithHelper(string prefix,TrieNode * root){
+        if(prefix.size()==0){
+            return true;
         }
-        int index=prefix[0]-'a';
         
-        if(root->children[index]!=NULL){
-           return startsWithHelper(root->children[index],prefix.substr(1));    
-        }
+          int index=prefix[0]-'a';
+       if(root->children[index]!=NULL){
+           return startsWithHelper(prefix.substr(1),root->children[index]);      
+       }
         else{
             return false;
-        }
+        }    
+        
         
     }
     bool startsWith(string prefix) {
-       return startsWithHelper(root,prefix);
+         return startsWithHelper(prefix,root);
     }
 };
 
