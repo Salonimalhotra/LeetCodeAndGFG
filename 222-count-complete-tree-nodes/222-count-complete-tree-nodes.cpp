@@ -25,7 +25,7 @@ public:
             curr=curr->left;
         }
         
-        
+        curr=root;
         while(curr!=NULL){
             rh++;
             curr=curr->right;
