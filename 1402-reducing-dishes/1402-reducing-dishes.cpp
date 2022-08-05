@@ -1,29 +1,27 @@
 #include<bits/stdc++.h>
+#include<vector>
 class Solution {
 public:
-    int solve(vector<int>& satisfaction,int index,int timer,int n,vector<vector<int>>&dp){
-        if(index==n){
-            return 0;
-        }
-        if(dp[index][timer]!=-1){
-            return dp[index][timer];
-        }
-        int incl=satisfaction[index] * timer+ solve(satisfaction,index+1,timer+1,n,dp);
-        int excl=solve(satisfaction,index+1,timer,n,dp);
-        return dp[index][timer]=max(incl,excl);
-    }
     int maxSatisfaction(vector<int>& satisfaction) {
+        int n=satisfaction.size();
         sort(satisfaction.begin(),satisfaction.end());
-        int n=satisfaction.size();     
-        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
-        int ans=solve(satisfaction,0,1,n,dp);
-        
-        if(ans<0){
-            return 0;
+        int **dp=new int *[n+1];
+        for(int i=0;i<=n;i++){
+            dp[i]=new int[n+1];
         }
-        else{
-            return ans;
+        for(int j=0;j<=n;j++){
+            dp[n][j]=0;
+        }
+        for(int index=n-1;index>=0;index--){
+            for(int timer=index;timer>=0;timer--){
+                int incl=satisfaction[index] * (timer+1) + dp[index+1][timer+1];
+                int excl=dp[index+1][timer];
+                dp[index][timer]=max(incl,excl);
+            }
         }
         
+        return dp[0][0];
+        
+       
     }
 };
