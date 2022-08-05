@@ -1,41 +1,42 @@
-#include<bits/stdc++.h>
 class Solution {
 public:
-    int solve(vector<int>& obstacles,int currpos,int currlane,int **dp){
-        int n=obstacles.size();
-        if(currpos==n-1){
-            return 0;
-        }
-        
-        if(dp[currpos][currlane]!=-1){
-            return dp[currpos][currlane];
-        }
-        // we will move on to the next position in our current lane if there is not obstacles at the next position 
-        if(obstacles[currpos+1]!=currlane){
-            dp[currpos][currlane]=solve(obstacles,currpos+1,currlane,dp);
-            return dp[currpos][currlane];
-        }
-        
-        int minAns=INT_MAX;
-        for(int i=1;i<=3;i++){
-            if(currlane!=i && obstacles[currpos]!=i){
-                minAns=min(minAns,1+solve(obstacles,currpos,i,dp));
-            }
-        }
-        return dp[currpos][currlane]=minAns;
-    }
     int minSideJumps(vector<int>& obstacles) {
-        int currpos=0;
-        int currlane=2;
+        //as size of obstacles is n+1 therefore or last target pos will be size-1
+        //therefore n will also be size-1
         int n=obstacles.size()-1;
-        int **dp=new int *[n+1];
-        for(int i=0;i<=n;i++){
-            dp[i]=new int[4];
-            for(int j=0;j<=3;j++){
-                dp[i][j]=-1;
+        
+        vector<int>next(4,INT_MAX-1);
+        vector<int>curr(4,INT_MAX-1);
+        
+        next[0]=0;
+        next[1]=0;
+        next[2]=0;
+        next[3]=0;
+        
+        // for the last position we have already filled the next vector
+        //hence we will be starting from the current vector
+        for(int currpos=n-1;currpos>=0;currpos--){
+            
+            for(int currentlane=1;currentlane<=3;currentlane++){
+                
+                if(obstacles[currpos+1]!=currentlane){
+                    curr[currentlane]=next[currentlane];
+                }
+                else{
+                    //we take a sidejump;
+                    int ans=INT_MAX-1;
+                    for(int i=1;i<=3;i++){
+                        if(obstacles[currpos]!=i && currentlane!=i){
+                            ans=min(ans,1+next[i]);
+                        }
+                    }
+                    curr[currentlane]=ans;
+                }
             }
-        }
-        return solve(obstacles,currpos,currlane,dp);
+            next=curr;
+         }
+        
+        return min(next[2], min(1+next[1],1+next[3]));       
         
     }
 };
