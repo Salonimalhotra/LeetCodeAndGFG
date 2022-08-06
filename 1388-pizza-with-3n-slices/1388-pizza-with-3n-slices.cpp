@@ -2,27 +2,48 @@
 #include<vector>
 class Solution {
 public:
-    int helper(vector<int>&slices,int index,int turnsLeft,int **dp){
-        if(index>=slices.size() || turnsLeft==0){
-            return 0;
-        }
-        if(dp[index][turnsLeft]!=-1){
-            return dp[index][turnsLeft];
-        }
-        int option1=slices[index] + helper(slices,index+2,turnsLeft-1,dp);
-        int option2=helper(slices,index+1,turnsLeft,dp);
-        return dp[index][turnsLeft]=max(option1,option2);
-    }
-    int solve(vector<int>& slices,int turns){
+    // int helper(vector<int>&slices,int index,int turnsLeft,int **dp){
+    //     if(index>=slices.size() || turnsLeft==0){
+    //         return 0;
+    //     }
+    //     if(dp[index][turnsLeft]!=-1){
+    //         return dp[index][turnsLeft];
+    //     }
+    //     int option1=slices[index] + helper(slices,index+2,turnsLeft-1,dp);
+    //     int option2=helper(slices,index+1,turnsLeft,dp);
+    //     return dp[index][turnsLeft]=max(option1,option2);
+    // }
+    // int solve(vector<int>& slices,int turns){
+    //     int n=slices.size();
+    //     int **dp=new int*[n+1];
+    //     for(int i=0;i<=n;i++){
+    //         dp[i]=new int[turns+1];
+    //         for(int j=0;j<=turns;j++)     {
+    //             dp[i][j]=-1;
+    //         }                
+    //     }
+    //    return helper(slices,0,turns,dp);
+    // }
+    
+    int solveTab(vector<int>&slices,int turns){
         int n=slices.size();
-        int **dp=new int*[n+1];
-        for(int i=0;i<=n;i++){
+         int **dp=new int*[n+3];
+        for(int i=0;i<=n+1;i++){
             dp[i]=new int[turns+1];
             for(int j=0;j<=turns;j++)     {
-                dp[i][j]=-1;
+                dp[i][j]=0;
             }                
         }
-       return helper(slices,0,turns,dp);
+        
+        for(int i=n-1;i>=0;i--){
+            for(int j=1;j<=turns;j++){
+              int option1=slices[i] + dp[i+2][j-1];
+              int option2=dp[i+1][j];
+              dp[i][j]=max(option1,option2);
+            }
+        }
+        
+        return dp[0][turns];        
     }
     int maxSizeSlices(vector<int>& slices) {
         int turns=slices.size()/3;
@@ -40,6 +61,6 @@ public:
                 x2.push_back(slices[i]);
             }
         }
-        return max(solve(x1,turns),solve(x2,turns));        
+        return max(solveTab(x1,turns),solveTab(x2,turns));        
     }
 };
