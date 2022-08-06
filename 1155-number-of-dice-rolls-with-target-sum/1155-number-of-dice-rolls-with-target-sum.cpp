@@ -53,7 +53,24 @@ public:
     }
     int numRollsToTarget(int n, int k, int target) {
        // return solve(n,k,target);     
-       vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
-        return solveMemo(n,k,target,dp);
+       vector<vector<int>>dp(n+1,vector<int>(target+1,0));
+       //  return solveMemo(n,k,target,dp);
+        dp[0][0]=1;
+        int mod=pow(10,9) + 7;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=target;j++){
+                int ans=0;
+                for(int m=1;m<=k;m++){
+                      // int temp=((long int)(solveMemo(dices-1,faces,target-i,dp)))%mod;
+                       if(j-m>=0){
+                             int temp=((long int)(dp[i-1][j-m]))%mod;
+                             ans=(ans %mod + temp%mod)%mod;   
+                       }
+                                          
+                }
+                dp[i][j]=ans;
+            }
+        }
+        return dp[n][target];
     }
 };
