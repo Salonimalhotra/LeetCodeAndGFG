@@ -27,8 +27,8 @@ public:
     
     int solveTab(vector<int>&slices,int turns){
         int n=slices.size();
-         int **dp=new int*[n+3];
-        for(int i=0;i<=n+2;i++){
+         int **dp=new int*[n+2];
+        for(int i=0;i<n+2;i++){
             dp[i]=new int[turns+1];
             for(int j=0;j<=turns;j++)     {
                 dp[i][j]=0;
