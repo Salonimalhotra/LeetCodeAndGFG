@@ -45,7 +45,20 @@ public:
                 len++;
             }
             else{
-                int idx=lower_bound(ans.begin(),ans.end(),envelopes[i][1])-ans.begin();
+                // int idx=lower_bound(ans.begin(),ans.end(),envelopes[i][1])-ans.begin();
+                int left=0;
+                int right=ans.size()-1;
+                int idx=ans.size()-1;
+                while(left<right){
+                    int mid=(left) + (right-left)/2;
+                    if(ans[mid]>=envelopes[i][1]){
+                        right=mid;
+                        idx=mid;
+                    }
+                    else{
+                        left=mid+1;
+                    }
+                }
                 ans[idx]=envelopes[i][1];
             }
         }
