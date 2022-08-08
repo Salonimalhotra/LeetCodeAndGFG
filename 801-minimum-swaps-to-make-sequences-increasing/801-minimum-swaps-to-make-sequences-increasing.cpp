@@ -5,7 +5,8 @@ public:
         nums1.insert(nums1.begin(),-1);
         nums2.insert(nums2.begin(),-1);
         int n=nums1.size();
-        vector<vector<int>>dp(n+1,vector<int>(2,0));
+        vector<int>last(2,0);
+        vector<int>curr(2,0);
         for(int index=n-1;index>=1;index--){
             for(int swapped=1;swapped>=0;swapped--){
                 int prev1=nums1[index-1];
@@ -15,14 +16,15 @@ public:
                 }
                 int ans=INT_MAX;
                 if(nums1[index]>prev1 && nums2[index]>prev2){
-                    ans=min(ans,dp[index+1][0]);
+                    ans=min(ans,last[0]);
                 }
                 if(nums1[index]>prev2 && nums2[index]>prev1){
-                    ans=min(ans,1+dp[index+1][1]);
+                    ans=min(ans,1+last[1]);
                 }
-                dp[index][swapped]=ans;
+                curr[swapped]=ans;
             }
+            last=curr;
         }
-        return dp[1][0];
+        return last[0];
     }
 };
