@@ -21,10 +21,10 @@ public:
     //     }
     // }
     
-    unsigned  tab(string s,string t){
+    int tab(string s,string t){
          int n=s.size();
          int m=t.size();
-         vector<vector<unsigned >>dp(n+1,vector<unsigned >(m+1,0));
+         vector<vector<double>>dp(n+1,vector<double >(m+1,0));
          for(int i=0;i<=n;i++){
              dp[i][0]=1;
          }
@@ -45,7 +45,7 @@ public:
             }
         }
         
-        return dp[n][m];
+        return (int)dp[n][m];
         
     }
     int numDistinct(string s, string t) {
