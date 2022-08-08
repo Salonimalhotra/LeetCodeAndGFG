@@ -41,15 +41,17 @@ public:
     int solveTab(vector<vector<int>>& grid){
          int rows=grid.size();
         int cols=grid[0].size();
-        vector<vector<vector<int>>>dp(rows,vector<vector<int>>(cols,vector<int>(cols,0)));
+        // vector<vector<vector<int>>>dp(rows,vector<vector<int>>(cols,vector<int>(cols,0)));
+        vector<vector<int>>prev(cols,vector<int>(cols,0));
+        vector<vector<int>>curr(cols,vector<int>(cols,0));
         
         for(int j1=0;j1<cols;j1++){
             for(int j2=0;j2<cols;j2++){
                 if(j1==j2){
-                    dp[rows-1][j1][j1]=grid[rows-1][j1];
+                    prev[j1][j1]=grid[rows-1][j1];
                 }
                 else{
-                    dp[rows-1][j1][j2]=grid[rows-1][j1] + grid[rows-1][j2];
+                    prev[j1][j2]=grid[rows-1][j1] + grid[rows-1][j2];
                 }
             }
         }
@@ -64,7 +66,7 @@ public:
                        int val=0;
                         if(j1==j2){
                            if(j1 + dj1>=0 && j1 + dj1<cols && j2 + dj2>=0 && j2 + dj2<cols){
-                              val=grid[i][j1] + dp[i+1][j1+dj1][j2+dj2];
+                              val=grid[i][j1] + prev[j1+dj1][j2+dj2];
                             }
                        else{
                          val=-1e9;
@@ -73,7 +75,7 @@ public:
                 
                  else{
                      if(j1 + dj1>=0 && j1 + dj1<cols && j2 + dj2>=0 && j2 + dj2<cols){
-                     val=grid[i][j1] + grid[i][j2] + dp[i+1][j1+dj1][j2+dj2];
+                     val=grid[i][j1] + grid[i][j2] + prev[j1+dj1][j2+dj2];
                      }
                     else{
                         val=-1e9;
@@ -83,11 +85,12 @@ public:
                
                   }
                }
-            dp[i][j1][j2]=maxi;
+              curr[j1][j2]=maxi;
                  }
              }
+             prev=curr;
          }
-        return dp[0][0][cols-1];
+        return prev[0][cols-1];
     }
     int cherryPickup(vector<vector<int>>& grid) {
         // int rows=grid.size();
