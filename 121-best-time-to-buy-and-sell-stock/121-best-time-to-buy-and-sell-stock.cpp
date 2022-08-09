@@ -23,7 +23,7 @@ public:
         }
         
         for(int i=1;i<prices.size();i++){
-            profit=max(profit,prices[i]-minArray[i-1]);
+            profit=max(profit,prices[i]-minArray[i]);
         }
         return profit;
     }
