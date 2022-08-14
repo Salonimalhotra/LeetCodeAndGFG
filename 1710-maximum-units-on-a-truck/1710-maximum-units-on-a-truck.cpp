@@ -10,7 +10,6 @@ public:
     }
     int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
         sort(boxTypes.begin(),boxTypes.end(),cmp);
-        // for(int i=)
         int maxAns=0;
         int cnt=0;
         int i=0;
@@ -20,10 +19,7 @@ public:
                 maxAns+=(boxTypes[i][0] * boxTypes[i][1]);
             }
             else{
-                int temp=(truckSize-cnt) * boxTypes[i][1];
-                // cout<<truckSize-cnt<<endl;
-                cnt+=(truckSize-cnt);          
-                // cout<<(truckSize-cnt) * boxTypes[i][1];
+                int temp=(truckSize-cnt) * boxTypes[i][1];                    
                 maxAns+=temp;
                 break;
             }
