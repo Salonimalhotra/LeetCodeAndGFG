@@ -5,12 +5,12 @@ public:
             return address;
         }
         string ans;
+        string smallAns=defangIPaddr(address.substr(1));
         if(address[0]!='.'){
-            string smallAns=defangIPaddr(address.substr(1));
            ans=address[0] + smallAns;
         }
         else if(address[0]=='.'){
-            ans="[.]" + defangIPaddr(address.substr(1));
+            ans="[.]" + smallAns;
         }
         return ans;
     }
