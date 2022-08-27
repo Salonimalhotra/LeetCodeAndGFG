@@ -32,7 +32,7 @@ public:
         int sum=0;
         int carry=0;
         
-        while(temp1!=NULL || temp2!=NULL || sum!=0 || carry!=0){
+        while(temp1!=NULL || temp2!=NULL ||  carry!=0){
             if(temp1!=NULL){
                 sum+=temp1->val;
                 temp1=temp1->next;
