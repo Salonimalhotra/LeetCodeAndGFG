@@ -17,7 +17,7 @@ public:
             temp=temp->next;
             cnt++;
         }
-        cout<<cnt<<endl;
+        // cout<<cnt<<endl;
         return cnt;
     }
     ListNode* swapNodes(ListNode* head, int k) {
