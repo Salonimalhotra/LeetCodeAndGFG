@@ -35,27 +35,22 @@ public:
                      temp=temp->next;
                      pos++;
                  }
-                else if(mp.size()==1){
-                    map<int, int>::iterator itr=mp.begin();
-                     min_p=min(min_p,pos-itr->first);
-                     max_p=max(max_p,pos-itr->first);
-                     mp[pos]++;
-                     prev=temp;
-                     temp=temp->next;
-                     pos++;
+//                 else if(mp.size()==1){
+//                     map<int, int>::iterator itr=mp.begin();
+//                      min_p=min(min_p,pos-itr->first);
+//                      max_p=max(max_p,pos-itr->first);
+//                      mp[pos]++;
+//                      prev=temp;
+//                      temp=temp->next;
+//                      pos++;
                   
-                }
+//                 }
                 else{
                     map<int,int>::iterator itr=mp.begin();
                     max_p=max(max_p,pos-itr->first);
                     itr=mp.end();
                     itr--;
-                    min_p=min(min_p,pos-itr->first);
-//                     while(itr!=mp.end()){
-//                         itr++;
-//                         min_p=min(min_p,pos-itr->first);
-//                     }
-                  
+                    min_p=min(min_p,pos-itr->first);                  
                      mp[pos]++;
                      prev=temp;
                      temp=temp->next;
@@ -68,9 +63,9 @@ public:
                      pos++;
             }
         }
-        for(auto i:mp){
-            cout<<"printing map"<<i.first<<endl;
-        }
+//         for(auto i:mp){
+//             cout<<"printing map"<<i.first<<endl;
+//         }
         
         if(min_p==INT_MAX){
             ans[0]=-1;
