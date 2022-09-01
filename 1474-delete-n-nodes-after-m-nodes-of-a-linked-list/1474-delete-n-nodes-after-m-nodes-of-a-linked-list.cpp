@@ -33,7 +33,7 @@ public:
                break;
             }
             t2=t1->next;
-            t1->next=NULL;
+            // t1->next=NULL;
             while(t2!=NULL && cnt2<=n){
                 ListNode * temp=t2;
                 t2=t2->next;
@@ -46,9 +46,9 @@ public:
             t1=t2;            
         }
         
-        // if(t2==NULL){
-        //     t1->next=NULL;
-        // }
+        if(t2==NULL && t1!=NULL){
+            t1->next=NULL;
+        }
         return head;
        
         
