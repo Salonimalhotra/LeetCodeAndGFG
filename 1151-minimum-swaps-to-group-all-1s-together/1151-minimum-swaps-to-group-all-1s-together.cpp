@@ -33,9 +33,9 @@ public:
                 j++;
             }
         }
-        if(minSwaps==INT_MAX){
-            return 0;
-        }
+        // if(minSwaps==INT_MAX){
+        //     return 0;
+        // }
         return minSwaps;
     }
 };
