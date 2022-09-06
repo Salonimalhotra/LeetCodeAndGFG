@@ -21,6 +21,7 @@ public:
             for(int i=0;i<s;i++){
                 TreeNode * topNode=q.front();
                 q.pop();
+                
                 if(level%2==0){
                     if(topNode->val%2==0){
                         return false;
