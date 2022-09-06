@@ -36,25 +36,15 @@ public:
                 if(lastElement==-1){
                     lastElement=topNode->val;
                 }
-                else{
-                    if(level%2!=0){
-                        if(topNode->val>=lastElement){
-                            return false;
-                        }
-                        else{
-                            lastElement=topNode->val;
-                        }
+                else if(level%2!=0 && topNode->val>=lastElement){
+                        return false;                       
                     }
                     
-                    else{
-                         if(topNode->val<=lastElement){
-                            return false;
-                        }
-                        else{
-                            lastElement=topNode->val;
-                        }
-                    }
-                }
+                 else if(level%2==0 && topNode->val<=lastElement){
+                        return false;                       
+                   }
+                
+                lastElement=topNode->val;
                 
                 if(topNode->left!=NULL){
                     q.push(topNode->left);
