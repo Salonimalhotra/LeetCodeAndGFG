@@ -31,8 +31,10 @@ public:
     }
     int amountOfTime(TreeNode* root, int start) {
         unordered_map<TreeNode *,TreeNode *>parents;
+        
         queue<TreeNode*>q1;
         q1.push(root);
+        
         while(q1.size()!=0){
             TreeNode * topNode=q1.front();
             q1.pop();
@@ -47,20 +49,17 @@ public:
                 parents[topNode->right]=topNode;
             }
         }
-        // for(auto i:parents){
-        //     cout<<i.first->val<<" "<<i.second->val<<" "<<endl;
-        // }
-        
+       
         unordered_map<TreeNode *,bool>vis;
         queue<TreeNode *>q;
-        TreeNode * targetNode=findNode(root,start);
-        // cout<<targetNode->val<<endl;
+        TreeNode * targetNode=findNode(root,start);    
         q.push(targetNode);
         vis[targetNode]=true;
-        int mins=-1;
+        int mins=0;
+        
         while(q.size()!=0){
             int s=q.size();
-            mins++;
+            
             for(int i=0;i<s;i++){
                 TreeNode * topNode=q.front();
                 q.pop();
@@ -78,7 +77,8 @@ public:
                 }
             
             }
-            // mins++;
+            if(q.size()!=0)
+            mins++;
         }
         return mins;      
         
