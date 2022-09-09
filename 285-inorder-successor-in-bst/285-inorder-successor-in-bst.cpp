@@ -25,15 +25,14 @@ public:
         int i=0;
         for(i=0;i,arr1.size();i++){
             if(arr1[i]==p){
-                break;
+                if(i==arr1.size()-1)return NULL;
+                else{
+                    break;
+                }
             }
-        }
-        
-        if(i==arr1.size()-1){
-            return NULL;
-        }
-        else{
+        }     
+       
             return arr1[i+1];
-        }
+        
     }
 };
