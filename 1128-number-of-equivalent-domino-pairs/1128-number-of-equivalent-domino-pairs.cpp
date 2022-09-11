@@ -6,9 +6,9 @@ public:
             sort(dominoes[i].begin(),dominoes[i].end());
         }
          sort(dominoes.begin(),dominoes.end());
-        for(int i=0;i<dominoes.size();i++){
-            cout<<dominoes[i][0]<<" "<<dominoes[i][1]<<endl;
-        }
+        // for(int i=0;i<dominoes.size();i++){
+        //     cout<<dominoes[i][0]<<" "<<dominoes[i][1]<<endl;
+        // }
         int ans=0;
         int i=0;
         while(i<dominoes.size()){
