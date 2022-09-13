@@ -33,8 +33,8 @@ public:
               pair<int,int> finalAns;
               int option1=max(leftAns.first,leftAns.second);
               int option2=max(rightAns.first,rightAns.second);
-              finalAns.second=option1 + option2;
               finalAns.first=root->val + leftAns.second + rightAns.second;
+              finalAns.second=option1 + option2;             
               return finalAns;
     }
     int rob(TreeNode* root) {
