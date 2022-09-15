@@ -11,30 +11,20 @@
  */
 class Solution {
 public:
-    void helper(TreeNode * root,TreeNode *&prev){      
-            if(root==NULL){
-                return;
-            }
-            
-            helper(root->right,prev);
-            helper(root->left,prev);
-            
-            root->right=prev;
-            root->left=NULL;
-            
-            prev=root;
-        
-        
-        return;
-    }
     void flatten(TreeNode* root) {
-        // first approach is with recursion here the order of linked list is root->left->right
-        // but if we do preorder traversal then we wont be able to get to attatch left subtree ka end to right subtree ka first node
-        // but here reverse postorder might work
-        // so lets start with it 
-        TreeNode * prev=NULL;
-        helper(root,prev);
+        if(root==NULL) return;
+       stack<TreeNode *>st;
+        st.push(root);
+        while(st.size()!=0){
+            TreeNode * curr=st.top();
+            st.pop();
+            
+            if(curr->right!=NULL)st.push(curr->right);
+            if(curr->left!=NULL)st.push(curr->left);
+            
+            if(st.size()!=0)curr->right=st.top();
+            curr->left=NULL;
+        }
         return;
     }
-    
 };
