@@ -12,6 +12,7 @@
 class Solution {
 public:
     void flatten(TreeNode* root) {
+        // stack ka approach :- time complexity:-O(N) && space complexity:-O(N)
         if(root==NULL) return;
        stack<TreeNode *>st;
         st.push(root);
