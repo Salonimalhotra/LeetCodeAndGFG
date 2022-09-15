@@ -12,20 +12,23 @@
 class Solution {
 public:
     void flatten(TreeNode* root) {
-        // stack ka approach :- time complexity:-O(N) && space complexity:-O(N)
-        if(root==NULL) return;
-       stack<TreeNode *>st;
-        st.push(root);
-        while(st.size()!=0){
-            TreeNode * curr=st.top();
-            st.pop();
-            
-            if(curr->right!=NULL)st.push(curr->right);
-            if(curr->left!=NULL)st.push(curr->left);
-            
-            if(st.size()!=0)curr->right=st.top();
-            curr->left=NULL;
-        }
+        // time complexity :- O(N) && space complexity is O(1);
+        // approach used is morris traversal
+        TreeNode * curr=root;        
+        while(curr!=NULL){            
+            if(curr->left!=NULL){ 
+                 TreeNode * prev=curr->left;  
+                     while(prev!=NULL && prev->right!=NULL){
+                     prev=prev->right;
+                     }
+                
+             prev->right=curr->right;
+             curr->right=curr->left; 
+             curr->left=NULL;   
+           }            
+            curr=curr->right;
+        }        
         return;
+            
     }
 };
