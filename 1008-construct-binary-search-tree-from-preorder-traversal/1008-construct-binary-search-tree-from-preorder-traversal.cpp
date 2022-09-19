@@ -11,25 +11,26 @@
  */
 class Solution {
 public:
-    TreeNode * helper(vector<int>&preorder,int start,int end){
+    TreeNode * helper(vector<int>&preorder,int &start,int end,int maxi,int mini){
         if(start>end){
             return NULL;
         }
-        int rootData=preorder[start];
-        TreeNode * root=new TreeNode(rootData);
-        int i=start+1;
-        while(i<=preorder.size()-1 && preorder[i]<rootData){
-            i++;
+        TreeNode * ans;
+        if(preorder[start]>mini && preorder[start]<maxi){
+            TreeNode * newNode=new TreeNode(preorder[start]);
+            start++;
+            newNode->left=helper(preorder,start,end,newNode->val,mini);
+            newNode->right=helper(preorder,start,end,maxi,newNode->val);
+            ans=newNode;
         }
-        root->left=helper(preorder,start+1,i-1);
-        root->right=helper(preorder,i,end);
-        return root;
+        else if(preorder[start]<mini || preorder[start]>maxi){
+            ans=NULL;
+        }            
+         return ans;
+           
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        int start=0;
-        int end=preorder.size()-1;
-        TreeNode * root=helper(preorder,start,end);
-        return root;
-        
+          int start=0;
+          return helper(preorder,start,preorder.size()-1,INT_MAX,INT_MIN);
     }
 };
