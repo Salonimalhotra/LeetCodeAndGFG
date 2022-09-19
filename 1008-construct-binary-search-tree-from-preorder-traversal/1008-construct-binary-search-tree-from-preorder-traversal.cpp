@@ -15,16 +15,16 @@ public:
         if(start>end){
             return NULL;
         }
-        TreeNode * ans=NULL;
+      
         if(preorder[start]>mini && preorder[start]<maxi){
             TreeNode * newNode=new TreeNode(preorder[start]);
             start++;
             newNode->left=helper(preorder,start,end,newNode->val,mini);
             newNode->right=helper(preorder,start,end,maxi,newNode->val);
-            ans=newNode;
+            return newNode;
         }
         
-         return ans;
+         return NULL;
            
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
