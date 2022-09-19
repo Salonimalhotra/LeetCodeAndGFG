@@ -15,7 +15,7 @@ public:
         if(start>end){
             return NULL;
         }
-        TreeNode * ans;
+        TreeNode * ans=NULL;
         if(preorder[start]>mini && preorder[start]<maxi){
             TreeNode * newNode=new TreeNode(preorder[start]);
             start++;
@@ -23,9 +23,7 @@ public:
             newNode->right=helper(preorder,start,end,maxi,newNode->val);
             ans=newNode;
         }
-        else if(preorder[start]<mini || preorder[start]>maxi){
-            ans=NULL;
-        }            
+        
          return ans;
            
     }
