@@ -15,17 +15,10 @@ public:
         if(root==NULL){
             TreeNode * newNode=new TreeNode(val);
             return newNode;
-        }
-         
-        if(root->val>val){
-            root->left=insertIntoBST(root->left,val);
-            // return root;
-        }
+        }         
+        if(root->val>val)root->left=insertIntoBST(root->left,val); 
+        else if(root->val<val)root->right=insertIntoBST(root->right,val);  
         
-        else if(root->val<val){
-            root->right=insertIntoBST(root->right,val);
-            // return root;
-        }
         return root;        
     }
 };
