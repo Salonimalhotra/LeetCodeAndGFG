@@ -1,11 +1,11 @@
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-           priority_queue<pair<double,pair<int,int>>>pq;
+           priority_queue<pair<int,pair<int,int>>>pq;
            for(int i=0;i<k;i++){
                int first_p=points[i][0];
                int second_p=points[i][1];
-               double distance=sqrt((first_p) * (first_p)  +  (second_p) * (second_p));
+               int distance=(first_p) * (first_p)  +  (second_p) * (second_p);
                pq.push(make_pair(distance,make_pair(first_p,second_p)));              
                
            }
@@ -13,7 +13,7 @@ public:
           for(int i=k;i<points.size();i++){
                   int first_p=points[i][0];
                   int second_p=points[i][1];
-                   double  distance=sqrt((first_p) * (first_p)  +  (second_p) * (second_p));
+                  int distance=(first_p) * (first_p)  +  (second_p) * (second_p);
               
                   if(pq.top().first>distance){
                       pq.pop();
