@@ -12,7 +12,7 @@ class Solution
                 {
                     if ((candidates[j] & m) != 0) cnt++;
                 }
-                maxAns = max(cnt, maxAns);
+                if(cnt>maxAns)maxAns=cnt;
             }
             
             return maxAns;
