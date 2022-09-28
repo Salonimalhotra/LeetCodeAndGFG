@@ -16,7 +16,7 @@ public:
                 if((j & m)!=0) cnt1++;
             }
             if(isPrime(cnt1)==true) {
-                cout<<j<<" "<<cnt1<<endl;
+                // cout<<j<<" "<<cnt1<<endl;
                 cnt++;
                 }
         }
