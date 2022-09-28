@@ -11,17 +11,12 @@ public:
         while(j<fruits.size()){
            map[fruits[j]]++;
             
-          if(map.size()<2){
-              count=max(count,j-i+1);
-              j++;
-          }
-          else if(map.size()==2){
+          if(map.size()<=2){
               count=max(count,j-i+1);
               j++;
           }  
           
-          else if(map.size()>2){
-              
+          else if(map.size()>2){              
               while(map.size()>2){
                  map[fruits[i]]--;
                   if(map[fruits[i]]==0){
