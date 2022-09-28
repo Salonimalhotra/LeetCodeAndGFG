@@ -15,10 +15,8 @@ public:
                  int m=1<<i;
                 if((j & m)!=0) cnt1++;
             }
-            if(isPrime(cnt1)==true) {
-                // cout<<j<<" "<<cnt1<<endl;
-                cnt++;
-                }
+            if(isPrime(cnt1)==true)cnt++;
+                
         }
         return cnt;        
     }
