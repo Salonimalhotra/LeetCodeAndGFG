@@ -1,7 +1,6 @@
 class Solution {
 public:
     int longestOnes(vector<int>& nums, int k) {
-        int len=0;
         int maxlen=0;
         int cntZeroes=0;
        
@@ -14,7 +13,6 @@ public:
             }
              
             if(cntZeroes<=k){
-            // cout<<j<<" "<<j-i+1<<endl;
               maxlen=max(maxlen,j-i+1);
                 j++;
             }
