@@ -5,9 +5,9 @@ class Solution
         {
             vector<int> ans;
             int n = nums.size();
-            vector<int> prefix(nums.size(), 0);
+            vector<int> prefix(n, 0);
             prefix[0] = nums[0];
-            for (int i = 1; i < nums.size(); i++)
+            for (int i = 1; i < n; i++)
             {
                 prefix[i] = prefix[i - 1] ^ nums[i];
             }
