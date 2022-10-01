@@ -6,8 +6,8 @@ public:
                int minAns=0;
                int start=1;
       
-        while(start!=target){
-             if(maxDoubles!=0 && target%2==0 && target/2>=start){
+        while(start!=target && maxDoubles!=0){
+             if(target%2==0 && target/2>=start){
                  target=target/2;
                  maxDoubles--;
                 
@@ -16,6 +16,6 @@ public:
                
              minAns++;
         }
-      return minAns;
+      return minAns + target-start;
     }
 };
