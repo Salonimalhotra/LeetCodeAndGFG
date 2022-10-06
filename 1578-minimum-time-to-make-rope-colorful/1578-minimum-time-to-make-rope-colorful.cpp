@@ -5,10 +5,8 @@ class Solution
         {
             if (colors.size() == 0 || colors.size() == 1) return 0;
             stack<pair<char, int>> st;
-            st.push({ colors[0],
-                neededTime[0] });
             int ans = 0;
-            for (int i = 1; i < colors.size(); i++)
+            for (int i = 0; i < colors.size(); i++)
             {
                 if (st.size() != 0 && st.top().first == colors[i])
                 {
