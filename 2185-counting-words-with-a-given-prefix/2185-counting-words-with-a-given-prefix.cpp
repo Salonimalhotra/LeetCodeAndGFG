@@ -14,7 +14,7 @@ class TrieNode
             children[i] = NULL;
         }
         isTerminal = false;
-        cntPrefix = 1;
+        cntPrefix = 0;
     }
    TrieNode* getChild(char d)
     {
@@ -44,11 +44,8 @@ class Trie
         {
             root->children[word[0] - 'a'] = new TrieNode(word[0]);
             child = root->children[word[0] - 'a'];
-        }
-        else
-        {
+        }        
             child->cntPrefix++;
-        }
 
         insertWord(word.substr(1), child);
     }
