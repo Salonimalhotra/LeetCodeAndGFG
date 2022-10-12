@@ -17,12 +17,7 @@ class TrieNode
 
     TrieNode* getChild(char d)
     {
-        TrieNode *child = NULL;
-        if (children[d - 'a'] != NULL)
-        {
-            child = children[d - 'a'];
-        }
-        return child;
+        return children[d-'a'];
     }
 };
 class Trie
