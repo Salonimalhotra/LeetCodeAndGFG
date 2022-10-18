@@ -3,7 +3,7 @@ class Solution
     public:
         int orangesRotting(vector<vector < int>> &grid)
         {
-            int fresh = 0;
+            int timer = 0;
             queue<pair<int, int>> q;
             int rows = grid.size();
             int cols = grid[0].size();
@@ -52,7 +52,7 @@ class Solution
                         }
                     }
                 }
-                if(check==true)fresh++;
+                if(check==true)timer++;
             }
 
             for (int i = 0; i < rows; i++)
@@ -65,6 +65,6 @@ class Solution
                     }
                 }
             }
-            return fresh;
+            return timer;
         }
 };
