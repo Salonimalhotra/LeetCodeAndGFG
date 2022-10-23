@@ -12,31 +12,33 @@ public:
             mp[i]++;
         }
         
-        
-        queue<pair<string,int>>q;
-        q.push(make_pair(startWord,1));
+        queue<string>q;
+        int steps=1;
+        q.push(startWord);
         mp.erase(startWord);
         
         while(q.size()!=0){
-            pair<string,int> topElement=q.front();
-            string str=topElement.first;
-            int len=topElement.second;
-            q.pop();
-            if(str==targetWord){
-                return len;
-            }
             int s=q.size();
-                for(int j=0;j<str.size();j++){
-                    string word=str;
-                    for(int k=0;k<=25;k++){
-                        word[j]='a' + k;
+            while(s--){
+                 string top=q.front();
+                 q.pop();
+            
+                 if(top==targetWord){
+                return steps;
+                 }
+               
+                for(int i=0;i<top.size();i++){
+                    for(int j=0;j<=25;j++){
+                        string word=top;
+                        word[i]='a' + j;
                         if(mp.find(word)!=mp.end()){
-                            q.push(make_pair(word,len+1));
+                            q.push(word);
                             mp.erase(word);
                         }
                     }
                 }
-            
+            }
+            steps++;
         }
         return 0;
     }
