@@ -20,47 +20,43 @@ class Solution
             }
             if (root->val != voyage[index])
             {
-                // cout << "returning from here 1 " << root->val << endl;
+               	// cout << "returning from here 1 " << root->val << endl;
                 check = false;
                 return;
             }
-          
+
             if(root->left==NULL && root->right==NULL){
-              index++;
-              
-            }
+                   index++;      
+            }        
+
             if (root->left != NULL && root->right != NULL)
             {
-                if (voyage[index + 1] == root->left->val)
-                {
-                    index++;
-                    helper(root->left, def, index, voyage, check);
-                    helper(root->right, def, index, voyage, check);
-                }
-                else
+
+                if (voyage[index + 1] != root->left->val)
                 {
                     TreeNode *extra = root->left;
                     root->left = root->right;
                     root->right = extra;
                     def.push_back(root->val);
-                    index++;
-                    helper(root->left, def, index, voyage, check);
-                    helper(root->right, def, index, voyage, check);
                 }
+                index++;
+                helper(root->left, def, index, voyage, check);
+                helper(root->right, def, index, voyage, check);
             }
+          
             else if (root->left != NULL)
             {
-                if (voyage[index+1] != root->left->val)
+                if (voyage[index + 1] != root->left->val)
                 {
-                     check = false;
-                     return;
+                    check = false;
+                    return;
                 }
                 index++;
                 helper(root->left, def, index, voyage, check);
             }
             else if (root->right != NULL)
             {
-                if (voyage[index+1] != root->right->val)
+                if (voyage[index + 1] != root->right->val)
                 {
                     check = false;
                     return;
