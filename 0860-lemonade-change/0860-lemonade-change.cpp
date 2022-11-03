@@ -40,9 +40,7 @@ class Solution
                         }
                         else
                         {
-                            mp[5]--;
-                            mp[5]--;
-                            mp[5]--;
+                            mp[5]-=3;
                             if (mp[5] == 0) mp.erase(5);
                         }
                     }
