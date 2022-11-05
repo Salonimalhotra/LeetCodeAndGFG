@@ -23,31 +23,25 @@ class Solution
                 }
                 else
                 {
-                    if (i == pushed.size())
+                    if (st.top() == popped[j])
                     {
-                        if (st.top() == popped[j])
-                        {
-                            j++;
-                            st.pop();
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else if (st.top() == popped[j])
-                    {
-                        j++;
                         st.pop();
+                        j++;
                     }
                     else
                     {
-                        st.push(pushed[i]);
-                        i++;
+                        if (i != pushed.size())
+                        {
+                            st.push(pushed[i]);
+                            i++;
+                        }
+                        else {
+                          return false;
+                        }
                     }
                 }
             }
-           if(i==pushed.size() && j==popped.size()) return true;
-           else return false;
+            if (i == pushed.size() && j == popped.size()) return true;
+            else return false;
         }
 };
