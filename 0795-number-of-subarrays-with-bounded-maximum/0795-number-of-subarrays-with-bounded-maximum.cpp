@@ -20,26 +20,25 @@ class Solution
            	//                 }
            	//             }
            	//             return numsAns;
-            int n = nums.size();
+            int i = 0;
+            int j = 0;
             int ans = 0;
-            int l = 0;
-            int r = 0;
             int window = 0;
-            while (r < n)
+            while (j < nums.size())
             {
-                if (nums[r] >= left && nums[r] <= right)
+
+                if (nums[j] >= left && nums[j] <= right)
                 {
-                    window = r - l + 1;
+                    window = j - i + 1;
                 }
-                else if (nums[r] > right)
+                else if (nums[j] > right)
                 {
                     window = 0;
-                    l = r + 1;
+                    i = j + 1;
                 }
-
-                ans += window;	// since whatever previously valid windows were present, we can add this to each of those windows
-                r += 1;
+                j++;
+                ans += window;
             }
-            return ans;
+          return ans;
         }
 };
