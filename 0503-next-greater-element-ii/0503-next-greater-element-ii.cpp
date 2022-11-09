@@ -16,9 +16,7 @@ class Solution
                         check=nums[j];
                         break;
                     }
-                    else {
-                      j=(j+1)%n;
-                    }
+                    else  j=(j+1)%n;
                 }
               ans.push_back(check);
             }
