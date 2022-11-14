@@ -54,10 +54,9 @@ class Solution
             {
                 sum += nums[i];
                 int required = sum - k;
-                if (mp.find(required) != mp.end())
-                {
-                    ans += mp[required];
-                }
+
+                ans += mp[required];
+
                 mp[sum]++;
             }
             return ans;
