@@ -3,13 +3,8 @@ class Solution
     public:
         int arrangeCoins(int n)
         {
-            if(n<0){
-              return 0;
-            }
-            if (n == 1)
-            {
-                return 1;
-            }
+
+            if (n == 1) return 1;
 
             int coins = n;
             int rownum = 1;
@@ -20,11 +15,8 @@ class Solution
                     coins -= rownum;
                     rownum++;
                 }
-                else
-                {
-                    break;
-                }
+                else break;
             }
-            return rownum-1;
+            return rownum - 1;
         }
 };
