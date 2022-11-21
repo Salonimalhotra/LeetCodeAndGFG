@@ -34,7 +34,7 @@ class Solution
                 return steps;
             }
             if(maze[x][y]=='+'){
-              vis[x][y]=true;
+              // vis[x][y]=true;
               continue;
             }
            	// right down up left
