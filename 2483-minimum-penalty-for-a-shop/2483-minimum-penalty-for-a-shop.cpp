@@ -44,7 +44,8 @@ class Solution
           
             int best_ans = -1;
             int score = INT_MAX;
-            for (int i = 0; i <= hours; i++)
+            // cout<<prefix.size()<<endl;
+            for (int i = 0; i <prefix.size(); i++)
             {
                 if ((prefix[i] + suffix[i]) < score)
                 {
