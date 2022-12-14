@@ -3,19 +3,30 @@
 class Solution
 {
     public:
-        int helper(vector<int> nums, int index,vector<int>&dp)
+
+        int tab(vector<int> nums)
         {
-            if (index >= nums.size())
+            vector<int> dp(nums.size() + 2, 0);
+            for (int i = nums.size() - 1; i >= 0; i--)
             {
-                return 0;
+                dp[i] = max(nums[i] + dp[i + 2], dp[i + 1]);
             }
-            if(dp[index]!=-1){
-              return dp[index];
-            }
-            int option1 = nums[index] + helper(nums, index + 2,dp);
-            int option2 = helper(nums, index + 1,dp);
-            return dp[index]= max(option1, option2);
+            return dp[0];
         }
+    int helper(vector<int> nums, int index, vector<int> &dp)
+    {
+        if (index >= nums.size())
+        {
+            return 0;
+        }
+        if (dp[index] != -1)
+        {
+            return dp[index];
+        }
+        int option1 = nums[index] + helper(nums, index + 2, dp);
+        int option2 = helper(nums, index + 1, dp);
+        return dp[index] = max(option1, option2);
+    }
     int rob(vector<int> &nums)
     {
        	//         if(nums.size()<=0){
@@ -35,7 +46,8 @@ class Solution
        	//             prev1=ans;
        	//         }
        	//         return prev1;
-      vector<int>dp(nums.size()+2,-1);
-      return helper(nums,0,dp);
+        // vector<int> dp(nums.size() + 2, -1);
+        // return helper(nums, 0, dp);
+        return tab(nums);
     }
 };
