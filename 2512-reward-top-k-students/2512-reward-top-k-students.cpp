@@ -3,9 +3,14 @@ class cmp
     public:
         bool operator()(pair<int, int> &a, pair<int, int> &b)
         {
-            if (a.first == b.first)
-                return a.second > b.second;
-            return a.first < b.first;
+            if (a.first < b.first)
+                return true;
+            else if(a.first == b.first){
+              if(a.second>b.second){
+                return true;
+              }
+            }
+          return false;
         }
 };
 class Solution
