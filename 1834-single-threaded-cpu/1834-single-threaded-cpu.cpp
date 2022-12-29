@@ -1,32 +1,32 @@
-// class cmp
-// {
-//     public:
-//         bool operator()(pair<int, int> p1, pair<int, int> p2)
-//         {
-//             if (p1.second > p2.second)
-//             {
-//                 return true;
-//             }
-//             else if (p1.second == p2.second)
-//             {
-//                 if (p1.first > p2.first)
-//                 {
-//                     return true;
-//                 }
-//                 else
-//                 {
-//                     return false;
-//                 }
-//             }
-//             return false;
-//         }
-// };
+class cmp
+{
+    public:
+        bool operator()(pair<int, int> p1, pair<int, int> p2)
+        {
+            if (p1.first > p2.first)
+            {
+                return true;
+            }
+            else if (p1.first == p2.first)
+            {
+                if (p1.second > p2.second)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+};
 class Solution
 {
     public:
         vector<int> getOrder(vector<vector < int>> &tasks)
         {
-            priority_queue<pair<int, int>, vector< pair<int, int>>, greater<pair<int,int>>> pq;
+            priority_queue<pair<int, int>, vector< pair<int, int>>, cmp> pq;
             vector<int> ans;
             vector<vector < int>> v = tasks;
             for (int i = 0; i < tasks.size(); i++)
