@@ -8,7 +8,7 @@ class Solution
             unordered_map<string, char> mp1;
             for (int i = 0; i < pattern.size(); i++)
             {
-                if(j==s.size()){
+                if(j>=s.size()){
                   return false;
                 }
                 string st = "";
@@ -37,9 +37,9 @@ class Solution
                     mp[pattern[i]] = st;
                     mp1[st] = pattern[i];
                 }
-                if(j!=s.size())j++;
+                j++;
             }
-            if(j!=s.size()) return false;
+            if(j<s.size()) return false;
             return true;
         }
 };
